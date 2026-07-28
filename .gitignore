@@ -1,0 +1,7 @@
+# Local test dependencies (scripts/ tests need: npm i jsdom --no-save)
+node_modules/
+package-lock.json
+
+# OS noise
+.DS_Store
+Thumbs.db

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Admin — NEVIN</title>
+
+<!-- Never index the control panel. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#05060a">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%2305060a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Segoe UI,Helvetica,sans-serif' font-size='30' font-weight='700' fill='url(%23g)'%3EA%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/admin.css">
+</head>
+
+<body class="admin">
+<div class="admin__wrap">
+
+  <!-- ============================== SIGN IN ============================== -->
+  <section class="gate" id="gate">
+    <div class="gate__card">
+      <div class="gate__brand">NEVIN</div>
+      <h1 class="gate__title">Content admin</h1>
+      <p class="gate__lede">
+        Edit every section of the site and publish straight to GitHub.
+        Paste a personal access token to unlock.
+      </p>
+
+      <form id="gateForm" autocomplete="off">
+        <div class="field">
+          <label class="field__label" for="token">GitHub personal access token</label>
+          <input class="input" id="token" type="password" placeholder="github_pat_… or ghp_…"
+                 autocomplete="current-password" spellcheck="false" required>
+        </div>
+
+        <div class="field">
+          <label class="checkline">
+            <input type="checkbox" id="remember" checked>
+            Keep me signed in on this device
+          </label>
+        </div>
+
+        <button class="abtn abtn--primary abtn--wide" type="submit" id="gateBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Unlock admin
+        </button>
+
+        <p class="status" id="gateStatus" role="status" aria-live="polite" style="margin-top:.9rem"></p>
+      </form>
+
+      <div class="gate__help">
+        <strong>First time?</strong>
+        <ol>
+          <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">GitHub → fine-grained tokens</a>.</li>
+          <li>Repository access → <em>Only select repositories</em> → this repo.</li>
+          <li>Permissions → Repository → <em>Contents</em> → <strong>Read and write</strong>.</li>
+          <li>Generate, copy, and paste it above.</li>
+        </ol>
+        The token is stored only in your own browser and is sent directly to
+        <code>api.github.com</code> — never to any other server.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== EDITOR ============================== -->
+  <div class="shell-admin" id="shell">
+
+    <header class="topbar">
+      <span class="topbar__brand">NEVIN</span>
+      <span class="topbar__repo" id="repoLabel"></span>
+      <span class="badge" id="dirtyBadge" hidden>
+        <span class="dot"></span> Unsaved
+      </span>
+      <span class="topbar__spacer"></span>
+
+      <a class="abtn" href="index.html" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        View site
+      </a>
+      <button class="abtn abtn--primary" id="publish" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        Publish
+      </button>
+      <button class="abtn" id="signout" type="button" title="Sign out">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        <span class="sr-only">Sign out</span>
+      </button>
+    </header>
+
+    <div class="layout">
+
+      <nav class="side" id="side" aria-label="Sections">
+        <button class="side__btn is-active" type="button" data-pane="hero" data-short="Hero">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h10"/></svg>
+          <span>Hero</span>
+        </button>
+        <button class="side__btn" type="button" data-pane="about" data-short="About">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span>About</span>
+        </button>
+        <button class="side__btn" type="button" data-pane="skills" data-short="Skills">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 9 9"/></svg>
+          <span>Skills</span>
+        </button>
+        <button class="side__btn" type="button" data-pane="work" data-short="Work">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>
+          <span>Work</span>
+        </button>
+        <button class="side__btn" type="button" data-pane="accounts" data-short="Social">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+          <span>Accounts</span>
+        </button>
+        <button class="side__btn" type="button" data-pane="contact" data-short="Contact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
+          <span>Contact</span>
+        </button>
+        <button class="side__btn" type="button" data-pane="media" data-short="Media">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          <span>Media</span>
+        </button>
+      </nav>
+
+      <main>
+        <!-- Panes are generated by admin.js -->
+        <section class="pane is-active" id="pane-hero"></section>
+        <section class="pane" id="pane-about"></section>
+        <section class="pane" id="pane-skills"></section>
+        <section class="pane" id="pane-work"></section>
+        <section class="pane" id="pane-accounts"></section>
+        <section class="pane" id="pane-contact"></section>
+        <section class="pane" id="pane-media"></section>
+      </main>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script src="assets/js/admin.js" defer></script>
+</body>
+</html>

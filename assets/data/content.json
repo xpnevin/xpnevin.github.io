@@ -1,0 +1,214 @@
+{
+  "version": 1,
+  "hero": {
+    "badge": "Available for commissions",
+    "name": "NEVIN",
+    "words": [
+      "Creative Video Editor & Motion Designer",
+      "Cinematic Edit Specialist",
+      "Character Edit Designer",
+      "Reels & Short-Form Creator"
+    ],
+    "lede": "Creating cinematic edits, character edits and premium visual experiences — built frame by frame around rhythm, colour and motion.",
+    "stats": [
+      {
+        "num": "4",
+        "label": "Active pages"
+      },
+      {
+        "num": "3",
+        "label": "Edit suites"
+      },
+      {
+        "num": "24h",
+        "label": "Reply window"
+      }
+    ]
+  },
+  "about": {
+    "eyebrow": "About",
+    "title": "Turning ordinary clips into *cinematic moments*",
+    "paras": [
+      "Hi, I'm **Nevin** — a passionate video editor specialising in cinematic storytelling and high-quality motion design.",
+      "I enjoy transforming ordinary clips into visually stunning edits using industry-leading software and creative techniques: precise beat-matched cutting, layered transitions, colour grading and typography that carries the mood of a scene.",
+      "Whether it's **character edits**, **cinematic reels** or **social media content**, my goal is always the same — to create edits that leave a lasting impression long after the last frame."
+    ],
+    "chips": [
+      "Cinematic edits",
+      "Character edits",
+      "Colour grading",
+      "Beat sync",
+      "Motion graphics",
+      "Reels & shorts"
+    ],
+    "glanceTitle": "At a glance",
+    "glance": [
+      {
+        "k": "Role",
+        "v": "Video editor & motion designer"
+      },
+      {
+        "k": "Focus",
+        "v": "Cinematic & character edits"
+      },
+      {
+        "k": "Delivery",
+        "v": "Vertical & widescreen"
+      },
+      {
+        "k": "Status",
+        "v": "Open for commissions"
+      }
+    ],
+    "toolkitTitle": "Toolkit",
+    "toolkit": [
+      "CapCut",
+      "After Effects",
+      "Alight Motion",
+      "Sound design"
+    ]
+  },
+  "skills": {
+    "eyebrow": "Editing skills",
+    "title": "The *software* behind the edits",
+    "lede": "Each ring reflects how deep I currently work inside that tool — and where I'm still levelling up.",
+    "items": [
+      {
+        "name": "CapCut",
+        "percent": 100,
+        "note": "Primary suite — full command of the workflow",
+        "from": "#22d3ee",
+        "to": "#3b82f6"
+      },
+      {
+        "name": "After Effects",
+        "percent": 52,
+        "note": "Compositing & motion graphics — actively growing",
+        "from": "#3b82f6",
+        "to": "#a855f7"
+      },
+      {
+        "name": "Alight Motion",
+        "percent": 59,
+        "note": "Keyframe effects & shape animation on mobile",
+        "from": "#a855f7",
+        "to": "#f472b6"
+      }
+    ]
+  },
+  "work": {
+    "eyebrow": "Portfolio",
+    "title": "Selected *frames & motion*",
+    "lede": "A short sample of motion work and the photography I shoot and grade for reference plates.",
+    "reels": [
+      {
+        "src": "assets/videos/reel-01.mp4",
+        "poster": "assets/photos/london-eye.jpg",
+        "title": "Motion Reel 01",
+        "tag": "Cinematic"
+      },
+      {
+        "src": "assets/videos/reel-02.mp4",
+        "poster": "assets/photos/violet-canopy.jpg",
+        "title": "Motion Reel 02",
+        "tag": "Character"
+      }
+    ],
+    "gallery": [
+      {
+        "src": "assets/photos/london-eye.jpg",
+        "alt": "The London Eye at golden hour beside the Thames"
+      },
+      {
+        "src": "assets/photos/big-ben-night.jpg",
+        "alt": "Big Ben lit in warm amber against a night sky"
+      },
+      {
+        "src": "assets/photos/blossom-avenue.jpg",
+        "alt": "Cherry blossom tree lining an empty street at dusk"
+      },
+      {
+        "src": "assets/photos/violet-canopy.jpg",
+        "alt": "Tree silhouette against a violet and blue graded sky"
+      },
+      {
+        "src": "assets/photos/blossom-branch.jpg",
+        "alt": "Close-up of pink cherry blossom against blue sky"
+      },
+      {
+        "src": "assets/photos/park-sunset.jpg",
+        "alt": "Sunset light over an open park framed by trees"
+      },
+      {
+        "src": "assets/photos/dusk-canopy.jpg",
+        "alt": "Teal-graded dusk sky between dark tree canopies"
+      },
+      {
+        "src": "assets/photos/dandelion.jpg",
+        "alt": "Macro shot of a dandelion seed head with shallow depth of field"
+      }
+    ]
+  },
+  "accounts": {
+    "eyebrow": "My accounts",
+    "title": "Where the *edits live*",
+    "lede": "Four pages, four purposes — from the main feed to dedicated cinema motion and character work.",
+    "items": [
+      {
+        "role": "Main editing account",
+        "handle": "@nevin.xp",
+        "desc": "Main editing page featuring my latest creative edits.",
+        "url": "https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==",
+        "footer": true
+      },
+      {
+        "role": "Cinema motion",
+        "handle": "@NEXR1.ae",
+        "desc": "High-quality cinema motion edits.",
+        "url": "https://www.instagram.com/nexr1.ae?igsh=MTZkaTZ6ZHFzbTYwbg==",
+        "footer": true
+      },
+      {
+        "role": "Cinematic characters",
+        "handle": "@ZEDEX.MOV",
+        "desc": "Secondary account dedicated to cinematic character edits.",
+        "url": "https://www.instagram.com/zedex.mov?igsh=cGx1NTA1ZWFlZ2p2",
+        "footer": true
+      },
+      {
+        "role": "Personal account",
+        "handle": "@nevin_manoj__",
+        "desc": "Life beyond the timeline — personal moments and behind the scenes.",
+        "url": "https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==",
+        "footer": false
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Let's build your *next edit*",
+    "lede": "Send the brief through the commission form, or reach me directly by email.",
+    "email": "xpnevin@gmail.com",
+    "turnaroundTitle": "Typical turnaround",
+    "turnaround": [
+      {
+        "k": "Short reel",
+        "v": "2–4 days"
+      },
+      {
+        "k": "Character edit",
+        "v": "3–6 days"
+      },
+      {
+        "k": "First reply",
+        "v": "Within 24 hours"
+      }
+    ],
+    "formLabel": "Commission form",
+    "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform"
+  },
+  "footer": {
+    "tagline": "Creative video editor & motion designer",
+    "credit": "Designed with ❤ by Nevin"
+  }
+}

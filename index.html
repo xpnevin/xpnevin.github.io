@@ -524,6 +524,8 @@
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
 </button>
 
-<script src="assets/js/main.js" defer></script>
+<!-- content.js hydrates the page from assets/data/content.json, then loads main.js.
+     Without JS (or if the JSON fails) the markup above stands on its own. -->
+<script src="assets/js/content.js" defer></script>
 </body>
 </html>
