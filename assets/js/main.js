@@ -122,7 +122,7 @@
 
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var w = 0, h = 0, dots = [], hidden = false;
-    var palette = ["59,130,246", "168,85,247", "34,211,238"];
+    var palette = ["140,150,165", "200,205,215", "41,151,255"];
 
     function size() {
       w = canvas.clientWidth;
@@ -165,8 +165,8 @@
           ctx.beginPath();
           ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
           ctx.fillStyle = "rgba(" + d.c + "," + glow.toFixed(3) + ")";
-          ctx.shadowBlur = 10;
-          ctx.shadowColor = "rgba(" + d.c + ",.5)";
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = "rgba(" + d.c + ",.28)";
           ctx.fill();
         }
         ctx.shadowBlur = 0;
@@ -252,10 +252,10 @@
           ctx.beginPath();
           ctx.moveTo(q.x, q.y);
           ctx.lineTo(p.x, p.y);
-          ctx.strokeStyle = "rgba(" + Math.round(lerp(34, 168, t)) + "," +
-                            Math.round(lerp(211, 85, t)) + "," +
-                            Math.round(lerp(238, 247, t)) + "," + (t * 0.42).toFixed(3) + ")";
-          ctx.lineWidth = t * 2.6;
+          ctx.strokeStyle = "rgba(" + Math.round(lerp(140, 255, t)) + "," +
+                            Math.round(lerp(150, 255, t)) + "," +
+                            Math.round(lerp(170, 255, t)) + "," + (t * 0.28).toFixed(3) + ")";
+          ctx.lineWidth = t * 2.2;
           ctx.lineCap = "round";
           ctx.stroke();
         }

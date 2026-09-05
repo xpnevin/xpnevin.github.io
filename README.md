@@ -51,5 +51,5 @@ Animated loading screen · mouse spotlight · glassmorphism UI · aurora animate
 ## Links
 
 - Email — xpnevin@gmail.com
-- Instagram — [@nevin.xp](https://www.instagram.com/nevin.xp) · [@NEXR1.ae](https://www.instagram.com/nexr1.ae) · [@ZEDEX.MOV](https://www.instagram.com/zedex.mov) · [@nevin_manoj__](https://www.instagram.com/nevin_manoj__)
+- Instagram — [@nevin.xp](https://www.instagram.com/nevin.xp) · [@nevin_manoj__](https://www.instagram.com/nevin_manoj__)
 - Commission form — [Google Form](https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform)
