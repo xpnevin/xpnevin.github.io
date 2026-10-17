@@ -1,12 +1,14 @@
 # NEVIN — Creative Video Editor & Motion Designer
 
-Premium single-page portfolio for Nevin. Static HTML, CSS and JavaScript — no build step, no dependencies, no framework. Deploys to GitHub Pages as-is.
+Corrra-inspired single-page portfolio for Nevin. Static HTML, CSS and JavaScript — no build step, no dependencies, no framework. Deploys to GitHub Pages as-is.
+
+Rebuilt to match the clean editorial style of https://corrra.com/@Nikhil%20Gite — warm paper, brutalist typography, pill buttons and rounded media.
 
 ## Project contents
 
 ```text
 index.html              # The whole page
-assets/css/style.css    # Theme, glassmorphism, layout, responsive rules
+assets/css/style.css    # Theme, layout, responsive rules
 assets/js/main.js       # All interactions (dependency-free)
 assets/photos/          # Photography gallery images
 assets/videos/          # Portfolio motion reels
@@ -15,32 +17,34 @@ assets/videos/          # Portfolio motion reels
 
 ## Design
 
-Black and dark-grey glassmorphism with electric blue and purple neon glow, over an animated aurora gradient background.
+Warm paper editorial inspired by Corrra:
 
 | Token | Value |
 | --- | --- |
-| Background | `#05060a` |
-| Electric blue | `#3b82f6` → `#22d3ee` |
-| Purple | `#a855f7` → `#7c3aed` |
+| Background | `#FFFBF5` (warm paper) |
+| Warm panel | `#F5EFE3` |
+| Surface | `#FFFFFF` |
+| Line | `#E8DDC7` |
+| Text | `#0E0E11` |
 | Display font | Space Grotesk |
-| Body font | Poppins |
+| Body font | Inter |
+| Serif accent | Instrument Serif |
 
 ## Features
 
-Animated loading screen · mouse spotlight · glassmorphism UI · aurora animated background · floating particles (canvas) · inertial smooth scrolling · animated typing text · hover glow cards · animated skill rings · scroll progress bar · custom cursor with trail · neon buttons · magnetic hover · ripple clicks · scroll reveal · 3D tilt cards · gradient borders · responsive layout · SEO metadata and JSON-LD · copy-email button · back-to-top · animated footer.
+Minimal top bar · massive Corrra-style logotype (NEVIN*) · visual profile hero · brutalist manifesto (“I am Nevin, motion graphics designer”) · selected work reels & gallery · toolkit with progress bars · accounts cards · India connect CTA · commission form embed · scroll reveal · copy-email · video autoplay on view · responsive · SEO metadata and JSON-LD.
 
 ### Implementation notes
 
-- **No third-party JS.** GSAP, Lenis, ScrollReveal, Vanilla Tilt and Typed.js were each replaced with a small purpose-built module. The page loads no external scripts, so there is no render-blocking CDN request and nothing to break if a CDN goes down. Only Google Fonts is fetched externally.
-- **Every module is isolated.** `main.js` boots each feature in its own `try/catch`; one failure cannot take down the rest of the page.
-- **The loader can never trap a visitor** — it force-completes after 3.6 s even if an asset stalls.
-- **Graceful degradation.** All content is in the HTML and readable without JavaScript. Cursor, spotlight, trail and inertial scroll activate only for fine pointers, and `prefers-reduced-motion` disables animation while revealing all content.
+- **No third-party JS.** Only Google Fonts is fetched externally. All interactions are vanilla.
+- **Every module is isolated.** `main.js` is defensive; one failure cannot break the rest.
+- **Graceful degradation.** All content is in HTML and readable without JavaScript. `prefers-reduced-motion` disables animations.
 
 ## Editing
 
 - **Text, links, section copy** — edit `index.html` directly.
-- **Skill percentages** — change the `data-ring="52"` attribute on a `.ring`; the label and arc both follow automatically.
-- **Typing headline** — edit the `data-words='[...]'` JSON array on `#typed`.
+- **Hero name** — edit `.hero__name-row` in `index.html`.
+- **Toolkit percentages** — change the `width:XX%` inline style on `.tool-bar span`.
 - **Colours** — edit the custom properties in the `:root` block at the top of `assets/css/style.css`.
 - **Photos / videos** — drop replacements into `assets/photos` or `assets/videos` and update the matching `src` in `index.html`.
 

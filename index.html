@@ -3,31 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NEVIN — Creative Video Editor &amp; Motion Designer</title>
-
+<title>NEVIN — Creative Video Editor & Motion Designer</title>
 <meta name="description" content="Nevin is a creative video editor and motion designer crafting cinematic edits, character edits and premium visual experiences with CapCut, After Effects and Alight Motion.">
 <meta name="author" content="Nevin Manoj">
 <meta name="keywords" content="video editor, motion designer, cinematic edits, character edits, CapCut, After Effects, Alight Motion, Instagram reels editor">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#FFFBF5">
 <link rel="canonical" href="https://xpnevin.github.io/">
 
-<!-- Open Graph / Twitter -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NEVIN">
-<meta property="og:title" content="NEVIN — Creative Video Editor &amp; Motion Designer">
+<meta property="og:title" content="NEVIN — Creative Video Editor & Motion Designer">
 <meta property="og:description" content="Cinematic edits, character edits and premium visual experiences.">
 <meta property="og:url" content="https://xpnevin.github.io/">
 <meta property="og:image" content="https://xpnevin.github.io/assets/photos/london-eye.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="NEVIN — Creative Video Editor &amp; Motion Designer">
+<meta name="twitter:title" content="NEVIN — Creative Video Editor & Motion Designer">
 <meta name="twitter:description" content="Cinematic edits, character edits and premium visual experiences.">
 <meta name="twitter:image" content="https://xpnevin.github.io/assets/photos/london-eye.jpg">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232997ff'/%3E%3Cstop offset='1' stop-color='%230a62d0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23000000'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='-apple-system,Segoe UI,Helvetica,sans-serif' font-size='34' font-weight='700' fill='url(%23g)'%3EN%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230E0E0F'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Space Grotesk,sans-serif' font-size='28' font-weight='700' fill='%23FFFBF5'%3EN%3C/text%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
 
 <script type="application/ld+json">
@@ -47,438 +45,411 @@
 }
 </script>
 </head>
+<body>
 
-<body class="is-loading">
-
-<!-- Loading animation -->
-<div class="loader" id="loader" role="status" aria-live="polite">
-  <div class="loader__mark">NEVIN</div>
-  <div class="loader__track"><div class="loader__bar"></div></div>
-  <div class="loader__pct">000%</div>
-  <span class="sr-only">Loading portfolio</span>
-</div>
-
-<!-- 3D gradient / aurora background + floating particles -->
-<div class="bg" aria-hidden="true">
-  <div class="bg__aurora bg__aurora--1"></div>
-  <div class="bg__aurora bg__aurora--2"></div>
-  <div class="bg__aurora bg__aurora--3"></div>
-  <div class="bg__grid"></div>
-  <canvas id="particles"></canvas>
-  <div class="bg__noise"></div>
-</div>
-
-<!-- Mouse-following light + custom cursor -->
-<div class="spotlight" id="spotlight" aria-hidden="true"></div>
-<canvas class="cursor-trail" id="cursorTrail" aria-hidden="true"></canvas>
-<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
-<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
-
-<!-- Scroll progress -->
-<div class="progress" id="progress" aria-hidden="true"></div>
-
-<a class="skip-link" href="#hero">Skip to content</a>
-
-<!-- Navigation -->
-<header class="nav" id="nav">
-  <div class="nav__inner">
-    <a class="nav__logo" href="#hero" aria-label="NEVIN — home">NEVIN</a>
-
-    <nav class="nav__links" id="navLinks" aria-label="Primary">
-      <a class="nav__link" href="#about">About</a>
-      <a class="nav__link" href="#skills">Skills</a>
-      <a class="nav__link" href="#work">Work</a>
-      <a class="nav__link" href="#accounts">Accounts</a>
-      <a class="nav__link" href="#contact">Contact</a>
+<!-- Top bar — corrra style: ultra minimal -->
+<header class="topbar" id="topbar">
+  <div class="shell topbar__inner">
+    <a class="topbar__brand" href="#hero" aria-label="NEVIN — home">
+      <span class="topbar__dot" aria-hidden="true"></span>
+      NEVIN <span class="topbar__sub">· India</span>
+    </a>
+    <nav class="topbar__nav" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#contact">Contact</a>
     </nav>
-
-    <button class="nav__toggle" id="navToggle" type="button"
-            aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
-      <span></span><span></span><span></span>
+    <a class="topbar__cta" href="mailto:xpnevin@gmail.com">
+      Contact
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+    </a>
+    <button class="topbar__menu" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span>
     </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav" hidden>
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#toolkit">Toolkit</a>
+    <a href="#accounts">Accounts</a>
+    <a href="#contact">Contact</a>
+    <a class="mobile-nav__cta" href="mailto:xpnevin@gmail.com">Email Nevin →</a>
   </div>
 </header>
 
-<main id="main">
+<main>
 
-  <!-- ============================== HERO ============================== -->
+  <!-- ================= HERO — huge Corrra-style logotype ================= -->
   <section class="hero" id="hero">
-    <div class="hero__inner">
-      <span class="eyebrow hero__badge" data-reveal>Available for commissions</span>
+    <div class="shell">
+      <div class="hero__eyebrow" data-reveal>
+        <span class="eyebrow__dot"></span>
+        Video Editor · Motion Designer · Available for commissions
+        <span class="eyebrow__year">©2025</span>
+      </div>
 
-      <h1 class="hero__name" data-reveal data-reveal-delay="80">NEVIN</h1>
+      <!-- Massive wordmark like NikhilGite* -->
+      <h1 class="hero__name" data-reveal data-reveal-delay="80">
+        <span class="hero__name-row">NEVIN<span class="hero__star" aria-hidden="true">*</span></span>
+      </h1>
 
-      <p class="hero__role" id="typed" data-reveal data-reveal-delay="160"
-         data-words='["Creative Video Editor &amp; Motion Designer","Cinematic Edit Specialist","Character Edit Designer","Reels &amp; Short-Form Creator"]'>
-        <span class="typed-text">Creative Video Editor &amp; Motion Designer</span><span class="typed-caret" aria-hidden="true"></span>
-      </p>
-
-      <p class="hero__lede" data-reveal data-reveal-delay="240">
-        Creating cinematic edits, character edits and premium visual experiences —
-        built frame by frame around rhythm, colour and motion.
-      </p>
-
-      <div class="hero__actions" data-reveal data-reveal-delay="320">
-        <a class="btn btn--primary" href="#work" data-ripple data-magnetic="0.3">
-          View Portfolio
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <a class="btn btn--ghost" href="#contact" data-ripple data-magnetic="0.3">
-          Hire Me
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-        </a>
-        <a class="btn btn--ghost" href="#contact" data-ripple data-magnetic="0.3">
+      <div class="hero__grid" data-reveal data-reveal-delay="140">
+        <p class="hero__tagline">
+          I can edit short, long, or any type of video.<br>
+          Software — <strong>CapCut</strong> · <strong>After Effects</strong> · <strong>Alight Motion</strong>
+        </p>
+        <a class="btn-pill btn-pill--dark" href="mailto:xpnevin@gmail.com" data-magnetic>
           Contact
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
         </a>
       </div>
 
-      <div class="hero__stats" data-reveal data-reveal-delay="400">
-        <div class="stat"><div class="stat__num">2</div><div class="stat__label">Active pages</div></div>
-        <div class="stat"><div class="stat__num">3</div><div class="stat__label">Edit suites</div></div>
-        <div class="stat"><div class="stat__num">24h</div><div class="stat__label">Reply window</div></div>
+      <!-- Visual profile — full bleed rounded media like Corrra -->
+      <div class="hero__visual" data-reveal data-reveal-delay="180">
+        <div class="hero__visual-top">
+          <span>Visual profile — 01</span>
+          <span>London · India → Worldwide</span>
+        </div>
+        <figure class="hero__media">
+          <img src="assets/photos/london-eye.jpg" alt="The London Eye at golden hour — Nevin's visual reference" width="1400" height="900" decoding="async" fetchpriority="high">
+          <figcaption class="hero__media-cap">
+            <span>Cinematic colour grading &amp; reframing for reels</span>
+            <span class="hero__media-badge">↗ Selected frame</span>
+          </figcaption>
+        </figure>
       </div>
-    </div>
-
-    <div class="hero__cue" aria-hidden="true">
-      <span></span>
-      Scroll
     </div>
   </section>
 
-  <!-- ============================== ABOUT ============================== -->
-  <section class="section" id="about">
+  <!-- ================= MANIFESTO — IamNevin,motiongraphicsdesigner ================= -->
+  <section class="manifesto" id="about">
     <div class="shell">
-      <header class="section__head">
-        <span class="eyebrow" data-reveal>About</span>
-        <h2 class="section__title" data-reveal data-reveal-delay="80">
-          Turning ordinary clips into <em>cinematic moments</em>
-        </h2>
-      </header>
+      <div class="manifesto__eyebrow" data-reveal>
+        <span>01</span> About — Visual profile
+      </div>
 
-      <div class="about__grid">
-        <article class="glass glass--tilt about__card" data-reveal="left" data-tilt="4">
-          <p>
-            Hi, I'm <strong>Nevin</strong> — a passionate video editor specialising in cinematic
-            storytelling and high-quality motion design.
-          </p>
-          <p>
-            I enjoy transforming ordinary clips into visually stunning edits using
-            industry-leading software and creative techniques: precise beat-matched cutting,
-            layered transitions, colour grading and typography that carries the mood of a scene.
-          </p>
-          <p>
-            Whether it's <strong>character edits</strong>, <strong>cinematic reels</strong> or
-            <strong>social media content</strong>, my goal is always the same — to create edits
-            that leave a lasting impression long after the last frame.
-          </p>
+      <!-- Large stacked Brutalist typography -->
+      <h2 class="manifesto__title" data-reveal data-reveal-delay="80">
+        <span class="manifesto__line">I am Nevin,</span>
+        <span class="manifesto__line manifesto__line--ghost">motion<span class="manifesto__break"><br></span>graphics</span>
+        <span class="manifesto__line">designer<span class="manifesto__dot">.</span></span>
+      </h2>
 
-          <div class="chiplist" style="margin-top:1.6rem">
-            <span class="chip">Cinematic edits</span>
-            <span class="chip">Character edits</span>
-            <span class="chip">Colour grading</span>
-            <span class="chip">Beat sync</span>
-            <span class="chip">Motion graphics</span>
-            <span class="chip">Reels &amp; shorts</span>
+      <div class="manifesto__grid">
+        <div class="manifesto__roles" data-reveal>
+          <div class="role">
+            <span class="role__k">Video Editor</span>
+            <span class="role__v">Creative Director</span>
           </div>
-        </article>
-
-        <div class="about__aside">
-          <div class="glass about__panel" data-reveal="right">
-            <h3>At a glance</h3>
-            <ul class="factlist">
-              <li><span class="k">Role</span><span class="v">Video editor &amp; motion designer</span></li>
-              <li><span class="k">Focus</span><span class="v">Cinematic &amp; character edits</span></li>
-              <li><span class="k">Delivery</span><span class="v">Vertical &amp; widescreen</span></li>
-              <li><span class="k">Status</span><span class="v">Open for commissions</span></li>
-            </ul>
-          </div>
-
-          <div class="glass about__panel" data-reveal="right" data-reveal-delay="120">
-            <h3>Toolkit</h3>
-            <div class="chiplist">
-              <span class="chip">CapCut</span>
-              <span class="chip">After Effects</span>
-              <span class="chip">Alight Motion</span>
-              <span class="chip">Sound design</span>
-            </div>
+          <p class="manifesto__desc">
+            Hi, I'm <strong>Nevin</strong> — a passionate video editor specialising in cinematic storytelling and high-quality motion design. I transform ordinary clips into visually stunning edits using precise beat-matched cutting, layered transitions, colour grading and typography that carries the mood of a scene.
+          </p>
+          <p class="manifesto__desc">
+            Whether it's <strong>character edits</strong>, <strong>cinematic reels</strong> or <strong>social media content</strong>, my goal is always the same — to create edits that leave a lasting impression long after the last frame.
+          </p>
+          <div class="meta-pills">
+            <span>Video editor</span>
+            <span>For creators &amp; brands</span>
+            <span>2025</span>
+            <span>English</span>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ============================== SKILLS ============================== -->
-  <section class="section" id="skills">
-    <div class="shell">
-      <header class="section__head">
-        <span class="eyebrow" data-reveal>Editing skills</span>
-        <h2 class="section__title" data-reveal data-reveal-delay="80">The <em>software</em> behind the edits</h2>
-        <p class="section__lede" data-reveal data-reveal-delay="140">
-          Each ring reflects how deep I currently work inside that tool — and where I'm still levelling up.
-        </p>
-      </header>
-
-      <div class="skills__grid">
-
-        <article class="glass glass--tilt skill" data-reveal="zoom" data-tilt="5">
-          <div class="ring" data-ring="100" role="img" aria-label="CapCut proficiency: 100 percent">
-            <svg viewBox="0 0 100 100" aria-hidden="true">
-              <defs>
-                <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#4aa3ff"/><stop offset="1" stop-color="#0a62d0"/>
-                </linearGradient>
-              </defs>
-              <circle class="ring__track" cx="50" cy="50" r="44"/>
-              <circle class="ring__bar" cx="50" cy="50" r="44" stroke="url(#grad1)"/>
-            </svg>
-            <div class="ring__value"><b>0</b><span>%</span></div>
-          </div>
-          <h3 class="skill__name">CapCut</h3>
-          <p class="skill__note">Primary suite — full command of the workflow</p>
-        </article>
-
-        <article class="glass glass--tilt skill" data-reveal="zoom" data-reveal-delay="90" data-tilt="5">
-          <div class="ring" data-ring="52" role="img" aria-label="After Effects proficiency: 52 percent">
-            <svg viewBox="0 0 100 100" aria-hidden="true">
-              <defs>
-                <linearGradient id="grad2" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#6bb7ff"/><stop offset="1" stop-color="#2997ff"/>
-                </linearGradient>
-              </defs>
-              <circle class="ring__track" cx="50" cy="50" r="44"/>
-              <circle class="ring__bar" cx="50" cy="50" r="44" stroke="url(#grad2)"/>
-            </svg>
-            <div class="ring__value"><b>0</b><span>%</span></div>
-          </div>
-          <h3 class="skill__name">After Effects</h3>
-          <p class="skill__note">Compositing &amp; motion graphics — actively growing</p>
-        </article>
-
-        <article class="glass glass--tilt skill" data-reveal="zoom" data-reveal-delay="180" data-tilt="5">
-          <div class="ring" data-ring="59" role="img" aria-label="Alight Motion proficiency: 59 percent">
-            <svg viewBox="0 0 100 100" aria-hidden="true">
-              <defs>
-                <linearGradient id="grad3" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#2997ff"/><stop offset="1" stop-color="#1d6fd1"/>
-                </linearGradient>
-              </defs>
-              <circle class="ring__track" cx="50" cy="50" r="44"/>
-              <circle class="ring__bar" cx="50" cy="50" r="44" stroke="url(#grad3)"/>
-            </svg>
-            <div class="ring__value"><b>0</b><span>%</span></div>
-          </div>
-          <h3 class="skill__name">Alight Motion</h3>
-          <p class="skill__note">Keyframe effects &amp; shape animation on mobile</p>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== WORK ============================== -->
-  <section class="section" id="work">
-    <div class="shell">
-      <header class="section__head">
-        <span class="eyebrow" data-reveal>Portfolio</span>
-        <h2 class="section__title" data-reveal data-reveal-delay="80">Selected <em>frames &amp; motion</em></h2>
-        <p class="section__lede" data-reveal data-reveal-delay="140">
-          A short sample of motion work and the photography I shoot and grade for reference plates.
-        </p>
-      </header>
-
-      <div class="work__reels">
-        <article class="glass reel" data-reveal>
-          <video data-autoplay muted loop playsinline preload="metadata"
-                 poster="assets/photos/london-eye.jpg">
-            <source src="assets/videos/reel-01.mp4" type="video/mp4">
-            Your browser does not support embedded video.
-          </video>
-          <div class="reel__meta"><h3>Motion Reel 01</h3><span>Cinematic</span></div>
-        </article>
-
-        <article class="glass reel" data-reveal data-reveal-delay="110">
-          <video data-autoplay muted loop playsinline preload="metadata"
-                 poster="assets/photos/violet-canopy.jpg">
-            <source src="assets/videos/reel-02.mp4" type="video/mp4">
-            Your browser does not support embedded video.
-          </video>
-          <div class="reel__meta"><h3>Motion Reel 02</h3><span>Character</span></div>
-        </article>
-      </div>
-
-      <div class="work__gallery">
-        <figure class="shot" data-reveal="zoom">
-          <img src="assets/photos/london-eye.jpg" alt="The London Eye at golden hour beside the Thames" loading="lazy" decoding="async" width="1200" height="1600">
-        </figure>
-        <figure class="shot" data-reveal="zoom" data-reveal-delay="70">
-          <img src="assets/photos/big-ben-night.jpg" alt="Big Ben lit in warm amber against a night sky" loading="lazy" decoding="async" width="1200" height="1600">
-        </figure>
-        <figure class="shot" data-reveal="zoom" data-reveal-delay="140">
-          <img src="assets/photos/blossom-avenue.jpg" alt="Cherry blossom tree lining an empty street at dusk" loading="lazy" decoding="async" width="1200" height="1600">
-        </figure>
-        <figure class="shot" data-reveal="zoom" data-reveal-delay="210">
-          <img src="assets/photos/violet-canopy.jpg" alt="Tree silhouette against a violet and blue graded sky" loading="lazy" decoding="async" width="1200" height="1600">
-        </figure>
-        <figure class="shot" data-reveal="zoom">
-          <img src="assets/photos/blossom-branch.jpg" alt="Close-up of pink cherry blossom against blue sky" loading="lazy" decoding="async" width="1200" height="1600">
-        </figure>
-        <figure class="shot" data-reveal="zoom" data-reveal-delay="70">
-          <img src="assets/photos/park-sunset.jpg" alt="Sunset light over an open park framed by trees" loading="lazy" decoding="async" width="1200" height="1600">
-        </figure>
-        <figure class="shot" data-reveal="zoom" data-reveal-delay="140">
-          <img src="assets/photos/dusk-canopy.jpg" alt="Teal-graded dusk sky between dark tree canopies" loading="lazy" decoding="async" width="1200" height="1600">
-        </figure>
-        <figure class="shot" data-reveal="zoom" data-reveal-delay="210">
-          <img src="assets/photos/dandelion.jpg" alt="Macro shot of a dandelion seed head with shallow depth of field" loading="lazy" decoding="async" width="1200" height="1600">
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== ACCOUNTS ============================== -->
-  <section class="section" id="accounts">
-    <div class="shell">
-      <header class="section__head">
-        <span class="eyebrow" data-reveal>My accounts</span>
-        <h2 class="section__title" data-reveal data-reveal-delay="80">Where the <em>edits live</em></h2>
-        <p class="section__lede" data-reveal data-reveal-delay="140">
-          Two pages, two purposes — from the main feed to personal moments and behind the scenes.
-        </p>
-      </header>
-
-      <div class="accounts__grid">
-
-        <article class="glass glass--tilt account" data-reveal data-tilt="6">
-          <div class="account__top">
-            <span class="account__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
-              </svg>
-            </span>
-            <div>
-              <div class="account__role">Main editing account</div>
-              <div class="account__handle">@nevin.xp</div>
-            </div>
-          </div>
-          <p class="account__desc">Main editing page featuring my latest creative edits.</p>
-          <a class="account__link" href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer">
-            Open on Instagram
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-          </a>
-        </article>
-
-        <article class="glass glass--tilt account" data-reveal data-reveal-delay="90" data-tilt="6">
-          <div class="account__top">
-            <span class="account__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
-              </svg>
-            </span>
-            <div>
-              <div class="account__role">Personal account</div>
-              <div class="account__handle">@nevin_manoj__</div>
-            </div>
-          </div>
-          <p class="account__desc">Life beyond the timeline — personal moments and behind the scenes.</p>
-          <a class="account__link" href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer">
-            Open on Instagram
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-          </a>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== CONTACT ============================== -->
-  <section class="section" id="contact">
-    <div class="shell">
-      <header class="section__head">
-        <span class="eyebrow" data-reveal>Contact</span>
-        <h2 class="section__title" data-reveal data-reveal-delay="80">Let's build your <em>next edit</em></h2>
-        <p class="section__lede" data-reveal data-reveal-delay="140">
-          Send the brief through the commission form, or reach me directly by email.
-        </p>
-      </header>
-
-      <div class="contact__grid">
-
-        <aside class="glass contact__card" data-reveal="left">
-          <div>
-            <div class="contact__label">Email</div>
-            <a class="contact__email" href="mailto:xpnevin@gmail.com">xpnevin@gmail.com</a>
-          </div>
-
-          <div>
-            <div class="contact__row">
-              <a class="btn btn--primary btn--sm" href="mailto:xpnevin@gmail.com" data-ripple>
-                Email me
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
-              </a>
-              <button class="btn btn--ghost btn--sm" id="copyEmail" type="button" data-ripple data-email="xpnevin@gmail.com">
-                Copy email
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5h10"/></svg>
-              </button>
-            </div>
-            <p class="copy-state" id="copyState" role="status" aria-live="polite"></p>
-          </div>
-
-          <div>
-            <div class="contact__label">Typical turnaround</div>
-            <ul class="factlist" style="margin-top:.9rem">
-              <li><span class="k">Short reel</span><span class="v">2–4 days</span></li>
-              <li><span class="k">Character edit</span><span class="v">3–6 days</span></li>
-              <li><span class="k">First reply</span><span class="v">Within 24 hours</span></li>
+        <aside class="manifesto__side" data-reveal data-reveal-delay="120">
+          <div class="side-card">
+            <div class="side-card__label">At a glance</div>
+            <ul class="facts">
+              <li><span>Role</span><span>Video editor &amp; motion designer</span></li>
+              <li><span>Focus</span><span>Cinematic &amp; character edits</span></li>
+              <li><span>Delivery</span><span>Vertical &amp; widescreen</span></li>
+              <li><span>Status</span><span class="facts__live"><i></i> Open for commissions</span></li>
             </ul>
+          </div>
+          <div class="side-card side-card--ghost">
+            <div class="side-card__label">Delivery</div>
+            <div class="side-stats">
+              <div><b>2–4</b> days <span>Short reel</span></div>
+              <div><b>3–6</b> days <span>Character edit</span></div>
+              <div><b>24h</b> <span>First reply</span></div>
+            </div>
           </div>
         </aside>
+      </div>
+    </div>
+  </section>
 
-        <div class="glass form-shell" data-reveal="right">
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform?embedded=true"
-            title="Commission request form"
-            loading="lazy">
-            Loading commission form…
-          </iframe>
-          <div class="form-shell__hint">
-            <span>Commission form</span>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform" target="_blank" rel="noopener noreferrer">Open in a new tab ↗</a>
+  <!-- ================= SELECTED WORK ================= -->
+  <section class="section section--work" id="work">
+    <div class="shell">
+      <header class="section-head" data-reveal>
+        <div class="section-head__left">
+          <div class="eyebrow-min">Selected work.</div>
+          <h2 class="section-title">Frames &amp;<br><em>motion</em></h2>
+          <p class="section-lede">A short sample of motion work and the photography I shoot and grade for reference plates.</p>
+        </div>
+        <div class="section-head__right">
+          <div class="section-head__card">
+            <span class="k">Nevin</span>
+            <span class="v">Motion Graphics Designer</span>
+            <span class="k" style="margin-top:.8rem">Short video</span>
+            <span class="v">Short video · Short video</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Motion reels — 2-up like Corrra embeds -->
+      <div class="reels" data-reveal data-reveal-delay="80">
+        <article class="reel-card">
+          <div class="reel-card__media">
+            <video muted loop playsinline preload="metadata" poster="assets/photos/london-eye.jpg" data-autoplay>
+              <source src="assets/videos/reel-01.mp4" type="video/mp4">
+            </video>
+            <button class="reel-card__play" type="button" aria-label="Play Motion Reel 01">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 6.5v11L18 12z"/></svg>
+            </button>
+            <span class="reel-card__badge">Short video · Cinematic · 0:15</span>
+          </div>
+          <div class="reel-card__meta">
+            <h3>Motion Reel 01</h3>
+            <span>Cinematic — beat-synced / colour</span>
+          </div>
+        </article>
+
+        <article class="reel-card">
+          <div class="reel-card__media">
+            <video muted loop playsinline preload="metadata" poster="assets/photos/violet-canopy.jpg" data-autoplay>
+              <source src="assets/videos/reel-02.mp4" type="video/mp4">
+            </video>
+            <button class="reel-card__play" type="button" aria-label="Play Motion Reel 02">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 6.5v11L18 12z"/></svg>
+            </button>
+            <span class="reel-card__badge">Short video · Character · 0:18</span>
+          </div>
+          <div class="reel-card__meta">
+            <h3>Motion Reel 02</h3>
+            <span>Character — typography / transitions</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- Photo gallery — 8 frames, rounded, soft beige borders -->
+      <div class="gallery" data-reveal data-reveal-delay="120">
+        <figure class="frame">
+          <img src="assets/photos/london-eye.jpg" alt="London Eye at golden hour" loading="lazy" decoding="async" width="600" height="800">
+          <figcaption>London Eye — golden hour</figcaption>
+        </figure>
+        <figure class="frame">
+          <img src="assets/photos/big-ben-night.jpg" alt="Big Ben at night" loading="lazy" decoding="async" width="600" height="800">
+          <figcaption>Big Ben — night amber</figcaption>
+        </figure>
+        <figure class="frame">
+          <img src="assets/photos/blossom-avenue.jpg" alt="Cherry blossom avenue" loading="lazy" decoding="async" width="600" height="800">
+          <figcaption>Blossom avenue — dusk</figcaption>
+        </figure>
+        <figure class="frame">
+          <img src="assets/photos/violet-canopy.jpg" alt="Violet canopy sky" loading="lazy" decoding="async" width="600" height="800">
+          <figcaption>Violet canopy — graded sky</figcaption>
+        </figure>
+        <figure class="frame">
+          <img src="assets/photos/blossom-branch.jpg" alt="Blossom branch close-up" loading="lazy" decoding="async" width="600" height="800">
+          <figcaption>Blossom branch — macro</figcaption>
+        </figure>
+        <figure class="frame">
+          <img src="assets/photos/park-sunset.jpg" alt="Park at sunset" loading="lazy" decoding="async" width="600" height="800">
+          <figcaption>Park sunset — open light</figcaption>
+        </figure>
+        <figure class="frame">
+          <img src="assets/photos/dusk-canopy.jpg" alt="Dusk canopy teal" loading="lazy" decoding="async" width="600" height="800">
+          <figcaption>Dusk canopy — teal grade</figcaption>
+        </figure>
+        <figure class="frame">
+          <img src="assets/photos/dandelion.jpg" alt="Dandelion macro" loading="lazy" decoding="async" width="600" height="800">
+          <figcaption>Dandelion — shallow DOF</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TOOLKIT ================= -->
+  <section class="section section--toolkit" id="toolkit">
+    <div class="shell">
+      <header class="section-head section-head--center" data-reveal>
+        <div class="eyebrow-min">Toolkit</div>
+        <h2 class="section-title section-title--sm">The tools behind the work, shown<br>only when they exist in the creator profile.</h2>
+      </header>
+
+      <div class="toolkit-grid" data-reveal data-reveal-delay="80">
+        <article class="tool-card tool-card--featured">
+          <div class="tool-card__top">
+            <div class="tool-icon tool-icon--capcut" aria-hidden="true">C</div>
+            <span class="tool-card__pct">100%</span>
+          </div>
+          <h3>CapCut</h3>
+          <p>Primary suite — full command of the workflow, beat-sync and transitions.</p>
+          <div class="tool-bar" role="img" aria-label="CapCut 100%"><span style="width:100%"></span></div>
+          <span class="tool-card__tag">Primary</span>
+        </article>
+
+        <article class="tool-card">
+          <div class="tool-card__top">
+            <div class="tool-icon tool-icon--ae" aria-hidden="true">Ae</div>
+            <span class="tool-card__pct">52%</span>
+          </div>
+          <h3>After Effects</h3>
+          <p>Compositing &amp; motion graphics — actively growing.</p>
+          <div class="tool-bar" role="img" aria-label="After Effects 52%"><span style="width:52%"></span></div>
+          <span class="tool-card__tag">Growing</span>
+        </article>
+
+        <article class="tool-card">
+          <div class="tool-card__top">
+            <div class="tool-icon tool-icon--am" aria-hidden="true">Am</div>
+            <span class="tool-card__pct">59%</span>
+          </div>
+          <h3>Alight Motion</h3>
+          <p>Keyframe effects &amp; shape animation on mobile.</p>
+          <div class="tool-bar" role="img" aria-label="Alight Motion 59%"><span style="width:59%"></span></div>
+          <span class="tool-card__tag">Mobile</span>
+        </article>
+
+        <article class="tool-card tool-card--soft">
+          <div class="tool-card__top">
+            <div class="tool-icon tool-icon--sound" aria-hidden="true">♪</div>
+            <span class="tool-card__pct">—</span>
+          </div>
+          <h3>Sound design</h3>
+          <p>Beat matching, SFX layering &amp; mix for reels of any length.</p>
+          <span class="tool-card__tag">Included</span>
+        </article>
+      </div>
+
+      <div class="toolkit-tags" data-reveal data-reveal-delay="120">
+        <span class="chip">Cinematic edits</span>
+        <span class="chip">Character edits</span>
+        <span class="chip">Colour grading</span>
+        <span class="chip">Beat sync</span>
+        <span class="chip">Motion graphics</span>
+        <span class="chip">Reels &amp; shorts</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ACCOUNTS — Where edits live ================= -->
+  <section class="section section--accounts" id="accounts">
+    <div class="shell">
+      <header class="section-head" data-reveal>
+        <div>
+          <div class="eyebrow-min">My accounts</div>
+          <h2 class="section-title">Where the <em>edits live</em></h2>
+          <p class="section-lede">Two pages, two purposes — main feed to personal moments and behind the scenes.</p>
+        </div>
+      </header>
+
+      <div class="accounts-grid" data-reveal data-reveal-delay="80">
+        <a class="account-card" href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer">
+          <div class="account-card__top">
+            <span class="account-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg>
+            </span>
+            <span class="account-card__arrow" aria-hidden="true">↗</span>
+          </div>
+          <div class="account-card__body">
+            <div class="account-card__role">Main editing account</div>
+            <div class="account-card__handle">@nevin.xp</div>
+            <p>Main editing page featuring my latest creative edits.</p>
+          </div>
+          <span class="account-card__link">Open on Instagram</span>
+        </a>
+
+        <a class="account-card" href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer">
+          <div class="account-card__top">
+            <span class="account-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg>
+            </span>
+            <span class="account-card__arrow" aria-hidden="true">↗</span>
+          </div>
+          <div class="account-card__body">
+            <div class="account-card__role">Personal account</div>
+            <div class="account-card__handle">@nevin_manoj__</div>
+            <p>Life beyond the timeline — personal moments and behind the scenes.</p>
+          </div>
+          <span class="account-card__link">Open on Instagram</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INDIA / CONNECT + CTA ================= -->
+  <section class="section section--connect" id="contact">
+    <div class="shell">
+      <div class="connect-grid">
+        <div class="connect__left" data-reveal>
+          <div class="eyebrow-min eyebrow-min--dark">India</div>
+          <h2 class="connect__title">Let's make<br>something<br><em>together.</em></h2>
+          <a class="btn-pill btn-pill--dark btn-pill--lg" href="mailto:xpnevin@gmail.com">
+            xpnevin@gmail.com
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+          </a>
+          <div class="connect__actions">
+            <a class="btn-pill btn-pill--light" href="mailto:xpnevin@gmail.com">Email me</a>
+            <button class="btn-pill btn-pill--light" id="copyEmail" type="button" data-email="xpnevin@gmail.com">Copy email</button>
+          </div>
+          <p class="copy-state" id="copyState" role="status" aria-live="polite"></p>
+
+          <div class="connect__meta">
+            <div><span>Connect</span><a href="tel:+0000000000">Get in touch ↗</a></div>
+            <div><span>Location</span>India → Worldwide (remote)</div>
+            <div><span>Reply</span>Within 24 hours</div>
           </div>
         </div>
 
+        <div class="connect__right" data-reveal data-reveal-delay="120">
+          <div class="form-card">
+            <div class="form-card__head">
+              <span>Commission form</span>
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform" target="_blank" rel="noopener noreferrer">Open in new tab ↗</a>
+            </div>
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform?embedded=true" title="Commission request form" loading="lazy"></iframe>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
 </main>
 
-<!-- ============================== FOOTER ============================== -->
 <footer class="footer">
-  <div class="footer__inner">
-    <div>
+  <div class="shell footer__inner">
+    <div class="footer__left">
       <div class="footer__brand">NEVIN</div>
-      <p class="footer__note">Creative video editor &amp; motion designer</p>
+      <p class="footer__sub">Creative video editor &amp; motion designer · India</p>
     </div>
-
-    <div class="footer__socials">
-      <a href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram — @nevin.xp">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-      </a>
-      <a href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram — @nevin_manoj__">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-      </a>
-      <a href="mailto:xpnevin@gmail.com" aria-label="Email Nevin">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
-      </a>
+    <div class="footer__right">
+      <div class="footer__socials">
+        <a href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram @nevin.xp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram @nevin_manoj__">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="mailto:xpnevin@gmail.com" aria-label="Email Nevin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
+        </a>
+      </div>
+      <p class="footer__note">Designed with <span class="heart">♥</span> by Nevin · © 2025</p>
     </div>
-
-    <p class="footer__note">Designed with <span class="heart">❤</span> by Nevin</p>
+  </div>
+  <div class="footer__bar">
+    <div class="shell footer__bar-inner">
+      <span>Nikhil Gite style · Rebuilt for Nevin on Corrra</span>
+      <span>Built frame by frame around rhythm, colour and motion.</span>
+    </div>
   </div>
 </footer>
 
-<button class="to-top" id="toTop" type="button" aria-label="Back to top" data-ripple>
-  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+<button class="to-top" id="toTop" type="button" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg>
 </button>
 
 <script src="assets/js/main.js" defer></script>
