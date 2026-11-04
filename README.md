@@ -1,6 +1,6 @@
-# NEVIN — Creative Video Editor & Motion Designer
+# NEVIN — Video Editing, Recording & Photography
 
-Premium single-page portfolio for Nevin. Static HTML, CSS and JavaScript — no build step, no dependencies, no framework. Deploys to GitHub Pages as-is.
+Single-page portfolio for Nevin’s video editing, recording and photography services. Static HTML, CSS and JavaScript — no build step, no dependencies, no framework. Deploys to GitHub Pages as-is.
 
 ## Project contents
 
@@ -25,7 +25,7 @@ Black and dark-grey glassmorphism with electric blue and purple neon glow, over 
 
 ## Features
 
-Animated loading screen · mouse spotlight · glassmorphism UI · aurora animated background · floating particles (canvas) · inertial smooth scrolling · animated typing text · hover glow cards · animated skill rings · scroll progress bar · custom cursor with trail · neon buttons · magnetic hover · ripple clicks · scroll reveal · 3D tilt cards · gradient borders · responsive layout · SEO metadata and JSON-LD · copy-email button · back-to-top · animated footer.
+Animated loading screen · mouse spotlight · glassmorphism UI · aurora animated background · floating particles (canvas) · inertial smooth scrolling · animated typing text · hover glow cards · service cards · scroll progress bar · custom cursor with trail · neon buttons · magnetic hover · ripple clicks · scroll reveal · 3D tilt cards · gradient borders · responsive layout · SEO metadata and JSON-LD · copy-email button · back-to-top · animated footer.
 
 ### Implementation notes
 
@@ -37,10 +37,10 @@ Animated loading screen · mouse spotlight · glassmorphism UI · aurora animate
 ## Editing
 
 - **Text, links, section copy** — edit `index.html` directly.
-- **Skill percentages** — change the `data-ring="52"` attribute on a `.ring`; the label and arc both follow automatically.
 - **Typing headline** — edit the `data-words='[...]'` JSON array on `#typed`.
 - **Colours** — edit the custom properties in the `:root` block at the top of `assets/css/style.css`.
-- **Gallery plates** — the eight work tiles are pure CSS. To recolour one, edit its `.shot--N::before` conic-gradient in `assets/css/style.css`. No image or video files are used anywhere on the page.
+- **Service cards** — edit the three cards in the Services section of `index.html`.
+- **Gallery plates** — the six work tiles are pure CSS. To recolour one, edit its `.shot--N::before` conic-gradient in `assets/css/style.css`. No image or video files are used anywhere on the page.
 
 ## Deployment
 

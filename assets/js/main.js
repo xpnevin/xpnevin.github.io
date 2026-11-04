@@ -461,87 +461,6 @@
     onScroll();
   }
 
-  /* ---------------------------------------------------- scroll countdown */
-  function countdown() {
-    var root = $("#countdown");
-    if (!root) return;
-    var target = new Date(root.getAttribute("data-target") || "2026-12-01T00:00:00Z").getTime();
-    var parts = {
-      days:  $("[data-cd='days']", root),
-      hours: $("[data-cd='hours']", root),
-      mins:  $("[data-cd='mins']", root),
-      secs:  $("[data-cd='secs']", root)
-    };
-    var label = $("#countdownLabel");
-
-    function pad(n) { return n < 10 ? "0" + n : String(n); }
-
-    function set(el, val) {
-      if (!el || el.textContent === val) return;
-      el.textContent = val;
-      el.classList.remove("tick");
-      void el.offsetWidth;
-      el.classList.add("tick");
-    }
-
-    function tick() {
-      var left = target - Date.now();
-      if (left <= 0) {
-        set(parts.days, "00"); set(parts.hours, "00");
-        set(parts.mins, "00"); set(parts.secs, "00");
-        if (label) label.textContent = "It's here";
-        return;
-      }
-      set(parts.days,  pad(Math.floor(left / 864e5)));
-      set(parts.hours, pad(Math.floor(left % 864e5 / 36e5)));
-      set(parts.mins,  pad(Math.floor(left % 36e5 / 6e4)));
-      set(parts.secs,  pad(Math.floor(left % 6e4 / 1000)));
-    }
-    tick();
-    setInterval(tick, 1000);
-  }
-
-  /* ------------------------------------------------------------ skill rings */
-  function rings() {
-    var list = $$("[data-ring]");
-    if (!list.length) return;
-
-    list.forEach(function (ring) {
-      var bar = $(".ring__bar", ring);
-      var out = $(".ring__value b", ring);
-      var pct = clamp(parseFloat(ring.getAttribute("data-ring")) || 0, 0, 100);
-      var circle = $("circle.ring__bar", ring);
-      var r = circle ? parseFloat(circle.getAttribute("r")) : 44;
-      var circ = 2 * Math.PI * r;
-
-      ring.style.setProperty("--circ", circ.toFixed(2));
-      if (bar) bar.style.strokeDashoffset = circ.toFixed(2);
-
-      function run() {
-        if (bar) bar.style.strokeDashoffset = (circ * (1 - pct / 100)).toFixed(2);
-        if (!out) return;
-        if (reduced) { out.textContent = Math.round(pct); return; }
-        var start = performance.now(), dur = 1700;
-        (function tick(now) {
-          var t = clamp((now - start) / dur, 0, 1);
-          var eased = 1 - Math.pow(1 - t, 3);
-          out.textContent = Math.round(pct * eased);
-          if (t < 1) raf(tick);
-        })(start);
-      }
-
-      if (reduced || !("IntersectionObserver" in window)) { run(); return; }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (!en.isIntersecting) return;
-          run();
-          io.disconnect();
-        });
-      }, { threshold: 0.4 });
-      io.observe(ring);
-    });
-  }
-
   /* -------------------------------------------------------------- typing */
   function typing() {
     var el = $("#typed");
@@ -684,7 +603,7 @@
 
   /* ---------------------------------------------------------------- boot */
   function boot() {
-    [loader, progress, nav, splitText, reveal, scrollFx, countdown, rings, typing, tilt, ripple,
+    [loader, progress, nav, splitText, reveal, scrollFx, typing, tilt, ripple,
      copyEmail, toTop, timecodes, particles, spotlight, cursor, smoothScroll]
       .forEach(function (mod) {
         try { mod(); } catch (err) {
