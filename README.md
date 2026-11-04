@@ -8,8 +8,6 @@ Premium single-page portfolio for Nevin. Static HTML, CSS and JavaScript — no 
 index.html              # The whole page
 assets/css/style.css    # Theme, glassmorphism, layout, responsive rules
 assets/js/main.js       # All interactions (dependency-free)
-assets/photos/          # Photography gallery images
-assets/videos/          # Portfolio motion reels
 .github/workflows/      # GitHub Pages deployment
 ```
 
@@ -42,7 +40,7 @@ Animated loading screen · mouse spotlight · glassmorphism UI · aurora animate
 - **Skill percentages** — change the `data-ring="52"` attribute on a `.ring`; the label and arc both follow automatically.
 - **Typing headline** — edit the `data-words='[...]'` JSON array on `#typed`.
 - **Colours** — edit the custom properties in the `:root` block at the top of `assets/css/style.css`.
-- **Photos / videos** — drop replacements into `assets/photos` or `assets/videos` and update the matching `src` in `index.html`.
+- **Gallery plates** — the eight work tiles are pure CSS. To recolour one, edit its `.shot--N::before` conic-gradient in `assets/css/style.css`. No image or video files are used anywhere on the page.
 
 ## Deployment
 

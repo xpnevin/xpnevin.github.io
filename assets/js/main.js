@@ -544,24 +544,26 @@
     });
   }
 
-  /* ------------------------------------------------ reels: play in view */
-  function reels() {
-    var vids = $$("video[data-autoplay]");
-    if (!vids.length || !("IntersectionObserver" in window)) return;
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        var v = en.target;
-        if (en.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
-        else v.pause();
-      });
-    }, { threshold: 0.35 });
-    vids.forEach(function (v) { io.observe(v); });
+  /* ------------------------------------- frame timecode: render-preview HUD */
+  function timecodes() {
+    var els = $$(".frame__time");
+    if (!els.length) return;
+    var t0 = performance.now();
+    (function tick() {
+      var ms = performance.now() - t0;
+      var f = Math.floor(ms / 1000 * 24) % 24;
+      var s = Math.floor(ms / 1000) % 60;
+      var m = Math.floor(ms / 60000) % 60;
+      var stamp = "00:" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s + ":" + (f < 10 ? "0" : "") + f;
+      for (var i = 0; i < els.length; i++) els[i].textContent = stamp;
+      requestAnimationFrame(tick);
+    })();
   }
 
   /* ---------------------------------------------------------------- boot */
   function boot() {
     [loader, progress, nav, reveal, rings, typing, tilt, magnetic, ripple,
-     copyEmail, toTop, reels, particles, spotlight, cursor, smoothScroll]
+     copyEmail, toTop, timecodes, particles, spotlight, cursor, smoothScroll]
       .forEach(function (mod) {
         try { mod(); } catch (err) {
           if (window.console && console.warn) console.warn("[nevin] " + mod.name + " failed:", err);
