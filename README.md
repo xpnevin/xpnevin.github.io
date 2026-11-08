@@ -1,50 +1,92 @@
 # NEVIN — Video Editing, Recording & Photography
 
-Single-page portfolio for Nevin’s video editing, recording and photography services. Static HTML, CSS and JavaScript — no build step, no dependencies, no framework. Deploys to GitHub Pages as-is.
+Single-page portfolio for Nevin's video editing, recording and photography
+services. Static HTML, CSS and JavaScript — no build step, no dependencies, no
+framework. Deploys to GitHub Pages as-is.
 
 ## Project contents
 
 ```text
 index.html              # The whole page
-assets/css/style.css    # Theme, glassmorphism, layout, responsive rules
+assets/css/style.css    # Theme, layout, responsive rules
 assets/js/main.js       # All interactions (dependency-free)
+assets/img/og.jpg       # 1200×630 social share card
+robots.txt, sitemap.xml # Crawler hints
 .github/workflows/      # GitHub Pages deployment
 ```
 
 ## Design
 
-Black and dark-grey glassmorphism with electric blue and purple neon glow, over an animated aurora gradient background.
+The page is built like an editing application: numbered sections, monospace
+technical labels, a timeline panel in the hero, plate covers for the work grid
+and a red playhead as the only warm colour on screen.
 
 | Token | Value |
 | --- | --- |
-| Background | `#05060a` |
-| Electric blue | `#3b82f6` → `#22d3ee` |
-| Purple | `#a855f7` → `#7c3aed` |
-| Display font | Space Grotesk |
-| Body font | Poppins |
+| Background | `#08090b` |
+| Panel | `#0e1014` |
+| Text / dim / faint | `#f4f5f7` · `#a9abb4` · `#8a8c95` |
+| Accent | `#4f8cff` → `#8fb8ff` |
+| Record red | `#ff4d3d` (playhead, REC dot only) |
+| Type | Inter (UI + display), JetBrains Mono (technical labels) |
+
+## Sections
+
+Hero with live timecode and an animated sequence panel · services ticker ·
+at-a-glance counters · 01 Services · 02 Work (filterable) · 03 Accounts ·
+04 About · 05 Process · 06 Contact · footer.
 
 ## Features
 
-Animated loading screen · mouse spotlight · glassmorphism UI · aurora animated background · floating particles (canvas) · inertial smooth scrolling · animated typing text · hover glow cards · service cards · scroll progress bar · custom cursor with trail · neon buttons · magnetic hover · ripple clicks · scroll reveal · 3D tilt cards · gradient borders · responsive layout · SEO metadata and JSON-LD · copy-email button · back-to-top · animated footer.
+Numbered section headers · timeline/sequence panel · animated playhead ·
+scrolling ticker · count-up stats · filterable work grid · hover light sweep on
+cards · magnetic primary button · ripple clicks · copy-email button · scroll
+progress bar · active nav link · scroll reveal with stagger · back-to-top ·
+responsive layout · SEO metadata, Open Graph image and JSON-LD.
 
-### Implementation notes
+## Implementation notes
 
-- **No third-party JS.** GSAP, Lenis, ScrollReveal, Vanilla Tilt and Typed.js were each replaced with a small purpose-built module. The page loads no external scripts, so there is no render-blocking CDN request and nothing to break if a CDN goes down. Only Google Fonts is fetched externally.
-- **Every module is isolated.** `main.js` boots each feature in its own `try/catch`; one failure cannot take down the rest of the page.
-- **The loader can never trap a visitor** — it force-completes after 3.6 s even if an asset stalls.
-- **Graceful degradation.** All content is in the HTML and readable without JavaScript. Cursor, spotlight, trail and inertial scroll activate only for fine pointers, and `prefers-reduced-motion` disables animation while revealing all content.
+- **No third-party JS.** Every effect is a small purpose-built module. The page
+  loads no external scripts; only Google Fonts is fetched externally.
+- **Nothing is hidden behind JavaScript.** The `<html>` element only gets the
+  `.js` class from a one-line inline script, and the reveal animation, mobile
+  menu, filter chips and copy button are all gated on that class. With JS
+  disabled the page is fully readable, the nav stays inline and every section is
+  visible — there is no loader to get stuck behind.
+- **No scroll hijacking.** Native scrolling and `scroll-behavior: smooth` are
+  left alone, so nested scrollers, keyboards, trackpads and the scrollbar all
+  behave normally.
+- **One scroll listener, one rAF per frame.** The progress bar, sticky header
+  and back-to-top button share a single throttled pipeline; reveals and counters
+  use `IntersectionObserver`; the only timer is a 4 Hz clock that pauses when
+  the tab is hidden.
+- **Cheap by default.** No canvas, no particles, no custom cursor, no large
+  blurred layers. The background is a static dot grid plus two radial glows, and
+  plate art is pure CSS — there are no photographic assets to download.
+- **Motion is optional.** `prefers-reduced-motion` stops the ticker, the
+  playhead, the counters and all reveals, and shows every element immediately.
+- **Accessibility.** Skip link to a focusable `<main>`, visible focus rings,
+  AA-contrast text tokens, `aria-pressed` filter chips, `aria-expanded` menu with
+  Escape and focus wrap, decorative art hidden from screen readers.
 
 ## Editing
 
 - **Text, links, section copy** — edit `index.html` directly.
-- **Typing headline** — edit the `data-words='[...]'` JSON array on `#typed`.
-- **Colours** — edit the custom properties in the `:root` block at the top of `assets/css/style.css`.
-- **Service cards** — edit the three cards in the Services section of `index.html`.
-- **Gallery plates** — the six work tiles are pure CSS. To recolour one, edit its `.shot--N::before` conic-gradient in `assets/css/style.css`. No image or video files are used anywhere on the page.
+- **Colours and spacing** — edit the custom properties in `:root` at the top of
+  `assets/css/style.css`.
+- **Work tiles** — each `<article class="tile" data-cat="…">` sets its filter
+  category (`edit`, `record`, `photo`). Plate colours live in `.plate--1` …
+  `.plate--6`.
+- **Service cards** — the three `<article class="card">` blocks in the Services
+  section.
+- **Social share card** — replace `assets/img/og.jpg` (1200×630).
+- **Ticker words** — the `.ticker__item` spans; keep the list doubled so the
+  loop stays seamless.
 
 ## Deployment
 
-`.github/workflows/static.yml` publishes the repository root to GitHub Pages on every push to `main`. The live site is <https://xpnevin.github.io/>.
+`.github/workflows/static.yml` publishes the repository root to GitHub Pages on
+every push to `main`. The live site is <https://xpnevin.github.io/>.
 
 ## Links
 
