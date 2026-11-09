@@ -1,7 +1,7 @@
 /* ==========================================================================
    NEVIN — portfolio
    Editor-interface inspired: numbered sections, mono technical labels,
-   timeline panel, plate art. Black canvas, one blue accent, one red signal.
+   timeline panel. Black canvas, one blue accent, one red signal.
 
    1.  Tokens
    2.  Reset & base
@@ -12,8 +12,8 @@
    7.  Stats
    8.  Section head
    9.  Services
-   10. Work + filters
-   11. Accounts
+   10. Work
+   11. Feed cards
    12. About
    13. Process
    14. Contact
@@ -818,148 +818,43 @@ body.nav-open .burger span:nth-child(2) { transform: translateY(-3.75px) rotate(
 }
 .card__link:hover { gap: .7rem; color: #dfe9ff; }
 
-/* 10. Work ----------------------------------------------------------------- */
-.filters {
-  display: none;
-  flex-wrap: wrap;
-  gap: .4rem;
-  margin-bottom: clamp(1.1rem, 2.4vw, 1.6rem);
-}
-.js .filters { display: flex; }
-
-.filter {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .48rem .85rem;
-  border: 1px solid var(--line);
-  border-radius: var(--r-pill);
-  font-size: .8rem;
-  color: var(--dim);
-  transition: color .25s, border-color .25s, background-color .25s;
-}
-.filter:hover { color: var(--text); border-color: rgba(255, 255, 255, .24); }
-.filter.is-on {
-  background: var(--text);
-  border-color: var(--text);
-  color: #08090b;
-}
-.filter__n { font-size: .62rem; opacity: .62; }
-
-.work {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(.7rem, 1.5vw, 1.1rem);
-}
-.tile[hidden] { display: none; }
-.tile__link { display: block; }
-
-.plate {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  overflow: hidden;
-  background: #0b0d11;
-  transition: border-color .35s var(--ease-soft);
-}
-.plate::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  transition: transform .6s var(--ease);
-}
-.plate::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, .035) 0 1px, transparent 1px 3px),
-    radial-gradient(120% 100% at 50% 50%, transparent 55%, rgba(0, 0, 0, .45) 100%);
-  pointer-events: none;
-}
-.tile:hover .plate { border-color: rgba(143, 184, 255, .34); }
-.tile:hover .plate::before { transform: scale(1.05); }
-
-.plate__tag,
-.plate__idx,
-.plate__meta {
-  position: absolute;
-  z-index: 2;
-  padding: .22rem .45rem;
-  border: 1px solid rgba(255, 255, 255, .12);
-  border-radius: 4px;
-  background: rgba(8, 9, 11, .72);
-  font-size: .54rem;
-  letter-spacing: .1em;
-  color: #e8eaef;
-}
-.plate__tag { top: .6rem; left: .6rem; }
-.plate__idx { top: .6rem; right: .6rem; color: var(--dim); }
-.plate__meta { bottom: .6rem; right: .6rem; color: var(--dim); }
-
-.plate--1::before {
-  background:
-    radial-gradient(58% 64% at 22% 24%, rgba(79, 140, 255, .55), transparent 70%),
-    radial-gradient(52% 56% at 82% 74%, rgba(143, 184, 255, .25), transparent 72%),
-    conic-gradient(from 210deg at 50% 50%, #0a1120, #121b2c, #090d15, #0a1120);
-}
-.plate--2::before {
-  background:
-    radial-gradient(56% 62% at 70% 26%, rgba(64, 224, 208, .42), transparent 70%),
-    radial-gradient(52% 60% at 24% 76%, rgba(79, 140, 255, .38), transparent 72%),
-    conic-gradient(from 30deg at 40% 60%, #08131a, #0d2026, #070f14, #08131a);
-}
-.plate--3::before {
-  background:
-    radial-gradient(60% 66% at 30% 70%, rgba(168, 120, 255, .45), transparent 70%),
-    radial-gradient(48% 54% at 78% 22%, rgba(79, 140, 255, .32), transparent 72%),
-    conic-gradient(from 120deg at 60% 40%, #0f0a1d, #171029, #0b0813, #0f0a1d);
-}
-.plate--4::before {
-  background:
-    radial-gradient(58% 64% at 20% 30%, rgba(255, 176, 92, .42), transparent 70%),
-    radial-gradient(50% 58% at 80% 76%, rgba(255, 110, 80, .26), transparent 72%),
-    conic-gradient(from 260deg at 50% 50%, #1a1008, #241608, #140c07, #1a1008);
-}
-.plate--5::before {
-  background:
-    radial-gradient(58% 62% at 68% 30%, rgba(255, 138, 170, .38), transparent 70%),
-    radial-gradient(52% 58% at 26% 72%, rgba(143, 184, 255, .22), transparent 72%),
-    conic-gradient(from 340deg at 50% 50%, #190d12, #241119, #120a0e, #190d12);
-}
-.plate--6::before {
-  background:
-    radial-gradient(60% 64% at 40% 24%, rgba(200, 208, 224, .28), transparent 70%),
-    radial-gradient(54% 60% at 76% 78%, rgba(79, 140, 255, .22), transparent 72%),
-    conic-gradient(from 60deg at 50% 50%, #101216, #191c22, #0c0e12, #101216);
+/* 10. Work ---------------------------------------------------------------- */
+/* The work itself is on Instagram; this section is the two feed cards below. */
+.accounts__note {
+  margin-top: clamp(1rem, 2vw, 1.4rem);
+  font-size: .6rem;
+  color: var(--faint);
 }
 
-.tile__meta {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: .75rem;
-  margin-top: .65rem;
-  padding-inline: .1rem;
-}
-.tile__meta h3 { font-size: .98rem; font-weight: 500; letter-spacing: -.02em; }
-.tile__meta .mono { font-size: .6rem; color: var(--faint); }
-
-/* 11. Accounts ------------------------------------------------------------- */
+/* 11. Feed cards ----------------------------------------------------------- */
 .accounts {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(.7rem, 1.5vw, 1.1rem);
 }
 .account {
+  position: relative;
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
   background: linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .01));
   transition: border-color .35s var(--ease-soft);
 }
-.account:hover { border-color: rgba(143, 184, 255, .3); }
+/* Same pointer-lit glow as the service cards, so the two rows feel related. */
+.account::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(280px 200px at var(--mx, 50%) var(--my, 0%), rgba(79, 140, 255, .15), transparent 70%);
+  opacity: 0;
+  transition: opacity .35s var(--ease-soft);
+  pointer-events: none;
+}
+.account:hover { border-color: rgba(143, 184, 255, .32); }
+.account:hover::before { opacity: 1; }
+.account:focus-within { border-color: rgba(143, 184, 255, .32); }
 .account__in {
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -1001,6 +896,13 @@ body.nav-open .burger span:nth-child(2) { transform: translateY(-3.75px) rotate(
 }
 .account__link:hover { gap: .7rem; color: #dfe9ff; }
 .account__link svg { width: 15px; height: 15px; }
+/* Stretched hit area: the whole card is the link, without nesting interactive bits. */
+.account__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
 
 /* 12. About ---------------------------------------------------------------- */
 .about {
@@ -1252,7 +1154,6 @@ body.nav-open .burger span:nth-child(2) { transform: translateY(-3.75px) rotate(
   .head__lede { max-width: 52ch; }
   .services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .services .card:last-child { grid-column: 1 / -1; }
-  .work { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .about { grid-template-columns: minmax(0, 1fr); }
   .about__aside { position: static; }
   .about__body { max-width: 62ch; }
@@ -1306,17 +1207,7 @@ body.nav-open .burger span:nth-child(2) { transform: translateY(-3.75px) rotate(
 
   .services { grid-template-columns: minmax(0, 1fr); }
   .services .card:last-child { grid-column: auto; }
-  .work { grid-template-columns: minmax(0, 1fr); }
   .accounts { grid-template-columns: minmax(0, 1fr); }
-
-  .filters {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: .35rem;
-    scrollbar-width: none;
-  }
-  .filters::-webkit-scrollbar { display: none; }
-  .filter { flex: 0 0 auto; }
 
   .brand__rec { display: none; }
   .btn--xs { display: none; }
@@ -1349,7 +1240,7 @@ body.nav-open .burger span:nth-child(2) { transform: translateY(-3.75px) rotate(
 @media print {
   body { background: #fff; color: #000; }
   body::before,
-  .topbar, .ticker, .progress, .totop, .filters, .seq__playhead { display: none !important; }
+  .topbar, .ticker, .progress, .totop, .seq__playhead { display: none !important; }
   .section { border-top-color: #ddd; }
   a { color: #000; text-decoration: underline; }
 }
