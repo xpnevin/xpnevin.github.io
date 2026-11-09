@@ -74,7 +74,8 @@ body {
   font-size: clamp(.96rem, .93rem + .18vw, 1.03rem);
   line-height: 1.65;
   letter-spacing: -.006em;
-  overflow-x: hidden;
+  overflow-x: hidden;   /* fallback */
+  overflow-x: clip;     /* preferred: no scroll container, sticky keeps working */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -576,7 +577,19 @@ body.nav-open .burger span:nth-child(2) { transform: translateY(-3.75px) rotate(
   color: #cfe0ff;
 }
 
+/* Full-width transparent layer whose line sits on its left edge: translating
+   the whole layer keeps the sweep on the compositor instead of animating
+   `left`, which would lay the timeline out on every frame. */
 .seq__playhead {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 100%;
+  z-index: 2;
+  pointer-events: none;
+  animation: playhead 18s linear infinite;
+}
+.seq__playhead::before {
+  content: "";
   position: absolute;
   top: -3px;
   bottom: -3px;
@@ -584,10 +597,8 @@ body.nav-open .burger span:nth-child(2) { transform: translateY(-3.75px) rotate(
   width: 1px;
   background: var(--rec);
   box-shadow: 0 0 12px rgba(255, 77, 61, .75);
-  z-index: 2;
-  animation: playhead 18s linear infinite;
 }
-.seq__playhead::before {
+.seq__playhead::after {
   content: "";
   position: absolute;
   top: -3px;
@@ -598,10 +609,10 @@ body.nav-open .burger span:nth-child(2) { transform: translateY(-3.75px) rotate(
   background: var(--rec);
 }
 @keyframes playhead {
-  0%   { left: 0;   opacity: 0; }
+  0%   { transform: translate3d(0, 0, 0);    opacity: 0; }
   5%   { opacity: 1; }
   95%  { opacity: 1; }
-  100% { left: 100%; opacity: 0; }
+  100% { transform: translate3d(100%, 0, 0); opacity: 0; }
 }
 .seq__bot { margin-top: .7rem; }
 .seq__bot-dim { color: var(--faint); }
@@ -1208,10 +1219,12 @@ body.nav-open .burger span:nth-child(2) { transform: translateY(-3.75px) rotate(
   opacity: 0;
   transform: translateY(10px);
   pointer-events: none;
-  transition: opacity .3s var(--ease-soft), transform .3s var(--ease), border-color .3s;
+  visibility: hidden;
+  transition: opacity .3s var(--ease-soft), transform .3s var(--ease),
+              border-color .3s, visibility .3s;
 }
 .js .totop { display: grid; }
-.js .totop.is-shown { opacity: 1; transform: none; pointer-events: auto; }
+.js .totop.is-shown { opacity: 1; transform: none; pointer-events: auto; visibility: visible; }
 .totop:hover { border-color: rgba(255, 255, 255, .28); }
 
 /* 16. Reveal & motion ------------------------------------------------------ */
@@ -1329,7 +1342,7 @@ body.nav-open .burger span:nth-child(2) { transform: translateY(-3.75px) rotate(
   .rise { animation: none; opacity: 1; transform: none; }
   .js [data-reveal] { opacity: 1 !important; transform: none !important; }
   .ticker__track { animation: none; }
-  .seq__playhead { animation: none; left: 38%; opacity: .8; }
+  .seq__playhead { animation: none; transform: translate3d(38%, 0, 0); opacity: .8; }
   .brand__rec i, .live { animation: none; }
 }
 
