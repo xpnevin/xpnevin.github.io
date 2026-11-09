@@ -3,30 +3,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NEVIN — Video Editing, Recording &amp; Photography</title>
+<title>NEVIN — Video Editor, Videographer &amp; Photographer</title>
 
-<meta name="description" content="Nevin offers video editing, video recording and photography services, turning your moments into polished videos and photographs.">
+<meta name="description" content="Nevin offers video editing, video recording and photography — one person, from the first frame to the finished file. Open for commissions.">
 <meta name="author" content="Nevin Manoj">
-<meta name="keywords" content="video editing, video recording, photography, video editor, videographer, photographer, photo editing">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#08090b">
 <link rel="canonical" href="https://xpnevin.github.io/">
 
 <!-- Open Graph / Twitter -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NEVIN">
-<meta property="og:title" content="NEVIN — Video Editing, Recording &amp; Photography">
-<meta property="og:description" content="Video editing, recording and photography — your moments, thoughtfully captured and polished.">
+<meta property="og:title" content="NEVIN — Video Editor, Videographer &amp; Photographer">
+<meta property="og:description" content="Video editing, recording and photography — one person, from the first frame to the finished file.">
 <meta property="og:url" content="https://xpnevin.github.io/">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NEVIN — Video Editing, Recording &amp; Photography">
-<meta name="twitter:description" content="Video editing, recording and photography — your moments, thoughtfully captured and polished.">
+<meta property="og:image" content="https://xpnevin.github.io/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NEVIN — video editing, recording and photography">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NEVIN — Video Editor, Videographer &amp; Photographer">
+<meta name="twitter:description" content="Video editing, recording and photography — one person, from the first frame to the finished file.">
+<meta name="twitter:image" content="https://xpnevin.github.io/assets/img/og.jpg">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232997ff'/%3E%3Cstop offset='1' stop-color='%230a62d0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23000000'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='-apple-system,Segoe UI,Helvetica,sans-serif' font-size='34' font-weight='700' fill='url(%23g)'%3EN%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308090b'/%3E%3Crect x='.5' y='.5' width='63' height='63' rx='13.5' fill='none' stroke='%23ffffff' stroke-opacity='.18'/%3E%3Cpath d='M20 45V19h3.6l16.8 21V19H44v26h-3.6L23.6 24v21z' fill='%234f8cff'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
+
+<!-- Marks the document as JS-capable so CSS can opt into enhanced behaviour.
+     Without JS nothing is hidden, the nav stays inline and the page is fully readable. -->
+<script>document.documentElement.classList.add("js");</script>
 
 <script type="application/ld+json">
 {
@@ -37,7 +45,8 @@
   "jobTitle": "Video Editor, Videographer & Photographer",
   "email": "mailto:xpnevin@gmail.com",
   "url": "https://xpnevin.github.io/",
-  "knowsAbout": ["Video Editing", "Video Recording", "Photography", "Colour Correction", "Photo Editing"],
+  "image": "https://xpnevin.github.io/assets/img/og.jpg",
+  "knowsAbout": ["Video Editing", "Video Recording", "Photography", "Colour Correction", "Photo Editing", "Sound Balancing"],
   "sameAs": [
     "https://www.instagram.com/nevin.xp",
     "https://www.instagram.com/nevin_manoj__"
@@ -46,346 +55,516 @@
 </script>
 </head>
 
-<body class="is-loading">
+<body>
 
-<!-- Loading animation -->
-<div class="loader" id="loader" role="status" aria-live="polite">
-  <div class="loader__mark">NEVIN</div>
-  <div class="loader__track"><div class="loader__bar"></div></div>
-  <div class="loader__pct">000%</div>
-  <span class="sr-only">Loading portfolio</span>
-</div>
+<a class="skip" href="#main">Skip to content</a>
 
-<!-- 3D gradient / aurora background + floating particles -->
-<div class="bg" aria-hidden="true">
-  <div class="bg__aurora bg__aurora--1"></div>
-  <div class="bg__aurora bg__aurora--2"></div>
-  <div class="bg__aurora bg__aurora--3"></div>
-  <div class="bg__grid"></div>
-  <canvas id="particles"></canvas>
-  <div class="bg__noise"></div>
-</div>
+<div class="progress" id="progress" aria-hidden="true"><span class="progress__fill" id="progressFill"></span></div>
 
-<!-- Mouse-following light + custom cursor -->
-<div class="spotlight" id="spotlight" aria-hidden="true"></div>
-<canvas class="cursor-trail" id="cursorTrail" aria-hidden="true"></canvas>
-<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
-<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<header class="topbar" id="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="#top" aria-label="NEVIN — back to top">
+      <span class="brand__mark" aria-hidden="true">N</span>
+      <span class="brand__name">NEVIN</span>
+      <span class="brand__rec" aria-hidden="true"><i></i>REC</span>
+    </a>
 
-<!-- Scroll progress -->
-<div class="progress" id="progress" aria-hidden="true"></div>
-
-<a class="skip-link" href="#hero">Skip to content</a>
-
-<!-- Navigation -->
-<header class="nav" id="nav">
-  <div class="nav__inner">
-    <a class="nav__logo" href="#hero" aria-label="NEVIN — home">NEVIN</a>
-
-    <nav class="nav__links" id="navLinks" aria-label="Primary">
-      <a class="nav__link" href="#about">About</a>
-      <a class="nav__link" href="#skills">Services</a>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a class="nav__link" href="#services">Services</a>
       <a class="nav__link" href="#work">Work</a>
       <a class="nav__link" href="#accounts">Accounts</a>
+      <a class="nav__link" href="#about">About</a>
       <a class="nav__link" href="#contact">Contact</a>
     </nav>
 
-    <button class="nav__toggle" id="navToggle" type="button"
-            aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="topbar__end">
+      <span class="tc mono" id="tcBar" aria-hidden="true">00:00:00:00</span>
+      <a class="btn btn--primary btn--xs" href="#contact" data-ripple>Start a project</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+        <span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
-<main id="main">
+<main id="main" tabindex="-1">
 
   <!-- ============================== HERO ============================== -->
-  <section class="hero" id="hero">
-    <div class="hero__inner">
-      <h1 class="hero__name" data-reveal data-reveal-delay="80"><span class="hero__word">NEVIN</span></h1>
-
-      <p class="hero__role" id="typed" data-reveal data-reveal-delay="160"
-         data-words='["Video Editing","Video Recording","Photography"]'>
-        <span class="typed-text">Video Editing</span><span class="typed-caret" aria-hidden="true"></span>
-      </p>
-
-      <p class="hero__lede" data-reveal data-reveal-delay="240">
-        Video editing, recording and photography — capturing your moments
-        and shaping them into stories worth remembering.
-      </p>
-
-      <div class="hero__actions" data-reveal data-reveal-delay="320">
-        <a class="btn btn--primary" href="#work" data-ripple data-magnetic="0.3">
-          View Portfolio
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <a class="btn btn--ghost" href="#contact" data-ripple data-magnetic="0.3">
-          Hire Me
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-        </a>
-      </div>
-
-    </div>
-
-  </section>
-
-  <!-- ============================== ABOUT ============================== -->
-  <section class="section" id="about">
+  <section class="hero" id="top">
     <div class="shell">
-      <header class="section__head">
-        <span class="eyebrow" data-reveal>About</span>
-        <h2 class="section__title" data-reveal data-reveal-delay="80" data-split>
-          Capturing moments and <em>shaping your story</em>
-        </h2>
-      </header>
+      <p class="metalist rise rise--1">
+        <span class="metalist__dot" aria-hidden="true"></span>
+        <span class="mono">Open for commissions</span>
+        <span class="metalist__rule" aria-hidden="true"></span>
+        <span class="mono metalist__dim">Editing · Recording · Photography</span>
+      </p>
 
-      <div class="about__grid">
-        <article class="glass glass--tilt about__card" data-reveal="left" data-tilt="4">
-          <p>
-            Hi, I'm <strong>Nevin</strong> — I offer video editing, video recording
-            and photography, with care for both the moment and the final result.
-          </p>
-          <p>
-            From recording footage and taking photographs to arranging clips, correcting colour
-            and balancing sound, I focus on making every video and image clear, polished and personal.
-          </p>
-          <p>
-            Whether you need <strong>a video edited</strong>, <strong>an occasion recorded</strong> or
-            <strong>photographs captured</strong>, my goal is the same — to give you work
-            that feels natural and helps you hold on to the moment.
+      <h1 class="hero__title rise rise--2">Edit faster.<br>Remember <em>longer</em>.</h1>
+
+      <div class="hero__row">
+        <div class="hero__lead">
+          <p class="hero__lede rise rise--3">
+            Video editing, recording and photography — one person, from the first
+            frame to the finished file.
           </p>
 
-          <div class="chiplist" style="margin-top:1.6rem">
-            <span class="chip">Video editing</span>
-            <span class="chip">Video recording</span>
-            <span class="chip">Photography</span>
-            <span class="chip">Colour correction</span>
-            <span class="chip">Sound balancing</span>
-            <span class="chip">Photo finishing</span>
-          </div>
-        </article>
-
-        <div class="about__aside">
-          <div class="glass about__panel" data-reveal="right">
-            <h3>At a glance</h3>
-            <ul class="factlist">
-              <li><span class="k">Services</span><span class="v">Editing, recording &amp; photography</span></li>
-              <li><span class="k">Focus</span><span class="v">Videos &amp; photographs</span></li>
-              <li><span class="k">Delivery</span><span class="v">Digital, ready to share</span></li>
-              <li><span class="k">Status</span><span class="v">Open for commissions</span></li>
-            </ul>
+          <div class="hero__cta rise rise--4">
+            <a class="btn btn--primary" href="#contact" data-ripple data-magnetic="0.3">
+              Start a project
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn--ghost" href="#work" data-ripple>See selected work</a>
           </div>
 
-          <div class="glass about__panel" data-reveal="right" data-reveal-delay="120">
-            <h3>What I offer</h3>
-            <div class="chiplist">
-              <span class="chip">Video editing</span>
-              <span class="chip">Recording</span>
-              <span class="chip">Photography</span>
+          <ul class="facts rise rise--5">
+            <li>Direct — no agency in between</li>
+            <li>Digital delivery, ready to share</li>
+            <li>Editing, recording &amp; stills</li>
+          </ul>
+        </div>
+
+        <div class="hero__visual rise rise--3">
+          <div class="seq" aria-hidden="true">
+            <div class="seq__top">
+              <span class="mono">SEQ 01</span>
+              <span class="mono seq__top-mid">1920 × 1080</span>
+              <span class="mono">24 fps</span>
+            </div>
+
+            <div class="seq__ruler"><span class="seq__ruler-fill"></span></div>
+
+            <div class="seq__rows">
+              <div class="seq__row">
+                <b class="seq__tag">V2</b>
+                <div class="seq__lane">
+                  <span class="clip clip--1">TITLE</span>
+                  <span class="clip clip--2">B-ROLL</span>
+                </div>
+              </div>
+              <div class="seq__row">
+                <b class="seq__tag">V1</b>
+                <div class="seq__lane">
+                  <span class="clip clip--3">MAIN</span>
+                  <span class="clip clip--4">CUTAWAY</span>
+                </div>
+              </div>
+              <div class="seq__row">
+                <b class="seq__tag">A1</b>
+                <div class="seq__lane">
+                  <span class="clip clip--5 clip--audio">MUSIC</span>
+                </div>
+              </div>
+              <span class="seq__playhead"></span>
+            </div>
+
+            <div class="seq__bot">
+              <span class="mono" id="tcSeq">00:00:00:00</span>
+              <span class="mono seq__bot-dim">00:00:36:00</span>
             </div>
           </div>
+          <p class="hero__caption mono">Sequence 01 — the shape of a typical edit</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================== SERVICES ============================== -->
-  <section class="section" id="skills">
-    <div class="shell">
-      <header class="section__head">
-        <span class="eyebrow" data-reveal>Services</span>
-        <h2 class="section__title" data-reveal data-reveal-delay="80" data-split>What I can <em>create for you</em></h2>
-        <p class="section__lede" data-reveal data-reveal-delay="140">
-          Three focused services, from capturing the original moment to delivering the finished video or photograph.
-        </p>
-      </header>
+  <!-- ============================== TICKER ============================== -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span class="ticker__item">Video editing</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Recording</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Photography</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Colour</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Sound</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Delivery</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Video editing</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Recording</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Photography</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Colour</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Sound</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Delivery</span><span class="ticker__sep">/</span>
+    </div>
+  </div>
 
-      <div class="skills__grid">
-
-        <article class="glass glass--tilt skill" data-reveal="zoom" data-tilt="5">
-          <div class="service__icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="7" y="12" width="34" height="28" rx="5"/><path d="M7 20h34M15 12l5 8M27 12l5 8M19 27l10 6-10 5z"/>
-            </svg>
-          </div>
-          <h3 class="skill__name">Video Editing</h3>
-          <p class="skill__note">Clean cuts, thoughtful pacing, colour correction and balanced sound for a polished final video.</p>
-        </article>
-
-        <article class="glass glass--tilt skill" data-reveal="zoom" data-reveal-delay="90" data-tilt="5">
-          <div class="service__icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="6" y="13" width="27" height="23" rx="5"/><path d="m33 21 9-5v17l-9-5z"/><circle cx="19.5" cy="24.5" r="5"/>
-            </svg>
-          </div>
-          <h3 class="skill__name">Recording</h3>
-          <p class="skill__note">Clear, carefully framed video recording for your moments, occasions and social content.</p>
-        </article>
-
-        <article class="glass glass--tilt skill" data-reveal="zoom" data-reveal-delay="180" data-tilt="5">
-          <div class="service__icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M7 16h8l3-5h12l3 5h8v24H7z"/><circle cx="24" cy="27" r="8"/><path d="M36 21h1"/>
-            </svg>
-          </div>
-          <h3 class="skill__name">Photography</h3>
-          <p class="skill__note">Thoughtfully composed photographs with natural colour and a clean, polished finish.</p>
-        </article>
-
+  <!-- ============================== STATS ============================== -->
+  <section class="stats" aria-label="At a glance">
+    <div class="shell stats__grid">
+      <div class="stat" data-reveal>
+        <span class="stat__num" data-count="3" aria-hidden="true">3</span>
+        <span class="sr-only">Three</span>
+        <span class="stat__label mono">Services offered</span>
+      </div>
+      <div class="stat" data-reveal data-d="70">
+        <span class="stat__num" data-count="2" aria-hidden="true">2</span>
+        <span class="sr-only">Two</span>
+        <span class="stat__label mono">Instagram feeds</span>
+      </div>
+      <div class="stat" data-reveal data-d="140">
+        <span class="stat__num" data-count="24" aria-hidden="true">24</span>
+        <span class="sr-only">Twenty-four</span>
+        <span class="stat__label mono">Frames per second</span>
+      </div>
+      <div class="stat" data-reveal data-d="210">
+        <span class="stat__num" data-count="1" aria-hidden="true">1</span>
+        <span class="sr-only">One</span>
+        <span class="stat__label mono">Person on your project</span>
       </div>
     </div>
   </section>
 
-  <!-- ============================== WORK ============================== -->
+  <!-- ============================== 01 SERVICES ============================== -->
+  <section class="section" id="services">
+    <div class="shell">
+      <header class="head">
+        <div class="head__left">
+          <span class="eyebrow mono" data-reveal>01 — Services</span>
+          <h2 class="head__title" data-reveal data-d="60">Three things,<br>done <em>properly</em>.</h2>
+        </div>
+        <p class="head__lede" data-reveal data-d="120">
+          From capturing the moment to handing over the finished file. Take one
+          service or the whole pipeline — it works either way.
+        </p>
+      </header>
+
+      <div class="services">
+        <article class="card" data-reveal>
+          <div class="card__in">
+            <div class="card__top">
+              <span class="card__idx mono">01</span>
+              <span class="chip mono">Edit</span>
+            </div>
+            <h3 class="card__title">Video editing</h3>
+            <p class="card__body">Clean cuts, thoughtful pacing, colour correction and balanced sound for a finished video that feels intentional.</p>
+            <ul class="spec">
+              <li>Cut &amp; pacing</li>
+              <li>Colour correction</li>
+              <li>Sound balancing</li>
+            </ul>
+            <a class="card__link" href="#contact">Enquire about editing <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+        <article class="card" data-reveal data-d="80">
+          <div class="card__in">
+            <div class="card__top">
+              <span class="card__idx mono">02</span>
+              <span class="chip mono">Record</span>
+            </div>
+            <h3 class="card__title">Video recording</h3>
+            <p class="card__body">Clear, carefully framed footage for occasions, social content and interviews — recorded so it is easy to cut later.</p>
+            <ul class="spec">
+              <li>Occasions &amp; events</li>
+              <li>Social content</li>
+              <li>Framing &amp; light</li>
+            </ul>
+            <a class="card__link" href="#contact">Enquire about recording <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+        <article class="card" data-reveal data-d="160">
+          <div class="card__in">
+            <div class="card__top">
+              <span class="card__idx mono">03</span>
+              <span class="chip mono">Stills</span>
+            </div>
+            <h3 class="card__title">Photography</h3>
+            <p class="card__body">Thoughtfully composed photographs with natural colour and a clean, polished finish — moments and details worth keeping.</p>
+            <ul class="spec">
+              <li>Occasions</li>
+              <li>Portraits</li>
+              <li>Photo finishing</li>
+            </ul>
+            <a class="card__link" href="#contact">Enquire about photography <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== 02 WORK ============================== -->
   <section class="section" id="work">
     <div class="shell">
-      <header class="section__head">
-        <span class="eyebrow" data-reveal>Portfolio</span>
-        <h2 class="section__title" data-reveal data-reveal-delay="80" data-split>Selected <em>work</em></h2>
-        <p class="section__lede" data-reveal data-reveal-delay="140">
-          A closer look at my three creative services: video editing, recording and photography.
+      <header class="head">
+        <div class="head__left">
+          <span class="eyebrow mono" data-reveal>02 — Selected work</span>
+          <h2 class="head__title" data-reveal data-d="60">Where the work<br><em>lives</em>.</h2>
+        </div>
+        <p class="head__lede" data-reveal data-d="120">
+          Six frames from the three services. New edits, recordings and photographs
+          go up on Instagram first.
         </p>
       </header>
 
-      <div class="work__reels">
-        <article class="glass reel" data-reveal>
-          <div class="frame" role="img" aria-label="Abstract video-editing gradient plate — reel 01">
-            <span class="frame__grain"></span>
-            <span class="frame__scan"></span>
-            <span class="frame__hud"><i>01</i><em>Editing</em></span>
-            <span class="frame__bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-            <span class="frame__time" aria-hidden="true">00:00:00:00</span>
-          </div>
-          <div class="reel__meta"><h3>Video Editing</h3><span>Cuts &amp; colour</span></div>
+      <div class="filters" role="group" aria-label="Filter work by service" data-reveal>
+        <button class="filter is-on" type="button" data-filter="all" aria-pressed="true">All <span class="filter__n mono">06</span></button>
+        <button class="filter" type="button" data-filter="edit" aria-pressed="false">Editing <span class="filter__n mono">03</span></button>
+        <button class="filter" type="button" data-filter="record" aria-pressed="false">Recording <span class="filter__n mono">01</span></button>
+        <button class="filter" type="button" data-filter="photo" aria-pressed="false">Photography <span class="filter__n mono">02</span></button>
+      </div>
+
+      <div class="work" id="workGrid">
+        <article class="tile" data-cat="edit" data-reveal>
+          <a class="tile__link" href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer">
+            <div class="plate plate--1" aria-hidden="true">
+              <span class="plate__tag mono">Edit</span>
+              <span class="plate__idx mono">01</span>
+              <span class="plate__meta mono">23.976 fps</span>
+            </div>
+            <div class="tile__meta">
+              <h3>Video editing</h3>
+              <span class="mono">Cuts &amp; pacing</span>
+            </div>
+          </a>
         </article>
 
-        <article class="glass reel" data-reveal data-reveal-delay="110">
-          <div class="frame frame--2" role="img" aria-label="Abstract video-recording gradient plate — reel 02">
-            <span class="frame__grain"></span>
-            <span class="frame__scan"></span>
-            <span class="frame__hud"><i>02</i><em>Recording</em></span>
-            <span class="frame__bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-            <span class="frame__time" aria-hidden="true">00:00:00:00</span>
-          </div>
-          <div class="reel__meta"><h3>Video Recording</h3><span>Framing &amp; capture</span></div>
+        <article class="tile" data-cat="edit" data-reveal data-d="70">
+          <a class="tile__link" href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer">
+            <div class="plate plate--2" aria-hidden="true">
+              <span class="plate__tag mono">Edit</span>
+              <span class="plate__idx mono">02</span>
+              <span class="plate__meta mono">Rec.709</span>
+            </div>
+            <div class="tile__meta">
+              <h3>Colour correction</h3>
+              <span class="mono">Balanced tones</span>
+            </div>
+          </a>
+        </article>
+
+        <article class="tile" data-cat="edit" data-reveal data-d="140">
+          <a class="tile__link" href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer">
+            <div class="plate plate--3" aria-hidden="true">
+              <span class="plate__tag mono">Edit</span>
+              <span class="plate__idx mono">03</span>
+              <span class="plate__meta mono">−14 LUFS</span>
+            </div>
+            <div class="tile__meta">
+              <h3>Sound balancing</h3>
+              <span class="mono">Clear audio</span>
+            </div>
+          </a>
+        </article>
+
+        <article class="tile" data-cat="record" data-reveal>
+          <a class="tile__link" href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer">
+            <div class="plate plate--4" aria-hidden="true">
+              <span class="plate__tag mono">Record</span>
+              <span class="plate__idx mono">04</span>
+              <span class="plate__meta mono">4K · 24 fps</span>
+            </div>
+            <div class="tile__meta">
+              <h3>Video recording</h3>
+              <span class="mono">Framing &amp; capture</span>
+            </div>
+          </a>
+        </article>
+
+        <article class="tile" data-cat="photo" data-reveal data-d="70">
+          <a class="tile__link" href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer">
+            <div class="plate plate--5" aria-hidden="true">
+              <span class="plate__tag mono">Stills</span>
+              <span class="plate__idx mono">05</span>
+              <span class="plate__meta mono">50 mm</span>
+            </div>
+            <div class="tile__meta">
+              <h3>Photography</h3>
+              <span class="mono">Moments &amp; details</span>
+            </div>
+          </a>
+        </article>
+
+        <article class="tile" data-cat="photo" data-reveal data-d="140">
+          <a class="tile__link" href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer">
+            <div class="plate plate--6" aria-hidden="true">
+              <span class="plate__tag mono">Stills</span>
+              <span class="plate__idx mono">06</span>
+              <span class="plate__meta mono">Finish</span>
+            </div>
+            <div class="tile__meta">
+              <h3>Photo finishing</h3>
+              <span class="mono">Clean &amp; polished</span>
+            </div>
+          </a>
         </article>
       </div>
 
-      <div class="work__gallery">
-        <figure class="shot shot--1" data-reveal="zoom"><figcaption><b>Video editing</b><span>Cuts &amp; pacing</span></figcaption></figure>
-        <figure class="shot shot--2" data-reveal="zoom" data-reveal-delay="70"><figcaption><b>Video recording</b><span>Framed with care</span></figcaption></figure>
-        <figure class="shot shot--3" data-reveal="zoom" data-reveal-delay="140"><figcaption><b>Photography</b><span>Moments &amp; details</span></figcaption></figure>
-        <figure class="shot shot--4" data-reveal="zoom" data-reveal-delay="210"><figcaption><b>Colour correction</b><span>Balanced tones</span></figcaption></figure>
-        <figure class="shot shot--5" data-reveal="zoom"><figcaption><b>Photo finishing</b><span>Clean &amp; polished</span></figcaption></figure>
-        <figure class="shot shot--6" data-reveal="zoom" data-reveal-delay="70"><figcaption><b>Sound balancing</b><span>Clear audio</span></figcaption></figure>
-      </div>
     </div>
   </section>
 
-  <!-- ============================== ACCOUNTS ============================== -->
+  <!-- ============================== 03 ACCOUNTS ============================== -->
   <section class="section" id="accounts">
     <div class="shell">
-      <header class="section__head">
-        <span class="eyebrow" data-reveal>My accounts</span>
-        <h2 class="section__title" data-reveal data-reveal-delay="80" data-split>Where the <em>work lives</em></h2>
-        <p class="section__lede" data-reveal data-reveal-delay="140">
-          Two pages, two purposes — from the main feed to personal moments and behind the scenes.
+      <header class="head">
+        <div class="head__left">
+          <span class="eyebrow mono" data-reveal>03 — Accounts</span>
+          <h2 class="head__title" data-reveal data-d="60">Two feeds,<br>two <em>purposes</em>.</h2>
+        </div>
+        <p class="head__lede" data-reveal data-d="120">
+          One is the work. The other is the life around it. Follow whichever you
+          came for.
         </p>
       </header>
 
-      <div class="accounts__grid">
-
-        <article class="glass glass--tilt account" data-reveal data-tilt="6">
-          <div class="account__top">
-            <span class="account__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
-              </svg>
-            </span>
-            <div>
-              <div class="account__role">Main creative account</div>
-              <div class="account__handle">@nevin.xp</div>
+      <div class="accounts">
+        <article class="account" data-reveal>
+          <div class="account__in">
+            <div class="account__top">
+              <span class="account__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+              </span>
+              <span class="chip mono">Main creative account</span>
             </div>
+            <h3 class="account__handle">@nevin.xp</h3>
+            <p class="account__body">The latest video edits, recordings and photography — the feed to check if you want to see the finish.</p>
+            <a class="account__link" href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer">
+              Open on Instagram
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
           </div>
-          <p class="account__desc">My latest video edits, recordings and photography.</p>
-          <a class="account__link" href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer">
-            Open on Instagram
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-          </a>
         </article>
 
-        <article class="glass glass--tilt account" data-reveal data-reveal-delay="90" data-tilt="6">
-          <div class="account__top">
-            <span class="account__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
-              </svg>
-            </span>
-            <div>
-              <div class="account__role">Personal account</div>
-              <div class="account__handle">@nevin_manoj__</div>
+        <article class="account" data-reveal data-d="90">
+          <div class="account__in">
+            <div class="account__top">
+              <span class="account__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+              </span>
+              <span class="chip mono">Personal account</span>
             </div>
+            <h3 class="account__handle">@nevin_manoj__</h3>
+            <p class="account__body">Life beyond the timeline — personal moments, behind the scenes and the photographs that never made the main feed.</p>
+            <a class="account__link" href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer">
+              Open on Instagram
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
           </div>
-          <p class="account__desc">Life beyond the timeline — personal moments and behind the scenes.</p>
-          <a class="account__link" href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer">
-            Open on Instagram
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-          </a>
         </article>
-
       </div>
     </div>
   </section>
 
-  <!-- ============================== CONTACT ============================== -->
-  <section class="section" id="contact">
+  <!-- ============================== 04 ABOUT ============================== -->
+  <section class="section" id="about">
+    <div class="shell about">
+      <div class="about__aside">
+        <span class="eyebrow mono" data-reveal>04 — About</span>
+        <h2 class="head__title" data-reveal data-d="60">Capturing moments,<br>shaping <em>stories</em>.</h2>
+        <div class="idcard" data-reveal data-d="120">
+          <div class="idcard__top mono">
+            <span>NEVIN MANOJ</span>
+            <span class="idcard__dot" aria-hidden="true"></span>
+          </div>
+          <dl class="idcard__facts">
+            <div><dt class="mono">Services</dt><dd>Editing, recording &amp; photography</dd></div>
+            <div><dt class="mono">Focus</dt><dd>Videos &amp; photographs</dd></div>
+            <div><dt class="mono">Delivery</dt><dd>Digital, ready to share</dd></div>
+            <div><dt class="mono">Status</dt><dd><span class="live" aria-hidden="true"></span> Open for commissions</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="about__body">
+        <p data-reveal>Hi, I'm <strong>Nevin</strong> — I offer video editing, video recording and photography, with care for both the moment and the final result.</p>
+        <p data-reveal data-d="60">From recording footage and taking photographs to arranging clips, correcting colour and balancing sound, I focus on making every video and image clear, polished and personal.</p>
+        <p data-reveal data-d="120">Whether you need <strong>a video edited</strong>, <strong>an occasion recorded</strong> or <strong>photographs captured</strong>, my goal is the same — to give you work that feels natural and helps you hold on to the moment.</p>
+
+        <p class="statement" data-reveal data-d="180">
+          The moment only happens once. The edit is how you keep it.
+        </p>
+
+        <ul class="chips" data-reveal data-d="240">
+          <li class="chip mono">Video editing</li>
+          <li class="chip mono">Video recording</li>
+          <li class="chip mono">Photography</li>
+          <li class="chip mono">Colour correction</li>
+          <li class="chip mono">Sound balancing</li>
+          <li class="chip mono">Photo finishing</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== 05 PROCESS ============================== -->
+  <section class="section" id="process">
     <div class="shell">
-      <header class="section__head">
-        <span class="eyebrow" data-reveal>Contact</span>
-        <h2 class="section__title" data-reveal data-reveal-delay="80" data-split>Let's plan your <em>next project</em></h2>
-        <p class="section__lede" data-reveal data-reveal-delay="140">
-          For video editing, recording or photography, send the brief through the commission form or reach me directly by email.
+      <header class="head">
+        <div class="head__left">
+          <span class="eyebrow mono" data-reveal>05 — Process</span>
+          <h2 class="head__title" data-reveal data-d="60">Brief, shoot,<br><em>deliver</em>.</h2>
+        </div>
+        <p class="head__lede" data-reveal data-d="120">
+          Three steps, no account managers. You talk to the person doing the work.
         </p>
       </header>
 
-      <div class="contact__grid">
+      <ol class="steps">
+        <li class="step" data-reveal>
+          <span class="step__n mono">01</span>
+          <h3 class="step__title">Tell me the brief</h3>
+          <p class="step__body">The service, the date and the deadline. Share any references or clips you already have.</p>
+        </li>
+        <li class="step" data-reveal data-d="80">
+          <span class="step__n mono">02</span>
+          <h3 class="step__title">Shoot &amp; cut</h3>
+          <p class="step__body">I record the footage or work with yours, then cut, correct colour and balance the sound.</p>
+        </li>
+        <li class="step" data-reveal data-d="160">
+          <span class="step__n mono">03</span>
+          <h3 class="step__title">Take delivery</h3>
+          <p class="step__body">You get the finished file digitally, ready to share — quote and delivery details agreed up front.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
 
-        <aside class="glass contact__card" data-reveal="left">
-          <div>
-            <div class="contact__label">Email</div>
-            <a class="contact__email" href="mailto:xpnevin@gmail.com">xpnevin@gmail.com</a>
-          </div>
+  <!-- ============================== 06 CONTACT ============================== -->
+  <section class="section" id="contact">
+    <div class="shell">
+      <header class="head">
+        <div class="head__left">
+          <span class="eyebrow mono" data-reveal>06 — Contact</span>
+          <h2 class="head__title" data-reveal data-d="60">Let's make something<br>worth <em>keeping</em>.</h2>
+        </div>
+        <p class="head__lede" data-reveal data-d="120">
+          Send the brief through the commission form, or email directly. You'll get
+          a quote and delivery details back.
+        </p>
+      </header>
 
-          <div>
-            <div class="contact__row">
+      <div class="contact">
+        <div class="contact__card" data-reveal>
+          <div class="contact__in">
+            <span class="contact__label mono">Email</span>
+            <a class="contact__mail" href="mailto:xpnevin@gmail.com">xpnevin@gmail.com</a>
+            <div class="contact__actions">
               <a class="btn btn--primary btn--sm" href="mailto:xpnevin@gmail.com" data-ripple>
-                Email me
+                Write an email
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
               </a>
               <button class="btn btn--ghost btn--sm" id="copyEmail" type="button" data-ripple data-email="xpnevin@gmail.com">
-                Copy email
+                Copy address
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5h10"/></svg>
               </button>
             </div>
-            <p class="copy-state" id="copyState" role="status" aria-live="polite"></p>
+            <p class="copystate" id="copyState" role="status" aria-live="polite"></p>
           </div>
-
-        </aside>
-
-        <div class="glass contact__card contact__card--brief" data-reveal="right">
-          <div>
-            <div class="contact__label">Start a commission</div>
-            <p class="contact__brief">
-              Tell me which service you need, your preferred date and your deadline. Share any
-              references or clips you have, and I'll reply with a quote and delivery details.
-            </p>
-          </div>
-          <a class="btn btn--primary btn--sm" href="https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform" target="_blank" rel="noopener noreferrer" data-ripple>
-            Open commission form
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-          </a>
         </div>
 
+        <div class="contact__card contact__card--brief" data-reveal data-d="90">
+          <div class="contact__in">
+            <span class="contact__label mono">Start a commission</span>
+            <p class="contact__brief">Tell me which service you need, your preferred date and your deadline. References and clips welcome.</p>
+            <ul class="ticklist">
+              <li>Which service — editing, recording or photography</li>
+              <li>Your date and deadline</li>
+              <li>Any references, footage or photos</li>
+            </ul>
+            <a class="btn btn--primary btn--sm" href="https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform" target="_blank" rel="noopener noreferrer" data-ripple>
+              Open the commission form
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -394,29 +573,43 @@
 
 <!-- ============================== FOOTER ============================== -->
 <footer class="footer">
-  <div class="footer__inner">
-    <div>
-      <div class="footer__brand">NEVIN</div>
-      <p class="footer__note">Video editing · Recording · Photography</p>
+  <div class="shell footer__top">
+    <div class="footer__brandcol">
+      <a class="brand" href="#top" aria-label="NEVIN — back to top">
+        <span class="brand__mark" aria-hidden="true">N</span>
+        <span class="brand__name">NEVIN</span>
+      </a>
+      <p class="footer__tag">Video editing · Recording · Photography</p>
+      <p class="footer__note">Open for commissions — direct, no agency in between.</p>
     </div>
 
-    <div class="footer__socials">
-      <a href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram — @nevin.xp">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-      </a>
-      <a href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram — @nevin_manoj__">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-      </a>
-      <a href="mailto:xpnevin@gmail.com" aria-label="Email Nevin">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
-      </a>
+    <div class="footer__cols">
+      <div class="footer__col">
+        <h2 class="footer__h mono">Explore</h2>
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#accounts">Accounts</a>
+        <a href="#about">About</a>
+        <a href="#process">Process</a>
+      </div>
+      <div class="footer__col">
+        <h2 class="footer__h mono">Elsewhere</h2>
+        <a href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer">Instagram — @nevin.xp</a>
+        <a href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer">Instagram — @nevin_manoj__</a>
+        <a href="mailto:xpnevin@gmail.com">xpnevin@gmail.com</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform" target="_blank" rel="noopener noreferrer">Commission form</a>
+      </div>
     </div>
+  </div>
 
-    <p class="footer__note">Designed with <span class="heart">❤</span> by Nevin</p>
+  <div class="shell footer__bottom">
+    <span class="mono">© <span id="year">2026</span> Nevin Manoj</span>
+    <span class="mono footer__tc" id="tcFoot" aria-hidden="true">00:00:00:00</span>
+    <span class="mono">Designed &amp; built by Nevin</span>
   </div>
 </footer>
 
-<button class="to-top" id="toTop" type="button" aria-label="Back to top" data-ripple>
+<button class="totop" id="toTop" type="button" aria-label="Back to top">
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
 </button>
 
