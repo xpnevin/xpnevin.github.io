@@ -36,6 +36,19 @@
     if (!scrollQueued) { scrollQueued = true; raf(flush); }
   }
 
+  /* Same idea for pointer moves: at most one read/write per frame. */
+  function onPointerFrame(el, fn) {
+    var queued = false;
+    var last = null;
+
+    el.addEventListener("pointermove", function (e) {
+      last = e;
+      if (queued) return;
+      queued = true;
+      raf(function () { queued = false; fn(last); });
+    }, { passive: true });
+  }
+
   window.addEventListener("scroll", requestScroll, { passive: true });
   window.addEventListener("resize", requestScroll, { passive: true });
 
@@ -50,9 +63,14 @@
     }
 
     onScroll(function (y) {
+      /* Read first, then write: measuring after a class change would force a
+         synchronous layout on every scroll frame. */
+      var max = maxScroll();
+      var vh = window.innerHeight;
+
       if (bar) bar.classList.toggle("is-stuck", y > 8);
-      if (fill) fill.style.transform = "scaleX(" + Math.min(1, y / maxScroll()).toFixed(4) + ")";
-      if (top) top.classList.toggle("is-shown", y > window.innerHeight * 0.7);
+      if (fill) fill.style.transform = "scaleX(" + Math.min(1, y / max).toFixed(4) + ")";
+      if (top) top.classList.toggle("is-shown", y > vh * 0.7);
     });
 
     if (top) {
@@ -102,7 +120,17 @@
     if (!btn || !nav) return;
 
     var links = $$(".nav__link", nav);
+    var topbar = $(".topbar");
     var isMobile = window.matchMedia("(max-width: 820px)");
+
+    /* Only what a sighted keyboard user can actually see, in DOM order:
+       brand, nav links, the header CTA and the burger itself. */
+    function focusables() {
+      if (!topbar) return [btn];
+      return $$("a[href], button", topbar).filter(function (el) {
+        return el.offsetParent !== null;
+      });
+    }
 
     function setOpen(open) {
       body.classList.toggle("nav-open", open);
@@ -131,10 +159,13 @@
       }
 
       if (e.key === "Tab") {
-        var items = [btn].concat(links);
-        var i = items.indexOf(doc.activeElement);
-        if (e.shiftKey && i <= 0) { e.preventDefault(); items[items.length - 1].focus(); }
-        else if (!e.shiftKey && i === items.length - 1) { e.preventDefault(); items[0].focus(); }
+        var items = focusables();
+        if (items.length < 2) return;
+        var first = items[0];
+        var last = items[items.length - 1];
+
+        if (e.shiftKey && doc.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && doc.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     });
 
@@ -315,20 +346,12 @@
 
     $$("[data-magnetic]").forEach(function (el) {
       var strength = parseFloat(el.getAttribute("data-magnetic")) || 0.28;
-      var queued = false;
-      var last = null;
 
-      el.addEventListener("pointermove", function (e) {
-        last = e;
-        if (queued) return;
-        queued = true;
-        raf(function () {
-          queued = false;
-          var b = el.getBoundingClientRect();
-          var dx = (last.clientX - (b.left + b.width / 2)) * strength;
-          var dy = (last.clientY - (b.top + b.height / 2)) * strength;
-          el.style.transform = "translate3d(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px,0)";
-        });
+      onPointerFrame(el, function (e) {
+        var b = el.getBoundingClientRect();
+        var dx = (e.clientX - (b.left + b.width / 2)) * strength;
+        var dy = (e.clientY - (b.top + b.height / 2)) * strength;
+        el.style.transform = "translate3d(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px,0)";
       });
 
       el.addEventListener("pointerleave", function () { el.style.transform = ""; });
@@ -340,7 +363,7 @@
     if (!fine || reduced) return;
 
     $$(".card").forEach(function (card) {
-      card.addEventListener("pointermove", function (e) {
+      onPointerFrame(card, function (e) {
         var b = card.getBoundingClientRect();
         card.style.setProperty("--mx", (((e.clientX - b.left) / b.width) * 100).toFixed(1) + "%");
         card.style.setProperty("--my", (((e.clientY - b.top) / b.height) * 100).toFixed(1) + "%");
