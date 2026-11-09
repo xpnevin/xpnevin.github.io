@@ -18,8 +18,9 @@ robots.txt, sitemap.xml # Crawler hints
 ## Design
 
 The page is built like an editing application: numbered sections, monospace
-technical labels, a timeline panel in the hero, plate covers for the work grid
-and a red playhead as the only warm colour on screen.
+technical labels, a timeline panel in the hero and a red playhead as the only
+warm colour on screen. There is no gallery and no stock imagery — the work
+itself lives on Instagram, and the page says so.
 
 | Token | Value |
 | --- | --- |
@@ -33,14 +34,14 @@ and a red playhead as the only warm colour on screen.
 ## Sections
 
 Hero with live timecode and an animated sequence panel · services ticker ·
-at-a-glance counters · 01 Services · 02 Work (filterable) · 03 Accounts ·
-04 About · 05 Process · 06 Contact · footer.
+at-a-glance counters · 01 Services · 02 Work (the two Instagram feeds) ·
+03 About · 04 Process · 05 Contact · footer.
 
 ## Features
 
 Numbered section headers · timeline/sequence panel · animated playhead ·
-scrolling ticker · count-up stats · filterable work grid · hover light sweep on
-cards · magnetic primary button · ripple clicks · copy-email button · scroll
+scrolling ticker · count-up stats · feed cards · hover light sweep on cards ·
+magnetic primary button · ripple clicks · copy-email button · scroll
 progress bar · active nav link · scroll reveal with stagger · back-to-top ·
 responsive layout · SEO metadata, Open Graph image and JSON-LD.
 
@@ -50,7 +51,7 @@ responsive layout · SEO metadata, Open Graph image and JSON-LD.
   loads no external scripts; only Google Fonts is fetched externally.
 - **Nothing is hidden behind JavaScript.** The `<html>` element only gets the
   `.js` class from a one-line inline script, and the reveal animation, mobile
-  menu, filter chips and copy button are all gated on that class. With JS
+  menu and copy button are all gated on that class. With JS
   disabled the page is fully readable, the nav stays inline and every section is
   visible — there is no loader to get stuck behind.
 - **No scroll hijacking.** Native scrolling and `scroll-behavior: smooth` are
@@ -61,22 +62,22 @@ responsive layout · SEO metadata, Open Graph image and JSON-LD.
   use `IntersectionObserver`; the only timer is a 4 Hz clock that pauses when
   the tab is hidden.
 - **Cheap by default.** No canvas, no particles, no custom cursor, no large
-  blurred layers. The background is a static dot grid plus two radial glows, and
-  plate art is pure CSS — there are no photographic assets to download.
+  blurred layers. The background is a static dot grid plus two radial glows,
+  and the page ships exactly one image — the social share card.
 - **Motion is optional.** `prefers-reduced-motion` stops the ticker, the
   playhead, the counters and all reveals, and shows every element immediately.
 - **Accessibility.** Skip link to a focusable `<main>`, visible focus rings,
-  AA-contrast text tokens, `aria-pressed` filter chips, `aria-expanded` menu with
-  Escape and focus wrap, decorative art hidden from screen readers.
+  AA-contrast text tokens, `aria-expanded` menu with Escape and focus wrap, and
+  decorative art hidden from screen readers.
 
 ## Editing
 
 - **Text, links, section copy** — edit `index.html` directly.
 - **Colours and spacing** — edit the custom properties in `:root` at the top of
   `assets/css/style.css`.
-- **Work tiles** — each `<article class="tile" data-cat="…">` sets its filter
-  category (`edit`, `record`, `photo`). Plate colours live in `.plate--1` …
-  `.plate--6`.
+- **Work section** — section 02 is just the two `<article class="account">`
+  feed cards; update the `href`, handle and description if an account changes.
+  There is no gallery to maintain and no thumbnails to keep in sync.
 - **Service cards** — the three `<article class="card">` blocks in the Services
   section.
 - **Social share card** — replace `assets/img/og.jpg` (1200×630).

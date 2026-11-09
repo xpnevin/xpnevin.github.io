@@ -176,41 +176,6 @@
     else if (isMobile.addListener) isMobile.addListener(onChange);
   }
 
-  /* -------------------------------------------------------- work filtering */
-  function filters() {
-    var bar = $(".filters");
-    var grid = $("#workGrid");
-    if (!bar || !grid) return;
-
-    var tiles = $$(".tile", grid);
-    var buttons = $$(".filter", bar);
-
-    function apply(cat) {
-      tiles.forEach(function (tile) {
-        var match = cat === "all" || tile.getAttribute("data-cat") === cat;
-        tile.hidden = !match;
-        var link = $(".tile__link", tile);
-        if (link) link.tabIndex = match ? 0 : -1;
-      });
-
-      buttons.forEach(function (button) {
-        var active = button.getAttribute("data-filter") === cat;
-        button.classList.toggle("is-on", active);
-        button.setAttribute("aria-pressed", String(active));
-      });
-
-      requestScroll(); /* page height changed — refresh the progress bar */
-    }
-
-    buttons.forEach(function (button) {
-      button.addEventListener("click", function () {
-        apply(button.getAttribute("data-filter"));
-      });
-    });
-
-    apply("all");
-  }
-
   /* --------------------------------------------------------- scroll reveal */
   function reveal() {
     var items = $$("[data-reveal]");
@@ -362,7 +327,7 @@
   function cardGlow() {
     if (!fine || reduced) return;
 
-    $$(".card").forEach(function (card) {
+    $$(".card, .account").forEach(function (card) {
       onPointerFrame(card, function (e) {
         var b = card.getBoundingClientRect();
         card.style.setProperty("--mx", (((e.clientX - b.left) / b.width) * 100).toFixed(1) + "%");
@@ -424,7 +389,7 @@
 
   /* ------------------------------------------------------------------- boot */
   function boot() {
-    [chrome, spy, menu, filters, reveal, counters, copyEmail, magnetic,
+    [chrome, spy, menu, reveal, counters, copyEmail, magnetic,
      cardGlow, ripple, timecode, year].forEach(function (module) {
       try { module(); } catch (err) {
         if (window.console && console.warn) console.warn("[nevin] " + module.name + " failed:", err);
