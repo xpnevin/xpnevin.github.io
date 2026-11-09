@@ -7,7 +7,7 @@
 
 <meta name="description" content="Nevin offers video editing, video recording and photography — one person, from the first frame to the finished file. Open for commissions.">
 <meta name="author" content="Nevin Manoj">
-<meta name="theme-color" content="#08090b">
+<meta name="theme-color" content="#070910">
 <link rel="canonical" href="https://xpnevin.github.io/">
 
 <!-- Open Graph / Twitter -->
@@ -26,7 +26,7 @@
 <meta name="twitter:image" content="https://xpnevin.github.io/assets/img/og.jpg">
 <meta name="twitter:image:alt" content="NEVIN — video editing, recording and photography">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308090b'/%3E%3Crect x='.5' y='.5' width='63' height='63' rx='13.5' fill='none' stroke='%23ffffff' stroke-opacity='.18'/%3E%3Cpath d='M20 45V19h3.6l16.8 21V19H44v26h-3.6L23.6 24v21z' fill='%234f8cff'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070910'/%3E%3Crect x='.5' y='.5' width='63' height='63' rx='13.5' fill='none' stroke='%23ffffff' stroke-opacity='.18'/%3E%3Cpath d='M20 45V19h3.6l16.8 21V19H44v26h-3.6L23.6 24v21z' fill='%2355ddff'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -124,6 +124,10 @@
         </div>
 
         <div class="hero__visual rise rise--3">
+          <div class="lens-scene" aria-hidden="true">
+            <span class="lens-scene__orbit"></span>
+            <span class="lens-scene__body"></span>
+          </div>
           <div class="seq" aria-hidden="true">
             <div class="seq__top">
               <span class="mono">SEQ 01</span>
@@ -186,29 +190,25 @@
     </div>
   </div>
 
-  <!-- ============================== STATS ============================== -->
-  <section class="stats" aria-label="At a glance">
+  <!-- ============================== WORKING TOGETHER ============================== -->
+  <section class="stats" aria-label="What to expect">
     <div class="shell stats__grid">
-      <div class="stat" data-reveal>
-        <span class="stat__num" data-count="3" aria-hidden="true">3</span>
-        <span class="sr-only">Three</span>
-        <span class="stat__label mono">Services offered</span>
-      </div>
-      <div class="stat" data-reveal data-d="70">
-        <span class="stat__num" data-count="2" aria-hidden="true">2</span>
-        <span class="sr-only">Two</span>
-        <span class="stat__label mono">Instagram feeds</span>
-      </div>
-      <div class="stat" data-reveal data-d="140">
-        <span class="stat__num" data-count="24" aria-hidden="true">24</span>
-        <span class="sr-only">Twenty-four</span>
-        <span class="stat__label mono">Frames per second</span>
-      </div>
-      <div class="stat" data-reveal data-d="210">
-        <span class="stat__num" data-count="1" aria-hidden="true">1</span>
-        <span class="sr-only">One</span>
-        <span class="stat__label mono">Person on your project</span>
-      </div>
+      <article class="stat" data-reveal>
+        <span class="stat__num">3</span>
+        <p class="stat__label">Services — editing, recording and photography</p>
+      </article>
+      <article class="stat" data-reveal data-d="70">
+        <span class="stat__num">One</span>
+        <p class="stat__label">person on your project, from brief to delivery</p>
+      </article>
+      <article class="stat" data-reveal data-d="140">
+        <span class="stat__num">Direct</span>
+        <p class="stat__label">Work with the person doing the work</p>
+      </article>
+      <article class="stat" data-reveal data-d="210">
+        <span class="stat__num">Digital</span>
+        <p class="stat__label">Finished files, ready to share</p>
+      </article>
     </div>
   </section>
 
@@ -419,8 +419,8 @@
           <h2 class="head__title" data-reveal data-d="60">Let's make something<br>worth <em>keeping</em>.</h2>
         </div>
         <p class="head__lede" data-reveal data-d="120">
-          Send the brief through the commission form, or email directly. You'll get
-          a quote and delivery details back.
+          Choose the service and preferred date to prepare a quick email, or write
+          directly if you already have a brief ready.
         </p>
       </header>
 
@@ -446,16 +446,41 @@
         <div class="contact__card contact__card--brief" data-reveal data-d="90">
           <div class="contact__in">
             <span class="contact__label mono">Start a commission</span>
-            <p class="contact__brief">Tell me which service you need, your preferred date and your deadline. References and clips welcome.</p>
-            <ul class="ticklist">
-              <li>Which service — editing, recording or photography</li>
-              <li>Your date and deadline</li>
-              <li>Any references, footage or photos</li>
-            </ul>
-            <a class="btn btn--primary btn--sm" href="https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform" target="_blank" rel="noopener noreferrer" data-ripple>
-              Open the commission form
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-            </a>
+            <p class="contact__brief">Choose a service and preferred date. Add a note if you like; I’ll reply with a quote and delivery details.</p>
+            <form class="brief-form" id="commissionForm" action="mailto:xpnevin@gmail.com" method="post" enctype="text/plain">
+              <div class="brief-form__row">
+                <label class="form-field" for="commissionService">
+                  <span>Service <span class="required-mark" aria-hidden="true">*</span></span>
+                  <select id="commissionService" name="service" required>
+                    <option value="" selected disabled>Choose a service</option>
+                    <option value="Video editing">Video editing</option>
+                    <option value="Video recording">Video recording</option>
+                    <option value="Photography">Photography</option>
+                    <option value="More than one service">More than one service</option>
+                    <option value="Not sure yet">Not sure yet</option>
+                  </select>
+                </label>
+                <label class="form-field" for="commissionDate">
+                  <span>Preferred date or deadline <span class="required-mark" aria-hidden="true">*</span></span>
+                  <input id="commissionDate" name="preferred_date" type="date" required>
+                  <span class="field-hint">If it’s not fixed, choose your best estimate.</span>
+                </label>
+              </div>
+              <label class="form-field" for="commissionName">
+                <span>Your name <span class="field-hint">(optional)</span></span>
+                <input id="commissionName" name="name" type="text" autocomplete="name" placeholder="Name">
+              </label>
+              <label class="form-field" for="commissionDetails">
+                <span>Project details <span class="field-hint">(optional)</span></span>
+                <textarea id="commissionDetails" name="details" rows="3" maxlength="1200" placeholder="A few details, references, or links to footage/photos"></textarea>
+              </label>
+              <button class="btn btn--primary btn--sm brief-form__submit" type="submit" data-ripple>
+                Prepare enquiry email
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
+              </button>
+            </form>
+            <p class="form-note" id="commissionFormStatus" role="status" aria-live="polite">This prepares an email for you to review and send; it won’t send anything automatically.</p>
+            <a class="commission-alt" href="https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform" target="_blank" rel="noopener noreferrer">Prefer the existing form? Open it in a new tab <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </div>

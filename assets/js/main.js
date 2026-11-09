@@ -215,43 +215,53 @@
     else window.addEventListener("load", function () { setTimeout(settle, 200); }, { once: true });
   }
 
-  /* ------------------------------------------------------------- counters */
-  function counters() {
-    var nums = $$("[data-count]");
-    if (!nums.length) return;
+  /* ------------------------------------ service/date enquiry email draft */
+  function commissionForm() {
+    var form = $("#commissionForm");
+    if (!form) return;
 
-    function finalValue(el) { el.textContent = el.getAttribute("data-count"); }
-
-    if (reduced || !("IntersectionObserver" in window)) {
-      nums.forEach(finalValue);
-      return;
-    }
-
-    function countUp(el) {
-      var target = parseInt(el.getAttribute("data-count"), 10) || 0;
-      var start = null;
-      var duration = 900;
-
-      function step(now) {
-        if (start === null) start = now;
-        var p = Math.min(1, (now - start) / duration);
-        var eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = String(Math.round(target * eased));
-        if (p < 1) raf(step);
-        else finalValue(el);
+    var status = $("#commissionFormStatus");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        if (form.reportValidity) form.reportValidity();
+        return;
       }
-      raf(step);
-    }
 
-    var io = new IntersectionObserver(function (entries, obs) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        obs.unobserve(entry.target);
-        countUp(entry.target);
-      });
-    }, { threshold: 0.6 });
+      var service = $("#commissionService", form).value;
+      var date = $("#commissionDate", form).value;
+      var name = $("#commissionName", form).value.trim();
+      var details = $("#commissionDetails", form).value.trim();
+      var dateLabel = date;
+      var parsedDate = new Date(date + "T12:00:00");
+      if (!isNaN(parsedDate.getTime())) {
+        dateLabel = parsedDate.toLocaleDateString(undefined, {
+          day: "numeric", month: "long", year: "numeric"
+        });
+      }
 
-    nums.forEach(function (el) { io.observe(el); });
+      var lines = [
+        "Hi Nevin,",
+        "",
+        "I'd like to enquire about " + service + ".",
+        "Preferred date or deadline: " + dateLabel
+      ];
+      if (name) lines.push("Name: " + name);
+      lines.push(
+        "",
+        "Project details:",
+        details || "I can share more information in reply.",
+        "",
+        "Thanks,"
+      );
+
+      if (status) {
+        status.textContent = "Your email app should open with this enquiry ready to review. Press Send when you’re happy with it.";
+      }
+      window.location.href = "mailto:xpnevin@gmail.com?subject=" +
+        encodeURIComponent("Project enquiry — " + service) +
+        "&body=" + encodeURIComponent(lines.join("\n"));
+    });
   }
 
   /* ---------------------------------------------------------- copy address */
@@ -389,7 +399,7 @@
 
   /* ------------------------------------------------------------------- boot */
   function boot() {
-    [chrome, spy, menu, reveal, counters, copyEmail, magnetic,
+    [chrome, spy, menu, reveal, commissionForm, copyEmail, magnetic,
      cardGlow, ripple, timecode, year].forEach(function (module) {
       try { module(); } catch (err) {
         if (window.console && console.warn) console.warn("[nevin] " + module.name + " failed:", err);
