@@ -17,33 +17,34 @@ robots.txt, sitemap.xml # Crawler hints
 
 ## Design
 
-The page is built like an editing application: numbered sections, monospace
-technical labels, a timeline panel in the hero and a red playhead as the only
-warm colour on screen. There is no gallery and no stock imagery — the work
-itself lives on Instagram, and the page says so.
+The page takes cues from a video-editing interface: numbered sections,
+monospace technical labels, a glass timeline panel and a CSS-built 3D camera
+lens in the hero. Cyan and violet light accents add depth without adding heavy
+images, libraries or stock portfolio work.
 
 | Token | Value |
 | --- | --- |
-| Background | `#08090b` |
-| Panel | `#0e1014` |
-| Text / dim / faint | `#f4f5f7` · `#a9abb4` · `#8a8c95` |
-| Accent | `#4f8cff` → `#8fb8ff` |
-| Record red | `#ff4d3d` (playhead, REC dot only) |
+| Background | `#070910` |
+| Panel | `#0d111b` |
+| Text / dim / faint | `#f4f7ff` · `#b7c0d1` · `#929db2` |
+| Accent | Cyan `#55ddff` · violet `#a58bff` |
+| Record red | `#ff4d6d` (playhead, REC dot only) |
 | Type | Inter (UI + display), JetBrains Mono (technical labels) |
 
 ## Sections
 
-Hero with live timecode and an animated sequence panel · services ticker ·
-at-a-glance counters · 01 Services · 02 Work (the two Instagram feeds) ·
-03 About · 04 Process · 05 Contact · footer.
+Hero with live timecode, a glass sequence panel and CSS 3D lens · services ticker ·
+working-together facts · 01 Services · 02 Work (the two Instagram feeds) ·
+03 About · 04 Process · 05 Contact with a service/date enquiry form · footer.
 
 ## Features
 
-Numbered section headers · timeline/sequence panel · animated playhead ·
-scrolling ticker · count-up stats · feed cards · hover light sweep on cards ·
-magnetic primary button · ripple clicks · copy-email button · scroll
-progress bar · active nav link · scroll reveal with stagger · back-to-top ·
-responsive layout · SEO metadata, Open Graph image and JSON-LD.
+Numbered section headers · glass timeline panel · CSS 3D lens · animated
+playhead · scrolling ticker · useful working-together facts · service/date
+email enquiry form · feed cards · hover light sweep and 3D lift · magnetic
+primary button · ripple clicks · copy-email button · scroll progress bar ·
+active nav link · staggered reveals · back-to-top · responsive layout · SEO
+metadata, Open Graph image and JSON-LD.
 
 ## Implementation notes
 
@@ -58,14 +59,16 @@ responsive layout · SEO metadata, Open Graph image and JSON-LD.
   left alone, so nested scrollers, keyboards, trackpads and the scrollbar all
   behave normally.
 - **One scroll listener, one rAF per frame.** The progress bar, sticky header
-  and back-to-top button share a single throttled pipeline; reveals and counters
-  use `IntersectionObserver`; the only timer is a 4 Hz clock that pauses when
-  the tab is hidden.
-- **Cheap by default.** No canvas, no particles, no custom cursor, no large
-  blurred layers. The background is a static dot grid plus two radial glows,
-  and the page ships exactly one image — the social share card.
-- **Motion is optional.** `prefers-reduced-motion` stops the ticker, the
-  playhead, the counters and all reveals, and shows every element immediately.
+  and back-to-top button share a single throttled pipeline; reveals use
+  `IntersectionObserver`; the only JavaScript timer is a 4 Hz clock that pauses
+  when the tab is hidden.
+- **Cheap by default.** No canvas, particles or custom cursor. Glass blur is
+  limited to interface surfaces; the background is static and the 3D lens is
+  CSS-only. The page ships exactly one image — the social share card.
+- **Motion is optional.** `prefers-reduced-motion` stops the ticker, lens,
+  playhead and reveals, and shows every element immediately.
+- **No form backend required.** The service/date enquiry form opens a
+  pre-filled email draft; a Google Form remains available as a fallback.
 - **Accessibility.** Skip link to a focusable `<main>`, visible focus rings,
   AA-contrast text tokens, `aria-expanded` menu with Escape and focus wrap, and
   decorative art hidden from screen readers.
