@@ -19,9 +19,10 @@ robots.txt, sitemap.xml # Crawler hints
 
 The page takes cues from a video-editing interface: numbered sections,
 monospace technical labels, a glass timeline panel and a CSS-built 3D camera
-lens in the hero. The visual system uses Cloud White space, Sand Dune structure
-and precise Cobalt Flash actions without adding heavy images, libraries or stock
-portfolio work.
+lens in the hero. The visual system uses human-first Liquid Glass surfaces:
+Cloud White space, tactile Sand Dune warmth and precise Cobalt Flash actions.
+It keeps the experience friendly and legible without adding heavy libraries or
+stock portfolio work.
 
 | Token | Value |
 | --- | --- |
