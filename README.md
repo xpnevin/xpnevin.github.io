@@ -60,10 +60,10 @@ Graph image and JSON-LD.
 - **No scroll hijacking.** Native scrolling and `scroll-behavior: smooth` are
   left alone, so nested scrollers, keyboards, trackpads and the scrollbar all
   behave normally.
-- **One scroll listener, one rAF per frame.** The progress bar, sticky header
-  and back-to-top button share a single throttled pipeline; reveals use
-  `IntersectionObserver`; the only JavaScript timer is a 4 Hz clock that pauses
-  when the tab is hidden.
+- **Motion has a small budget.** The progress bar, sticky header and back-to-top
+  button share one throttled scroll pipeline; reveals use `IntersectionObserver`.
+  The utility timecode updates at 4 Hz, while the visible 24 fps sequence
+  transport uses compositor-only transforms and pauses when its tab is hidden.
 - **Cheap by default.** No canvas, particles or custom cursor. Glass blur is
   limited to interface surfaces; the background is static and the 3D lens is
   CSS-only. The page ships exactly one image — the social share card.

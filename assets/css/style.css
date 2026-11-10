@@ -687,7 +687,8 @@ body.nav-open .burger span:nth-child(2) { transform: translateY(-3.75px) rotate(
   width: 100%;
   z-index: 2;
   pointer-events: none;
-  animation: playhead 18s linear infinite;
+  opacity: 0;
+  will-change: transform, opacity;
 }
 .seq__playhead::before {
   content: "";
@@ -1926,6 +1927,29 @@ body::before {
   backdrop-filter: blur(22px) saturate(130%);
 }
 .hero__visual:hover .seq { border-color: rgba(255, 255, 255, .96); box-shadow: 0 41px 80px -42px rgba(73, 62, 52, .38), 0 0 0 1px rgba(6, 79, 202, .10); }
+.seq {
+  isolation: isolate;
+  overflow: hidden;
+  will-change: transform;
+}
+.seq::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -65% -45%;
+  pointer-events: none;
+  background: linear-gradient(108deg, transparent 38%, rgba(255, 255, 255, .05) 45%, rgba(255, 255, 255, .54) 50%, rgba(255, 255, 255, .08) 55%, transparent 63%);
+  transform: translate3d(-30%, 0, 0) rotate(7deg);
+  animation: seq-reflection 13s cubic-bezier(.4, 0, .2, 1) infinite;
+  will-change: transform, opacity;
+}
+.seq__top, .seq__ruler, .seq__rows, .seq__bot { position: relative; z-index: 1; }
+.seq__playhead { z-index: 3; }
+@keyframes seq-reflection {
+  0%, 11% { opacity: 0; transform: translate3d(-30%, 0, 0) rotate(7deg); }
+  25%, 62% { opacity: .7; }
+  80%, 100% { opacity: 0; transform: translate3d(30%, 0, 0) rotate(7deg); }
+}
 .seq__top, .seq__bot, .seq__bot-dim { color: var(--faint); }
 .seq__top-mid { color: var(--dim); }
 .seq__ruler { border-bottom-color: rgba(73, 62, 52, .15); background-image: repeating-linear-gradient(90deg, rgba(73, 62, 52, .28) 0 1px, transparent 1px 10px); }
@@ -2048,7 +2072,8 @@ body::before {
   .rise { animation: none; opacity: 1; transform: none; }
   .js [data-reveal] { opacity: 1 !important; transform: none !important; }
   .ticker__track { animation: none; }
-  .seq__playhead { animation: none; transform: translate3d(38%, 0, 0); opacity: .8; }
+  .seq__playhead { transform: translate3d(38%, 0, 0) !important; opacity: .8 !important; }
+  .seq::before { animation: none !important; }
   .brand__rec i, .live { animation: none; }
 }
 
