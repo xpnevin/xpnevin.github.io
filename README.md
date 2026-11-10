@@ -34,17 +34,18 @@ images, libraries or stock portfolio work.
 ## Sections
 
 Hero with live timecode, a glass sequence panel and CSS 3D lens · services ticker ·
-working-together facts · 01 Services · 02 Work (the two Instagram feeds) ·
-03 About · 04 Process · 05 Contact with a service/date enquiry form · footer.
+interactive Colour Lab · working-together facts · 01 Services · 02 Work (the two
+Instagram feeds) · 03 About · 04 Process · 05 Contact with a service/date enquiry form · footer.
 
 ## Features
 
-Numbered section headers · glass timeline panel · CSS 3D lens · animated
-playhead · scrolling ticker · useful working-together facts · service/date
-email enquiry form · feed cards · hover light sweep and 3D lift · magnetic
-primary button · ripple clicks · copy-email button · scroll progress bar ·
-active nav link · staggered reveals · back-to-top · responsive layout · SEO
-metadata, Open Graph image and JSON-LD.
+Numbered section headers · glass timeline panel · CSS 3D lens · interactive
+Colour Lab with four looks and a glow slider · pointer tilt on desktop · animated
+playhead · scrolling ticker · useful working-together facts · service/date email
+enquiry form · feed cards · hover light sweep and 3D lift · magnetic primary
+button · ripple clicks · copy-email button · scroll progress bar · active nav
+link · staggered reveals · back-to-top · responsive layout · SEO metadata, Open
+Graph image and JSON-LD.
 
 ## Implementation notes
 
@@ -69,6 +70,8 @@ metadata, Open Graph image and JSON-LD.
   playhead and reveals, and shows every element immediately.
 - **No form backend required.** The service/date enquiry form opens a
   pre-filled email draft; a Google Form remains available as a fallback.
+- **Kid-friendly play without tracking.** The Colour Lab changes only local CSS
+  state; it asks for no personal details and does not save the selected look.
 - **Accessibility.** Skip link to a focusable `<main>`, visible focus rings,
   AA-contrast text tokens, `aria-expanded` menu with Escape and focus wrap, and
   decorative art hidden from screen readers.
@@ -83,6 +86,9 @@ metadata, Open Graph image and JSON-LD.
   There is no gallery to maintain and no thumbnails to keep in sync.
 - **Service cards** — the three `<article class="card">` blocks in the Services
   section.
+- **Colour Lab** — change the buttons in `index.html`, palette variables in
+  `assets/css/style.css` (`.colourlab[data-look]`) and behaviour in
+  `assets/js/main.js` (`colourLab`).
 - **Social share card** — replace `assets/img/og.jpg` (1200×630).
 - **Ticker words** — the `.ticker__item` spans; keep the list doubled so the
   loop stays seamless.

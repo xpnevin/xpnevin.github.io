@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NEVIN — Video Editor, Videographer &amp; Photographer</title>
 
-<meta name="description" content="Nevin offers video editing, video recording and photography — one person, from the first frame to the finished file. Open for commissions.">
+<meta name="description" content="Nevin Manoj offers video editing, recording and photography. Explore a playful colour-grading lab, then enquire about a project.">
 <meta name="author" content="Nevin Manoj">
 <meta name="theme-color" content="#070910">
 <link rel="canonical" href="https://xpnevin.github.io/">
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NEVIN">
 <meta property="og:title" content="NEVIN — Video Editor, Videographer &amp; Photographer">
-<meta property="og:description" content="Video editing, recording and photography — one person, from the first frame to the finished file.">
+<meta property="og:description" content="Video editing, recording and photography by Nevin Manoj. Explore the playful Colour Lab and start a project.">
 <meta property="og:url" content="https://xpnevin.github.io/">
 <meta property="og:image" content="https://xpnevin.github.io/assets/img/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -22,7 +22,7 @@
 <meta property="og:image:alt" content="NEVIN — video editing, recording and photography">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="NEVIN — Video Editor, Videographer &amp; Photographer">
-<meta name="twitter:description" content="Video editing, recording and photography — one person, from the first frame to the finished file.">
+<meta name="twitter:description" content="Video editing, recording and photography by Nevin Manoj. Explore the playful Colour Lab and start a project.">
 <meta name="twitter:image" content="https://xpnevin.github.io/assets/img/og.jpg">
 <meta name="twitter:image:alt" content="NEVIN — video editing, recording and photography">
 
@@ -73,6 +73,7 @@
     <nav class="nav" id="nav" aria-label="Primary">
       <a class="nav__link" href="#services">Services</a>
       <a class="nav__link" href="#work">Work</a>
+      <a class="nav__link" href="#lab">Play Lab</a>
       <a class="nav__link" href="#about">About</a>
       <a class="nav__link" href="#contact">Contact</a>
     </nav>
@@ -113,7 +114,7 @@
               Start a project
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
-            <a class="btn btn--ghost" href="#work" data-ripple>See selected work</a>
+            <a class="btn btn--ghost" href="#lab" data-ripple>Try the Colour Lab <span aria-hidden="true">✦</span></a>
           </div>
 
           <ul class="facts rise rise--5">
@@ -189,6 +190,89 @@
       <span class="ticker__item">Delivery</span><span class="ticker__sep">/</span>
     </div>
   </div>
+
+  <!-- ============================== COLOUR LAB ============================== -->
+  <section class="section colourlab-section" id="lab" aria-labelledby="labTitle">
+    <div class="shell">
+      <header class="head">
+        <div class="head__left">
+          <span class="eyebrow mono" data-reveal>A little creative playground</span>
+          <h2 class="head__title" id="labTitle" data-reveal data-d="60">Pick a vibe.<br><em>Paint a scene.</em></h2>
+        </div>
+        <p class="head__lede" data-reveal data-d="120">
+          Tap a colour mood, slide the glow and watch this tiny demo scene change.
+          No uploads, no sign-up — just play.
+        </p>
+      </header>
+
+      <div class="colourlab" id="colourLab" data-look="aurora" data-reveal>
+        <div class="colourlab__stage-wrap">
+          <div class="colourlab__stage" aria-hidden="true">
+            <div class="colourlab__scene">
+              <span class="colourlab__glow"></span>
+              <span class="colourlab__stars"></span>
+              <span class="colourlab__planet"></span>
+              <span class="colourlab__planet-ring"></span>
+              <span class="colourlab__ridge colourlab__ridge--back"></span>
+              <span class="colourlab__ridge colourlab__ridge--front"></span>
+              <span class="colourlab__spark colourlab__spark--one"></span>
+              <span class="colourlab__spark colourlab__spark--two"></span>
+              <span class="colourlab__spark colourlab__spark--three"></span>
+              <div class="colourlab__hud mono">
+                <span>NEVIN / FRAME LAB</span>
+                <span id="labLookBadge">01 — AURORA</span>
+              </div>
+              <span class="colourlab__stamp mono">Demo frame · 01</span>
+            </div>
+          </div>
+          <p class="colourlab__caption">A little made-for-fun scene — not a client project.</p>
+        </div>
+
+        <div class="colourlab__panel">
+          <div class="colourlab__panel-head">
+            <span class="mono">Your turn</span>
+            <span class="colourlab__ready"><i aria-hidden="true"></i>Ready to play</span>
+          </div>
+          <h3 class="colourlab__title">Choose a colour mood</h3>
+          <p class="colourlab__copy">Every tap gives the same scene a different feeling.</p>
+
+          <div class="colourlab__choices" role="group" aria-label="Choose a colour mood">
+            <button class="look-choice" type="button" data-look-choice="aurora" aria-pressed="true">
+              <span class="look-choice__swatch look-choice__swatch--aurora" aria-hidden="true"></span>
+              <span>Aurora</span>
+            </button>
+            <button class="look-choice" type="button" data-look-choice="sunset" aria-pressed="false">
+              <span class="look-choice__swatch look-choice__swatch--sunset" aria-hidden="true"></span>
+              <span>Sunset</span>
+            </button>
+            <button class="look-choice" type="button" data-look-choice="dream" aria-pressed="false">
+              <span class="look-choice__swatch look-choice__swatch--dream" aria-hidden="true"></span>
+              <span>Dream</span>
+            </button>
+            <button class="look-choice" type="button" data-look-choice="candy" aria-pressed="false">
+              <span class="look-choice__swatch look-choice__swatch--candy" aria-hidden="true"></span>
+              <span>Candy</span>
+            </button>
+          </div>
+
+          <div class="colourlab__slider">
+            <div class="colourlab__slider-head">
+              <label for="labIntensity">Glow strength</label>
+              <output id="labIntensityValue" for="labIntensity">65%</output>
+            </div>
+            <input id="labIntensity" type="range" min="20" max="100" step="5" value="65" aria-describedby="labIntensityHint">
+            <p class="colourlab__hint" id="labIntensityHint">Move the slider, or use the arrow keys.</p>
+          </div>
+
+          <div class="colourlab__bottom">
+            <p class="colourlab__status" id="labStatus" role="status" aria-live="polite">Aurora look selected.</p>
+            <button class="colourlab__reset" id="labReset" type="button">Reset <span aria-hidden="true">↺</span></button>
+          </div>
+          <p class="colourlab__privacy">The lab doesn’t ask for personal details or save your choices.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ============================== WORKING TOGETHER ============================== -->
   <section class="stats" aria-label="What to expect">
@@ -506,6 +590,7 @@
         <h2 class="footer__h mono">Explore</h2>
         <a href="#services">Services</a>
         <a href="#work">Work</a>
+        <a href="#lab">Play Lab</a>
         <a href="#about">About</a>
         <a href="#process">Process</a>
       </div>

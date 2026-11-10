@@ -264,6 +264,80 @@
     });
   }
 
+  /* --------------------------------------------- interactive colour lab */
+  function colourLab() {
+    var lab = $("#colourLab");
+    if (!lab) return;
+
+    var choices = $$("[data-look-choice]", lab);
+    var stage = $(".colourlab__stage", lab);
+    var scene = $(".colourlab__scene", lab);
+    var slider = $("#labIntensity", lab);
+    var output = $("#labIntensityValue", lab);
+    var status = $("#labStatus", lab);
+    var badge = $("#labLookBadge", lab);
+    var reset = $("#labReset", lab);
+    var labels = {
+      aurora: "01 — AURORA",
+      sunset: "02 — SUNSET",
+      dream: "03 — DREAM",
+      candy: "04 — CANDY"
+    };
+
+    function setLook(look, announce) {
+      if (!Object.prototype.hasOwnProperty.call(labels, look)) return;
+      lab.setAttribute("data-look", look);
+      choices.forEach(function (choice) {
+        var selected = choice.getAttribute("data-look-choice") === look;
+        choice.setAttribute("aria-pressed", String(selected));
+      });
+      if (badge) badge.textContent = labels[look];
+      if (status && announce) {
+        status.textContent = look.charAt(0).toUpperCase() + look.slice(1) + " look selected.";
+      }
+    }
+
+    function setIntensity() {
+      if (!slider) return;
+      var level = Number(slider.value) || 65;
+      lab.style.setProperty("--lab-intensity", (level / 100).toFixed(2));
+      if (output) output.textContent = level + "%";
+    }
+
+    choices.forEach(function (choice) {
+      choice.addEventListener("click", function () {
+        setLook(choice.getAttribute("data-look-choice"), true);
+      });
+    });
+
+    if (slider) slider.addEventListener("input", setIntensity);
+
+    if (reset) {
+      reset.addEventListener("click", function () {
+        setLook("aurora", true);
+        if (slider) slider.value = "65";
+        setIntensity();
+      });
+    }
+
+    if (stage && scene && fine && !reduced) {
+      onPointerFrame(stage, function (event) {
+        var bounds = stage.getBoundingClientRect();
+        var x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+        var y = ((event.clientY - bounds.top) / bounds.height) * 2 - 1;
+        scene.style.setProperty("--tilt-x", (-y * 4).toFixed(2) + "deg");
+        scene.style.setProperty("--tilt-y", (x * 5).toFixed(2) + "deg");
+      });
+      stage.addEventListener("pointerleave", function () {
+        scene.style.setProperty("--tilt-x", "0deg");
+        scene.style.setProperty("--tilt-y", "0deg");
+      }, { passive: true });
+    }
+
+    setLook(lab.getAttribute("data-look") || "aurora", false);
+    setIntensity();
+  }
+
   /* ---------------------------------------------------------- copy address */
   function copyEmail() {
     var btn = $("#copyEmail");
@@ -399,7 +473,7 @@
 
   /* ------------------------------------------------------------------- boot */
   function boot() {
-    [chrome, spy, menu, reveal, commissionForm, copyEmail, magnetic,
+    [chrome, spy, menu, reveal, commissionForm, colourLab, copyEmail, magnetic,
      cardGlow, ripple, timecode, year].forEach(function (module) {
       try { module(); } catch (err) {
         if (window.console && console.warn) console.warn("[nevin] " + module.name + " failed:", err);
