@@ -439,30 +439,88 @@
     });
   }
 
-  /* -------------------------------------------------------------- timecode */
+  /* ----------------------------------------------------- timecode + sequence transport */
   function timecode() {
-    var cells = [$("#tcBar"), $("#tcSeq"), $("#tcFoot")].filter(Boolean);
-    if (!cells.length) return;
-
+    var cells = [$("#tcBar"), $("#tcFoot")].filter(Boolean);
+    var seqCell = $("#tcSeq");
+    var playhead = $(".seq__playhead");
     var fps = 24;
     var started = performance.now();
 
     function pad(n) { return n < 10 ? "0" + n : String(n); }
 
-    function paint() {
-      var t = (performance.now() - started) / 1000;
-      var stamp = pad(Math.floor(t / 3600) % 24) + ":" +
-                  pad(Math.floor(t / 60) % 60) + ":" +
-                  pad(Math.floor(t) % 60) + ":" +
-                  pad(Math.floor(t * fps) % fps);
+    function stampFromFrames(totalFrames) {
+      var frames = totalFrames % fps;
+      var totalSeconds = Math.floor(totalFrames / fps);
+      return pad(Math.floor(totalSeconds / 3600) % 24) + ":" +
+             pad(Math.floor(totalSeconds / 60) % 60) + ":" +
+             pad(totalSeconds % 60) + ":" + pad(frames);
+    }
+
+    function paintClock() {
+      var totalFrames = Math.floor(((performance.now() - started) / 1000) * fps);
+      var stamp = stampFromFrames(totalFrames);
       for (var i = 0; i < cells.length; i++) cells[i].textContent = stamp;
     }
 
-    paint();
-    if (reduced) return; /* a still readout is fine for the motion-sensitive */
+    paintClock();
 
-    /* 4 Hz is enough for a decorative clock and costs almost nothing. */
-    window.setInterval(function () { if (!doc.hidden) paint(); }, 250);
+    /* The page clock needs only a quiet 4 Hz update. The visible edit transport
+       is different: it uses compositor-only transforms and changes its label at
+       the declared 24 fps, so the playhead and sequence timecode never drift. */
+    if (reduced) {
+      if (seqCell) seqCell.textContent = stampFromFrames(Math.round(36 * fps * .38));
+      return;
+    }
+
+    window.setInterval(function () { if (!doc.hidden) paintClock(); }, 250);
+
+    if (!seqCell || !playhead) return;
+
+    var sequenceFrames = 36 * fps;
+    var loopMs = 18000;
+    var loopStarted = performance.now();
+    var pausedProgress = 0;
+    var transportFrame = -1;
+    var transportRaf = 0;
+    var isPaused = false;
+
+    function paintTransport(now) {
+      if (isPaused) return;
+      var progress = ((now - loopStarted) % loopMs) / loopMs;
+      /* Fade across the invisible reset point: the loop never appears to snap. */
+      var edge = .018;
+      var opacity = progress < edge ? progress / edge : (progress > 1 - edge ? (1 - progress) / edge : 1);
+      var frame = Math.min(sequenceFrames, Math.round(progress * sequenceFrames));
+
+      playhead.style.transform = "translate3d(" + (progress * 100).toFixed(3) + "%,0,0)";
+      playhead.style.opacity = opacity.toFixed(3);
+      if (frame !== transportFrame) {
+        transportFrame = frame;
+        seqCell.textContent = stampFromFrames(frame);
+      }
+      transportRaf = raf(paintTransport);
+    }
+
+    function pauseTransport() {
+      if (isPaused) return;
+      pausedProgress = ((performance.now() - loopStarted) % loopMs) / loopMs;
+      isPaused = true;
+      if (transportRaf) window.cancelAnimationFrame(transportRaf);
+    }
+
+    function resumeTransport() {
+      if (!isPaused) return;
+      loopStarted = performance.now() - pausedProgress * loopMs;
+      isPaused = false;
+      transportRaf = raf(paintTransport);
+    }
+
+    doc.addEventListener("visibilitychange", function () {
+      if (doc.hidden) pauseTransport();
+      else resumeTransport();
+    });
+    transportRaf = raf(paintTransport);
   }
 
   /* ------------------------------------------------------------------- year */
