@@ -7,7 +7,7 @@
 
 <meta name="description" content="Nevin Manoj offers video editing, recording and photography. Explore a playful colour-grading lab, then enquire about a project.">
 <meta name="author" content="Nevin Manoj">
-<meta name="theme-color" content="#f7f5f0">
+<meta name="theme-color" id="themeColor" content="#f7f5f0">
 <link rel="canonical" href="https://xpnevin.github.io/">
 
 <!-- Open Graph / Twitter -->
@@ -33,9 +33,23 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
 
-<!-- Marks the document as JS-capable so CSS can opt into enhanced behaviour.
-     Without JS nothing is hidden, the nav stays inline and the page is fully readable. -->
-<script>document.documentElement.classList.add("js");</script>
+<!-- Restore the visitor's colour preference before the stylesheet paints.
+     Without JS the site remains a complete, readable light experience. -->
+<script>
+(function () {
+  var root = document.documentElement;
+  var theme = "light";
+  try {
+    var saved = window.localStorage.getItem("nevin-theme");
+    theme = saved === "dark" || saved === "light" ? saved :
+      (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  } catch (err) { /* A private browser may deny storage; light remains a safe fallback. */ }
+  root.setAttribute("data-theme", theme);
+  root.classList.add("js");
+  var themeColor = document.getElementById("themeColor");
+  if (themeColor) themeColor.setAttribute("content", theme === "dark" ? "#10151f" : "#f7f5f0");
+})();
+</script>
 
 <script type="application/ld+json">
 {
@@ -80,6 +94,11 @@
 
     <div class="topbar__end">
       <span class="tc mono" id="tcBar" aria-hidden="true">00:00:00:00</span>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"/></svg>
+        <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2.5v2M12 19.5v2M21.5 12h-2M4.5 12h-2M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4M18.7 18.7l-1.4-1.4M6.7 6.7 5.3 5.3"/></svg>
+        <span class="sr-only">Toggle colour theme</span>
+      </button>
       <a class="btn btn--primary btn--xs" href="#contact" data-ripple>Start a project</a>
       <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
         <span></span><span></span>
@@ -163,7 +182,7 @@
             </div>
 
             <div class="seq__bot">
-              <span class="mono" id="tcSeq">00:00:00:00</span>
+              <span class="mono" id="tcSeq">00:00:18:04</span>
               <span class="mono seq__bot-dim">00:00:36:00</span>
             </div>
           </div>
