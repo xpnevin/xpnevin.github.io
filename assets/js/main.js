@@ -50,7 +50,6 @@
   }
 
   window.addEventListener("scroll", requestScroll, { passive: true });
-  window.addEventListener("resize", requestScroll, { passive: true });
 
   /* ------------------------------------------- top bar, progress, back to top */
   function chrome() {
@@ -58,18 +57,24 @@
     var fill = $("#progressFill");
     var top = $("#toTop");
 
-    function maxScroll() {
-      return Math.max(1, doc.documentElement.scrollHeight - window.innerHeight);
+    var scrollLimit = 1;
+
+    function measureScrollLimit() {
+      scrollLimit = Math.max(1, doc.documentElement.scrollHeight - window.innerHeight);
     }
 
-    onScroll(function (y) {
-      /* Read first, then write: measuring after a class change would force a
-         synchronous layout on every scroll frame. */
-      var max = maxScroll();
-      var vh = window.innerHeight;
+    /* Geometry is measured when it can change, not for every scroll frame. */
+    measureScrollLimit();
+    window.addEventListener("resize", function () {
+      measureScrollLimit();
+      requestScroll();
+    }, { passive: true });
+    window.addEventListener("load", measureScrollLimit, { once: true });
 
+    onScroll(function (y) {
+      var vh = window.innerHeight;
       if (bar) bar.classList.toggle("is-stuck", y > 8);
-      if (fill) fill.style.transform = "scaleX(" + Math.min(1, y / max).toFixed(4) + ")";
+      if (fill) fill.style.transform = "scaleX(" + Math.min(1, y / scrollLimit).toFixed(4) + ")";
       if (top) top.classList.toggle("is-shown", y > vh * 0.7);
     });
 
@@ -439,88 +444,54 @@
     });
   }
 
-  /* ----------------------------------------------------- timecode + sequence transport */
+  /* -------------------------------------------------------------- timecode */
   function timecode() {
     var cells = [$("#tcBar"), $("#tcFoot")].filter(Boolean);
-    var seqCell = $("#tcSeq");
-    var playhead = $(".seq__playhead");
+    if (!cells.length) return;
+
     var fps = 24;
     var started = performance.now();
 
     function pad(n) { return n < 10 ? "0" + n : String(n); }
 
-    function stampFromFrames(totalFrames) {
+    function paint() {
+      var totalFrames = Math.floor(((performance.now() - started) / 1000) * fps);
       var frames = totalFrames % fps;
       var totalSeconds = Math.floor(totalFrames / fps);
-      return pad(Math.floor(totalSeconds / 3600) % 24) + ":" +
-             pad(Math.floor(totalSeconds / 60) % 60) + ":" +
-             pad(totalSeconds % 60) + ":" + pad(frames);
-    }
-
-    function paintClock() {
-      var totalFrames = Math.floor(((performance.now() - started) / 1000) * fps);
-      var stamp = stampFromFrames(totalFrames);
+      var stamp = pad(Math.floor(totalSeconds / 3600) % 24) + ":" +
+                  pad(Math.floor(totalSeconds / 60) % 60) + ":" +
+                  pad(totalSeconds % 60) + ":" + pad(frames);
       for (var i = 0; i < cells.length; i++) cells[i].textContent = stamp;
     }
 
-    paintClock();
+    paint();
+    if (reduced) return;
+    window.setInterval(function () { if (!doc.hidden) paint(); }, 250);
+  }
 
-    /* The page clock needs only a quiet 4 Hz update. The visible edit transport
-       is different: it uses compositor-only transforms and changes its label at
-       the declared 24 fps, so the playhead and sequence timecode never drift. */
-    if (reduced) {
-      if (seqCell) seqCell.textContent = stampFromFrames(Math.round(36 * fps * .38));
-      return;
-    }
+  /* ----------------------------------------------------------- colour theme */
+  function theme() {
+    var toggle = $("#themeToggle");
+    if (!toggle) return;
 
-    window.setInterval(function () { if (!doc.hidden) paintClock(); }, 250);
+    var root = doc.documentElement;
+    var themeColor = $("#themeColor");
 
-    if (!seqCell || !playhead) return;
-
-    var sequenceFrames = 36 * fps;
-    var loopMs = 18000;
-    var loopStarted = performance.now();
-    var pausedProgress = 0;
-    var transportFrame = -1;
-    var transportRaf = 0;
-    var isPaused = false;
-
-    function paintTransport(now) {
-      if (isPaused) return;
-      var progress = ((now - loopStarted) % loopMs) / loopMs;
-      /* Fade across the invisible reset point: the loop never appears to snap. */
-      var edge = .018;
-      var opacity = progress < edge ? progress / edge : (progress > 1 - edge ? (1 - progress) / edge : 1);
-      var frame = Math.min(sequenceFrames, Math.round(progress * sequenceFrames));
-
-      playhead.style.transform = "translate3d(" + (progress * 100).toFixed(3) + "%,0,0)";
-      playhead.style.opacity = opacity.toFixed(3);
-      if (frame !== transportFrame) {
-        transportFrame = frame;
-        seqCell.textContent = stampFromFrames(frame);
+    function apply(next, persist) {
+      var dark = next === "dark";
+      root.setAttribute("data-theme", dark ? "dark" : "light");
+      toggle.setAttribute("aria-pressed", String(dark));
+      toggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+      if (themeColor) themeColor.setAttribute("content", dark ? "#10151f" : "#f7f5f0");
+      if (persist) {
+        try { window.localStorage.setItem("nevin-theme", dark ? "dark" : "light"); } catch (err) { /* Preference remains for this visit. */ }
       }
-      transportRaf = raf(paintTransport);
     }
 
-    function pauseTransport() {
-      if (isPaused) return;
-      pausedProgress = ((performance.now() - loopStarted) % loopMs) / loopMs;
-      isPaused = true;
-      if (transportRaf) window.cancelAnimationFrame(transportRaf);
-    }
-
-    function resumeTransport() {
-      if (!isPaused) return;
-      loopStarted = performance.now() - pausedProgress * loopMs;
-      isPaused = false;
-      transportRaf = raf(paintTransport);
-    }
-
-    doc.addEventListener("visibilitychange", function () {
-      if (doc.hidden) pauseTransport();
-      else resumeTransport();
+    apply(root.getAttribute("data-theme") === "dark" ? "dark" : "light", false);
+    toggle.addEventListener("click", function () {
+      apply(root.getAttribute("data-theme") === "dark" ? "light" : "dark", true);
     });
-    transportRaf = raf(paintTransport);
   }
 
   /* ------------------------------------------------------------------- year */
@@ -531,7 +502,7 @@
 
   /* ------------------------------------------------------------------- boot */
   function boot() {
-    [chrome, spy, menu, reveal, commissionForm, colourLab, copyEmail, magnetic,
+    [theme, chrome, spy, menu, reveal, commissionForm, colourLab, copyEmail, magnetic,
      cardGlow, ripple, timecode, year].forEach(function (module) {
       try { module(); } catch (err) {
         if (window.console && console.warn) console.warn("[nevin] " + module.name + " failed:", err);

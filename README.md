@@ -60,15 +60,16 @@ Graph image and JSON-LD.
 - **No scroll hijacking.** Native scrolling and `scroll-behavior: smooth` are
   left alone, so nested scrollers, keyboards, trackpads and the scrollbar all
   behave normally.
-- **Motion has a small budget.** The progress bar, sticky header and back-to-top
-  button share one throttled scroll pipeline; reveals use `IntersectionObserver`.
-  The utility timecode updates at 4 Hz, while the visible 24 fps sequence
-  transport uses compositor-only transforms and pauses when its tab is hidden.
+- **Smooth by default.** The progress bar, sticky header and back-to-top button
+  share one throttled scroll pipeline; page geometry is measured on resize/load,
+  not on each scroll frame. The sequence is a calm static composition, while the
+  non-essential utility timecode updates at a quiet 4 Hz only while visible.
 - **Cheap by default.** No canvas, particles or custom cursor. Glass blur is
   limited to interface surfaces; the background is static and the 3D lens is
   CSS-only. The page ships exactly one image — the social share card.
-- **Motion is optional.** `prefers-reduced-motion` stops the ticker, lens,
-  playhead and reveals, and shows every element immediately.
+- **Motion and colour are optional.** `prefers-reduced-motion` stops ambient
+  movement and reveals every element immediately. The light/dark switch follows
+  the system preference on a first visit and remembers an explicit choice.
 - **No form backend required.** The service/date enquiry form opens a
   pre-filled email draft; a Google Form remains available as a fallback.
 - **Kid-friendly play without tracking.** The Colour Lab changes only local CSS
