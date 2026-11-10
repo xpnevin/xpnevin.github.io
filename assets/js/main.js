@@ -278,10 +278,10 @@
     var badge = $("#labLookBadge", lab);
     var reset = $("#labReset", lab);
     var labels = {
-      aurora: "01 — AURORA",
-      sunset: "02 — SUNSET",
-      dream: "03 — DREAM",
-      candy: "04 — CANDY"
+      aurora: "01 — COBALT",
+      sunset: "02 — SAND",
+      dream: "03 — CLOUD",
+      candy: "04 — FILM"
     };
 
     function setLook(look, announce) {
@@ -293,7 +293,7 @@
       });
       if (badge) badge.textContent = labels[look];
       if (status && announce) {
-        status.textContent = look.charAt(0).toUpperCase() + look.slice(1) + " look selected.";
+        status.textContent = labels[look].replace(/^\d+ — /, "").toLowerCase().replace(/^./, function (letter) { return letter.toUpperCase(); }) + " look selected.";
       }
     }
 

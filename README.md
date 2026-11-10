@@ -19,16 +19,16 @@ robots.txt, sitemap.xml # Crawler hints
 
 The page takes cues from a video-editing interface: numbered sections,
 monospace technical labels, a glass timeline panel and a CSS-built 3D camera
-lens in the hero. Cyan and violet light accents add depth without adding heavy
-images, libraries or stock portfolio work.
+lens in the hero. The visual system uses Cloud White space, Sand Dune structure
+and precise Cobalt Flash actions without adding heavy images, libraries or stock
+portfolio work.
 
 | Token | Value |
 | --- | --- |
-| Background | `#070910` |
-| Panel | `#0d111b` |
-| Text / dim / faint | `#f4f7ff` · `#b7c0d1` · `#929db2` |
-| Accent | Cyan `#55ddff` · violet `#a58bff` |
-| Record red | `#ff4d6d` (playhead, REC dot only) |
+| Cloud White — 60% | `#f7f5f0` canvas · `#fffdf9` paper surfaces |
+| Sand Dune — 30% | `#8a7966` structure · `#493e34` deep ink |
+| Cobalt Flash — 10% | `#064fca` actions, active states and focus |
+| Record red | `#bd5048` (playhead, REC dot only) |
 | Type | Inter (UI + display), JetBrains Mono (technical labels) |
 
 ## Sections
