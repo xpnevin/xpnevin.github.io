@@ -466,6 +466,14 @@
   }
 
   /* ---------------------------------------------------------------- modules */
+  /* Two frames after first paint, so the hidden initial states never flash
+     and the entrance animations always start from zero. */
+  function loaded() {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { doc.body.classList.add("is-loaded"); });
+    });
+  }
+
   function chatForm() {
     if (!els.composer || !els.input) return;
 
@@ -597,7 +605,7 @@
   }
 
   function boot() {
-    var modules = [chatForm, connectionForm, theme, footerYear];
+    var modules = [loaded, chatForm, connectionForm, theme, footerYear];
     for (var i = 0; i < modules.length; i++) {
       try { modules[i](); } catch (err) { /* one module cannot break the rest */ }
     }

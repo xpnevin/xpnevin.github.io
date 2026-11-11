@@ -42,10 +42,14 @@ footer with an outlined wordmark.
 ## Features
 
 Numbered section rules · film-gate hero · ledger services with hover states ·
-interactive Colour Lab with four looks, a glow slider and pointer tilt · enormous
-outlined wordmark · scrolling marquee · sticky header, scroll progress and back
-to top · active nav link · staggered reveals · service/date enquiry email draft ·
-copy-email button · live timecode · theme toggle that remembers the choice ·
+interactive Colour Lab with four looks, a glow slider, pointer tilt and a bloom
+on every look swap · enormous outlined wordmark · scrolling marquee with faded
+edges · sticky header, scroll progress and back to top · active nav link ·
+a choreographed page entrance (masked title reveal, staggered rises) ·
+staggered scroll reveals · gentle scroll drift and a cursor follow light on
+fine pointers · sheen, lift and glow hover polish on buttons, cards and chips ·
+a theme toggle that crossfades the palette and remembers the choice ·
+service/date enquiry email draft · copy-email button · live timecode ·
 responsive down to small phones · `prefers-reduced-motion` support.
 
 ## Implementation notes
@@ -61,7 +65,8 @@ responsive down to small phones · `prefers-reduced-motion` support.
   `aria-pressed` on the look choices, `aria-live` status messages, decorative art
   hidden from screen readers.
 - **Cheap by default.** No canvas, particles or custom cursor; the only image is
-  the social share card.
+  the social share card. Every effect is a transform, opacity or clip-path,
+  driven through one rAF-throttled scroll pipeline.
 - **No form backend.** The enquiry form opens a pre-filled email draft; the
   Google Form stays available as a fallback.
 

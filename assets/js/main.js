@@ -51,6 +51,74 @@
 
   window.addEventListener("scroll", requestScroll, { passive: true });
 
+  /* ---------------------------------------------------- entrance choreography */
+  /* Two frames after first paint, so the hidden initial states never flash
+     and the entrance animations always start from zero. */
+  function loaded() {
+    raf(function () {
+      raf(function () { body.classList.add("is-loaded"); });
+    });
+  }
+
+  /* ------------------------------------------------------ cursor follow light */
+  function cursorGlow() {
+    if (!fine || reduced) return;
+
+    var glow = doc.createElement("div");
+    glow.className = "cursor-glow";
+    glow.setAttribute("aria-hidden", "true");
+    body.appendChild(glow);
+
+    var tx = window.innerWidth / 2;
+    var ty = window.innerHeight / 2;
+    var cx = tx;
+    var cy = ty;
+    var started = false;
+
+    function frame() {
+      cx += (tx - cx) * 0.16;
+      cy += (ty - cy) * 0.16;
+      glow.style.transform = "translate3d(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px,0)";
+      raf(frame);
+    }
+
+    doc.addEventListener("pointermove", function (e) {
+      tx = e.clientX;
+      ty = e.clientY;
+      if (!started) { started = true; cx = tx; cy = ty; frame(); }
+      body.classList.add("pointer-active");
+    }, { passive: true });
+
+    doc.addEventListener("pointerout", function (e) {
+      if (!e.relatedTarget) body.classList.remove("pointer-active");
+    }, { passive: true });
+  }
+
+  /* -------------------------------------------------- gentle depth on scroll */
+  function drift() {
+    if (!fine || reduced) return;
+
+    var aside = $(".hero__aside");
+    var mark = $(".footer__wordmark");
+    if (!aside && !mark) return;
+
+    onScroll(function (y) {
+      if (aside) {
+        var drop = Math.min(y, 900) * 0.055;
+        aside.style.transform = "translate3d(0," + (-drop).toFixed(1) + "px,0)";
+      }
+      if (mark) {
+        var rect = mark.getBoundingClientRect();
+        var vh = window.innerHeight;
+        if (rect.top < vh && rect.bottom > 0) {
+          var progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh + rect.height)));
+          var shift = (0.5 - progress) * 44;
+          mark.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0)";
+        }
+      }
+    });
+  }
+
   /* ------------------------------------------- top bar, progress, back to top */
   function chrome() {
     var bar = $("#topbar");
@@ -292,6 +360,12 @@
     function setLook(look, announce) {
       if (!Object.prototype.hasOwnProperty.call(labels, look)) return;
       lab.setAttribute("data-look", look);
+      /* A quick bloom covers the snap between looks. */
+      if (stage && announce && !reduced) {
+        stage.classList.remove("is-switching");
+        void stage.offsetWidth;
+        stage.classList.add("is-switching");
+      }
       choices.forEach(function (choice) {
         var selected = choice.getAttribute("data-look-choice") === look;
         choice.setAttribute("aria-pressed", String(selected));
@@ -502,8 +576,8 @@
 
   /* ------------------------------------------------------------------- boot */
   function boot() {
-    [theme, chrome, spy, menu, reveal, commissionForm, colourLab, copyEmail, magnetic,
-     cardGlow, ripple, timecode, year].forEach(function (module) {
+    [theme, loaded, chrome, spy, menu, reveal, commissionForm, colourLab, copyEmail, magnetic,
+     cardGlow, ripple, drift, cursorGlow, timecode, year].forEach(function (module) {
       try { module(); } catch (err) {
         if (window.console && console.warn) console.warn("[nevin] " + module.name + " failed:", err);
       }

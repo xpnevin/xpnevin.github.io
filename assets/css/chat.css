@@ -6,6 +6,27 @@
 
 .chatpage main { padding-bottom: clamp(3rem, 6vw, 5rem); }
 
+/* -------------------------------------------------- entrance choreography */
+/* chat.js adds .is-loaded to <body> after first paint; without JS every
+   element below simply stays visible. Keyframes ship in style.css. */
+.js .chat-intro__idx,
+.js .chat-intro__title,
+.js .chat-intro__lede,
+.js .chat-rail > *,
+.js .console,
+.js .settings {
+  opacity: 0;
+}
+
+body.is-loaded .chat-intro__idx { animation: fade-up 0.8s var(--swing) 0.05s both; }
+body.is-loaded .chat-intro__title { animation: fade-up 0.9s var(--swing) 0.14s both; }
+body.is-loaded .chat-intro__lede { animation: fade-up 0.9s var(--swing) 0.28s both; }
+body.is-loaded .console { animation: fade-up 0.9s var(--swing) 0.34s both; }
+body.is-loaded .chat-rail > *:nth-child(1) { animation: fade-up 0.9s var(--swing) 0.4s both; }
+body.is-loaded .chat-rail > *:nth-child(2) { animation: fade-up 0.9s var(--swing) 0.48s both; }
+body.is-loaded .chat-rail > *:nth-child(3) { animation: fade-up 0.9s var(--swing) 0.56s both; }
+body.is-loaded .settings { animation: fade-up 0.9s var(--swing) 0.5s both; }
+
 /* ------------------------------------------------------------------ intro */
 .chat-intro {
   display: grid;
@@ -192,7 +213,15 @@
 }
 
 /* --------------------------------------------------------------- messages */
-.msg { display: grid; gap: 0.45rem; }
+.msg {
+  display: grid;
+  gap: 0.45rem;
+  animation: msg-in 0.45s var(--swing) both;
+}
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
 .msg__meta {
   display: flex;
   align-items: baseline;
@@ -442,4 +471,5 @@
   .console__rec i,
   .msg__dots i { animation: none; }
   .msg__dots i { opacity: 0.6; }
+  .msg { animation: none; }
 }

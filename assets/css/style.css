@@ -25,6 +25,10 @@
 
   --shell: min(1360px, 92vw);
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --swing: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-soft: 0 18px 44px -18px rgba(0, 0, 0, 0.55);
+  --shadow-acc: 0 14px 30px -12px color-mix(in srgb, var(--acc) 55%, transparent);
+  --shadow-bar: 0 18px 38px -24px rgba(0, 0, 0, 0.55);
   --gut: clamp(1.1rem, 2.4vw, 2rem);
 }
 
@@ -39,6 +43,8 @@
   --acc: #c3481c;
   --acc-2: #a83a13;
   --acc-ink: #fff6ee;
+  --shadow-soft: 0 18px 44px -18px rgba(77, 56, 30, 0.3);
+  --shadow-bar: 0 18px 38px -24px rgba(77, 56, 30, 0.24);
 }
 
 [data-theme="dark"] { color-scheme: dark; }
@@ -53,6 +59,7 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   background: var(--bg);
+  transition: background-color 0.5s ease;
 }
 
 body {
@@ -66,6 +73,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 body.nav-open { overflow: hidden; }
@@ -123,6 +131,30 @@ a { color: inherit; text-decoration: none; }
 }
 .skip:focus { transform: translateY(0); }
 
+/* Theme crossfade — components that don't manage their own transitions
+   borrow these so the theme toggle melts instead of snapping. Declared
+   early so a component's own transition list always wins later. */
+.section--tint,
+.ticker,
+.gate,
+.gate__thumb,
+.hero__facts li,
+.idcard,
+.colourlab__panel,
+.colourlab__stage,
+.contact__panel,
+.footer,
+.console,
+.composer,
+.rail-card,
+.settings__form,
+.log {
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+}
+
+/* Anchored sections clear the sticky bar when jumped to. */
+section[id] { scroll-margin-top: 80px; }
+
 .grain {
   position: fixed;
   inset: 0;
@@ -142,7 +174,8 @@ a { color: inherit; text-decoration: none; }
 .progress__fill {
   display: block;
   height: 100%;
-  background: var(--acc);
+  background: linear-gradient(90deg, var(--acc), var(--acc-2));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--acc) 60%, transparent);
   transform: scaleX(0);
   transform-origin: 0 50%;
 }
@@ -158,7 +191,11 @@ a { color: inherit; text-decoration: none; }
   -webkit-backdrop-filter: blur(16px);
   transition: border-color 0.35s var(--ease), background-color 0.35s var(--ease);
 }
-.topbar.is-stuck { border-bottom-color: var(--line); }
+.topbar.is-stuck {
+  border-bottom-color: var(--line);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  box-shadow: var(--shadow-bar);
+}
 
 .topbar__inner {
   width: var(--shell);
@@ -168,7 +205,9 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: space-between;
   gap: 1.6rem;
+  transition: min-height 0.4s var(--ease);
 }
+.topbar.is-stuck .topbar__inner { min-height: 56px; }
 
 .brand {
   display: inline-flex;
@@ -268,7 +307,11 @@ a { color: inherit; text-decoration: none; }
   transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
 }
 .theme-toggle:hover { border-color: var(--acc); color: var(--acc); }
-.theme-toggle svg { width: 15px; height: 15px; }
+.theme-toggle svg {
+  width: 15px; height: 15px;
+  transition: transform 0.5s var(--swing);
+}
+.theme-toggle:hover svg { transform: rotate(-14deg); }
 [data-theme="dark"] .theme-toggle__sun { display: none; }
 [data-theme="light"] .theme-toggle__moon { display: none; }
 
@@ -289,20 +332,50 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   cursor: pointer;
   transition: background-color 0.3s var(--ease), color 0.3s var(--ease),
-              border-color 0.3s var(--ease), transform 0.3s var(--ease);
+              border-color 0.3s var(--ease), transform 0.3s var(--ease),
+              box-shadow 0.3s var(--ease);
 }
 .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* A soft sheen sweeps across on hover. */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.3) 50%, transparent 58%);
+  transform: translateX(-130%);
+  transition: transform 0.65s var(--ease);
+  pointer-events: none;
+}
+.btn:hover::after { transform: translateX(130%); }
+.btn:hover { transform: translateY(-2px); }
+.btn:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 0.12s;
+}
+
 .btn--primary {
   background: var(--acc);
   color: var(--acc-ink);
   border-color: var(--acc);
 }
-.btn--primary:hover { background: var(--acc-2); border-color: var(--acc-2); }
+.btn--primary:hover {
+  background: var(--acc-2);
+  border-color: var(--acc-2);
+  box-shadow: var(--shadow-acc);
+}
 .btn--ghost {
   border-color: var(--line-2);
   color: var(--fg);
 }
-.btn--ghost:hover { border-color: var(--acc); color: var(--acc); }
+.btn--ghost::after {
+  background: linear-gradient(105deg, transparent 42%, color-mix(in srgb, var(--fg) 14%, transparent) 50%, transparent 58%);
+}
+.btn--ghost:hover {
+  border-color: var(--acc);
+  color: var(--acc);
+  box-shadow: 0 10px 24px -16px color-mix(in srgb, var(--acc) 45%, transparent);
+}
 .btn--xs { padding: 0.55rem 0.85rem; font-size: 0.6rem; letter-spacing: 0.12em; }
 .btn--sm { padding: 0.75rem 1.05rem; font-size: 0.63rem; }
 
@@ -556,12 +629,80 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.1em;
 }
 
+/* -------------------------------------------------- entrance choreography */
+/* JS adds .is-loaded to <body> one frame after first paint, starting the
+   staggered hero entrance on both pages. Without JS nothing is hidden. */
+.js .topbar,
+.js .hero__rail,
+.js .hero__meta,
+.js .hero__title-a,
+.js .hero__title-b,
+.js .hero__foot,
+.js .hero__aside > * {
+  opacity: 0;
+}
+
+body.is-loaded .topbar { animation: bar-in 0.9s var(--swing) both; }
+body.is-loaded .hero__rail { animation: fade-in 0.9s ease 0.05s both; }
+body.is-loaded .hero__meta { animation: fade-up 0.8s var(--swing) 0.1s both; }
+body.is-loaded .hero__title-a { animation: line-mask 1.05s var(--swing) 0.18s both; }
+body.is-loaded .hero__title-b { animation: line-mask 1.05s var(--swing) 0.32s both; }
+body.is-loaded .hero__foot { animation: fade-up 0.9s var(--swing) 0.55s both; }
+body.is-loaded .hero__aside > .gate { animation: fade-up 0.9s var(--swing) 0.42s both; }
+body.is-loaded .hero__aside > .hero__facts { animation: fade-up 0.9s var(--swing) 0.6s both; }
+
+@keyframes bar-in {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes line-mask {
+  from {
+    opacity: 0;
+    clip-path: inset(-0.08em -0.2em 104% -0.02em);
+    transform: translateY(0.4em);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(-0.08em -0.2em -0.22em -0.02em);
+    transform: translateY(0);
+  }
+}
+
+/* A recording dribble runs down the hero rail. */
+.hero__rail-line { position: relative; overflow: hidden; }
+.hero__rail-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -6%;
+  width: 100%;
+  height: 4px;
+  background: var(--acc);
+  animation: rail-drip 3.4s var(--ease) infinite;
+}
+@keyframes rail-drip {
+  0% { top: -6%; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 102%; opacity: 0; }
+}
+
 /* ----------------------------------------------------------------- ticker */
 .ticker {
   overflow: hidden;
   border-block: 1px solid var(--line);
   padding: 0.7rem 0;
   background: var(--bg);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
 }
 .ticker__track {
   display: flex;
@@ -647,9 +788,12 @@ a { color: inherit; text-decoration: none; }
   gap: clamp(0.8rem, 2vw, 2rem);
   align-items: start;
   padding: clamp(1.5rem, 2.8vw, 2.3rem) 0.4rem;
-  transition: background-color 0.35s var(--ease), padding-left 0.35s var(--ease);
+  transition: background-color 0.35s var(--ease), transform 0.35s var(--ease);
 }
-.ledger__link:hover { background: color-mix(in srgb, var(--acc) 7%, transparent); }
+.ledger__link:hover {
+  background: color-mix(in srgb, var(--acc) 7%, transparent);
+  transform: translateX(8px);
+}
 .ledger__n {
   font-size: 0.6rem;
   letter-spacing: 0.1em;
@@ -687,6 +831,13 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.52rem;
   letter-spacing: 0.16em;
   color: var(--mute);
+  transition: border-color 0.3s var(--ease), color 0.3s var(--ease),
+              background-color 0.3s var(--ease);
+}
+.ledger__link:hover .ledger__chip {
+  border-color: var(--acc);
+  color: var(--acc);
+  background: color-mix(in srgb, var(--acc) 8%, transparent);
 }
 .ledger__arrow {
   align-self: center;
@@ -715,7 +866,8 @@ a { color: inherit; text-decoration: none; }
   padding: clamp(1.4rem, 3vw, 2.4rem);
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--bg) 60%, transparent);
-  transition: border-color 0.4s var(--ease), background-color 0.4s var(--ease);
+  transition: border-color 0.4s var(--ease), background-color 0.4s var(--ease),
+              transform 0.45s var(--swing), box-shadow 0.45s var(--swing);
 }
 .account::after {
   content: "";
@@ -730,8 +882,16 @@ a { color: inherit; text-decoration: none; }
   transition: opacity 0.4s var(--ease);
   pointer-events: none;
 }
-.account:hover { border-color: var(--acc); }
+.account:hover {
+  border-color: var(--acc);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-soft);
+}
 .account:hover::after { opacity: 1; }
+.account__cta svg {
+  transition: transform 0.35s var(--ease);
+}
+.account:hover .account__cta svg { transform: translate(2px, -2px); }
 .account__n {
   font-size: 0.6rem;
   color: var(--acc);
@@ -878,6 +1038,14 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.53rem;
   letter-spacing: 0.14em;
   color: var(--mute);
+  transition: border-color 0.3s var(--ease), color 0.3s var(--ease),
+              background-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.chip:hover {
+  border-color: var(--acc);
+  color: var(--fg);
+  background: color-mix(in srgb, var(--acc) 7%, transparent);
+  transform: translateY(-2px);
 }
 
 /* ---------------------------------------------------------------- process */
@@ -889,15 +1057,19 @@ a { color: inherit; text-decoration: none; }
 .step {
   padding: clamp(1.4rem, 2.6vw, 2.2rem) clamp(1rem, 2vw, 1.8rem) clamp(1.4rem, 2.6vw, 2.2rem) 0;
   border-right: 1px solid var(--line);
+  transition: background-color 0.35s var(--ease), border-color 0.5s ease;
 }
 .step:last-child { border-right: 0; }
+.step:hover { background: color-mix(in srgb, var(--acc) 5%, transparent); }
 .step__n {
   display: block;
   font-size: 0.6rem;
   letter-spacing: 0.14em;
   color: var(--acc);
   margin-bottom: 0.9rem;
+  transition: transform 0.35s var(--ease);
 }
+.step:hover .step__n { transform: translateX(6px); }
 .step__title {
   font-family: var(--serif);
   font-weight: 400;
@@ -933,6 +1105,15 @@ a { color: inherit; text-decoration: none; }
   transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.06);
   transition: transform 0.6s var(--ease);
   will-change: transform;
+}
+
+/* A quick bloom covers the snap when a new look is picked. */
+.colourlab__stage.is-switching .colourlab__scene {
+  animation: look-swap 0.5s var(--swing) both;
+}
+@keyframes look-swap {
+  from { filter: brightness(1.55) saturate(1.5); }
+  to { filter: none; }
 }
 .colourlab__scene > span,
 .colourlab__scene > div { position: absolute; }
@@ -1106,13 +1287,16 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   cursor: pointer;
   transition: border-color 0.25s var(--ease), color 0.25s var(--ease),
-              background-color 0.25s var(--ease);
+              background-color 0.25s var(--ease), transform 0.2s var(--ease),
+              box-shadow 0.3s var(--ease);
 }
 .look-choice:hover { border-color: var(--line-2); color: var(--fg); }
+.look-choice:active { transform: scale(0.97); }
 .look-choice[aria-pressed="true"] {
   border-color: var(--acc);
   color: var(--fg);
   background: color-mix(in srgb, var(--acc) 8%, transparent);
+  box-shadow: 0 8px 20px -12px color-mix(in srgb, var(--acc) 50%, transparent);
 }
 .look-choice__swatch {
   width: 20px; height: 20px;
@@ -1269,7 +1453,9 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--mute);
+  transition: color 0.3s var(--ease);
 }
+.field:focus-within .field__label { color: var(--acc); }
 .field__hint {
   font-family: var(--mono);
   font-size: 0.46rem;
@@ -1305,6 +1491,7 @@ a { color: inherit; text-decoration: none; }
   outline: none;
   border-color: var(--acc);
   background: color-mix(in srgb, var(--acc) 4%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--acc) 16%, transparent);
 }
 .field input[type="date"] { color-scheme: inherit; }
 
@@ -1384,7 +1571,9 @@ a { color: inherit; text-decoration: none; }
   -webkit-text-stroke: 1px var(--line-2);
   user-select: none;
   overflow: hidden;
+  transition: -webkit-text-stroke-color 0.5s var(--ease);
 }
+.footer__wordmark:hover { -webkit-text-stroke-color: var(--acc); }
 .footer__bottom {
   display: flex;
   flex-wrap: wrap;
@@ -1427,14 +1616,39 @@ a { color: inherit; text-decoration: none; }
 /* ----------------------------------------------------------------- reveal */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  transform: translateY(26px);
+  transition: opacity 0.9s var(--swing), transform 0.9s var(--swing);
   transition-delay: var(--d, 0ms);
+  will-change: opacity, transform;
 }
 .js [data-reveal].is-in {
   opacity: 1;
   transform: none;
 }
+
+/* ------------------------------------------------------------ cursor glow */
+/* A soft follow light, created and driven by main.js on fine pointers. */
+.cursor-glow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 480px;
+  height: 480px;
+  margin: -240px 0 0 -240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--acc) 13%, transparent) 0%, transparent 62%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 30;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+  will-change: transform;
+}
+[data-theme="light"] .cursor-glow {
+  mix-blend-mode: normal;
+  background: radial-gradient(circle, rgba(195, 72, 28, 0.12) 0%, rgba(195, 72, 28, 0.05) 38%, transparent 66%);
+}
+body.pointer-active .cursor-glow { opacity: 1; }
 
 /* ------------------------------------------------------------- responsive */
 @media (max-width: 1180px) {
@@ -1457,6 +1671,7 @@ a { color: inherit; text-decoration: none; }
 
 @media (max-width: 900px) {
   .topbar__inner { min-height: 60px; }
+  .topbar.is-stuck .topbar__inner { min-height: 52px; }
   .tc { display: none; }
 
   .nav {
@@ -1570,7 +1785,10 @@ a { color: inherit; text-decoration: none; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .js [data-reveal] { opacity: 1; transform: none; }
+  .js [data-reveal] { opacity: 1; transform: none; will-change: auto; }
   .ticker__track { animation: none; transform: none; }
   .gate__glow { animation: none; }
+  .hero__rail-line::after { animation: none; opacity: 0; }
+  .colourlab__stage.is-switching .colourlab__scene { animation: none; }
+  .cursor-glow { display: none; }
 }
