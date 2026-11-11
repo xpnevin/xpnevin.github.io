@@ -7,7 +7,7 @@
 
 <meta name="description" content="Nevin Manoj offers video editing, recording and photography. Explore a playful colour-grading lab, then enquire about a project.">
 <meta name="author" content="Nevin Manoj">
-<meta name="theme-color" id="themeColor" content="#f7f5f0">
+<meta name="theme-color" id="themeColor" content="#0b0c0e">
 <link rel="canonical" href="https://xpnevin.github.io/">
 
 <!-- Open Graph / Twitter -->
@@ -26,11 +26,11 @@
 <meta name="twitter:image" content="https://xpnevin.github.io/assets/img/og.jpg">
 <meta name="twitter:image:alt" content="NEVIN — video editing, recording and photography">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f7f5f0'/%3E%3Crect x='.5' y='.5' width='63' height='63' rx='13.5' fill='none' stroke='%23493e34' stroke-opacity='.18'/%3E%3Cpath d='M20 45V19h3.6l16.8 21V19H44v26h-3.6L23.6 24v21z' fill='%23064fca'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0c0e'/%3E%3Cpath d='M20 45V19h3.6l16.8 21V19H44v26h-3.6L23.6 24v21z' fill='%23f4743b'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
 
 <!-- Restore the visitor's colour preference before the stylesheet paints.
@@ -38,16 +38,16 @@
 <script>
 (function () {
   var root = document.documentElement;
-  var theme = "light";
+  var theme = "dark";
   try {
     var saved = window.localStorage.getItem("nevin-theme");
     theme = saved === "dark" || saved === "light" ? saved :
-      (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-  } catch (err) { /* A private browser may deny storage; light remains a safe fallback. */ }
+      (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+  } catch (err) { /* A private browser may deny storage; dark remains a safe fallback. */ }
   root.setAttribute("data-theme", theme);
   root.classList.add("js");
   var themeColor = document.getElementById("themeColor");
-  if (themeColor) themeColor.setAttribute("content", theme === "dark" ? "#10151f" : "#f7f5f0");
+  if (themeColor) themeColor.setAttribute("content", theme === "dark" ? "#0b0c0e" : "#f3eee4");
 })();
 </script>
 
@@ -74,6 +74,7 @@
 
 <a class="skip" href="#main">Skip to content</a>
 
+<div class="grain" aria-hidden="true"></div>
 <div class="progress" id="progress" aria-hidden="true"><span class="progress__fill" id="progressFill"></span></div>
 
 <header class="topbar" id="topbar">
@@ -87,14 +88,14 @@
     <nav class="nav" id="nav" aria-label="Primary">
       <a class="nav__link" href="#services">Services</a>
       <a class="nav__link" href="#work">Work</a>
-      <a class="nav__link" href="#lab">Play Lab</a>
+      <a class="nav__link" href="#lab">Colour Lab</a>
       <a class="nav__link" href="#about">About</a>
       <a class="nav__link" href="#contact">Contact</a>
     </nav>
 
     <div class="topbar__end">
       <span class="tc mono" id="tcBar" aria-hidden="true">00:00:00:00</span>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode" aria-pressed="true">
         <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"/></svg>
         <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2.5v2M12 19.5v2M21.5 12h-2M4.5 12h-2M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4M18.7 18.7l-1.4-1.4M6.7 6.7 5.3 5.3"/></svg>
         <span class="sr-only">Toggle colour theme</span>
@@ -111,83 +112,76 @@
 
   <!-- ============================== HERO ============================== -->
   <section class="hero" id="top">
-    <div class="shell">
-      <p class="metalist rise rise--1">
-        <span class="metalist__dot" aria-hidden="true"></span>
+    <div class="shell hero__grid">
+
+      <div class="hero__rail" aria-hidden="true">
         <span class="mono">Open for commissions</span>
-        <span class="metalist__rule" aria-hidden="true"></span>
-        <span class="mono metalist__dim">Editing · Recording · Photography</span>
-      </p>
+        <span class="hero__rail-line"></span>
+        <span class="mono hero__rail-year">MMXXVI</span>
+      </div>
 
-      <h1 class="hero__title rise rise--2">Your story,<br>made to <em>last</em>.</h1>
+      <div class="hero__body">
+        <p class="hero__meta mono">
+          <span>Editing · Recording · Photography</span>
+          <span class="hero__meta-dim">One person, brief to delivery</span>
+        </p>
 
-      <div class="hero__row">
-        <div class="hero__lead">
-          <p class="hero__lede rise rise--3">
+        <h1 class="hero__title">
+          <span class="hero__title-a">Your story,</span>
+          <span class="hero__title-b">made to <em>last</em>.</span>
+        </h1>
+
+        <div class="hero__foot">
+          <p class="hero__lede">
             Thoughtful video, photography and editing — made with you, from the first
             hello to the finished file.
           </p>
 
-          <div class="hero__cta rise rise--4">
+          <div class="hero__cta">
             <a class="btn btn--primary" href="#contact" data-ripple data-magnetic="0.3">
               Start a project
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
             <a class="btn btn--ghost" href="#lab" data-ripple>Try the Colour Lab <span aria-hidden="true">✦</span></a>
           </div>
-
-          <ul class="facts rise rise--5">
-            <li>One person, from brief to final file</li>
-            <li>Clear, friendly communication</li>
-            <li>Digital delivery, ready to share</li>
-          </ul>
         </div>
+      </div>
 
-        <div class="hero__visual rise rise--3">
-          <div class="lens-scene" aria-hidden="true">
-            <span class="lens-scene__orbit"></span>
-            <span class="lens-scene__body"></span>
+      <div class="hero__aside">
+        <figure class="gate">
+          <div class="gate__bar mono">
+            <span>SEQ 01</span>
+            <span>1920 × 1080</span>
+            <span>24 FPS</span>
           </div>
-          <div class="seq" aria-hidden="true">
-            <div class="seq__top">
-              <span class="mono">SEQ 01</span>
-              <span class="mono seq__top-mid">1920 × 1080</span>
-              <span class="mono">24 fps</span>
-            </div>
 
-            <div class="seq__ruler"><span class="seq__ruler-fill"></span></div>
-
-            <div class="seq__rows">
-              <div class="seq__row">
-                <b class="seq__tag">V2</b>
-                <div class="seq__lane">
-                  <span class="clip clip--1">TITLE</span>
-                  <span class="clip clip--2">B-ROLL</span>
-                </div>
-              </div>
-              <div class="seq__row">
-                <b class="seq__tag">V1</b>
-                <div class="seq__lane">
-                  <span class="clip clip--3">MAIN</span>
-                  <span class="clip clip--4">CUTAWAY</span>
-                </div>
-              </div>
-              <div class="seq__row">
-                <b class="seq__tag">A1</b>
-                <div class="seq__lane">
-                  <span class="clip clip--5 clip--audio">MUSIC</span>
-                </div>
-              </div>
-              <span class="seq__playhead"></span>
-            </div>
-
-            <div class="seq__bot">
-              <span class="mono" id="tcSeq">00:00:18:04</span>
-              <span class="mono seq__bot-dim">00:00:36:00</span>
-            </div>
+          <div class="gate__stage" aria-hidden="true">
+            <span class="gate__grid"></span>
+            <span class="gate__glow"></span>
+            <span class="gate__mono">N</span>
+            <span class="gate__corner gate__corner--tl"></span>
+            <span class="gate__corner gate__corner--tr"></span>
+            <span class="gate__corner gate__corner--bl"></span>
+            <span class="gate__corner gate__corner--br"></span>
+            <span class="gate__cap mono">Open for commissions</span>
           </div>
-          <p class="hero__caption mono">Sequence 01 — the shape of a typical edit</p>
-        </div>
+
+          <div class="gate__strip" aria-hidden="true">
+            <span class="gate__thumb gate__thumb--1"></span>
+            <span class="gate__thumb gate__thumb--2"></span>
+            <span class="gate__thumb gate__thumb--3"></span>
+            <span class="gate__thumb gate__thumb--4"></span>
+            <span class="gate__strip-label mono">Reel 001</span>
+          </div>
+
+          <figcaption class="gate__note mono">Sequence 01 — the shape of a typical edit</figcaption>
+        </figure>
+
+        <ul class="hero__facts">
+          <li><span class="mono">01</span> One person, from brief to final file</li>
+          <li><span class="mono">02</span> Clear, friendly communication</li>
+          <li><span class="mono">03</span> Digital delivery, ready to share</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -195,30 +189,200 @@
   <!-- ============================== TICKER ============================== -->
   <div class="ticker" aria-hidden="true">
     <div class="ticker__track">
-      <span class="ticker__item">Video editing</span><span class="ticker__sep">/</span>
-      <span class="ticker__item">Recording</span><span class="ticker__sep">/</span>
-      <span class="ticker__item">Photography</span><span class="ticker__sep">/</span>
-      <span class="ticker__item">Colour</span><span class="ticker__sep">/</span>
-      <span class="ticker__item">Sound</span><span class="ticker__sep">/</span>
-      <span class="ticker__item">Delivery</span><span class="ticker__sep">/</span>
-      <span class="ticker__item">Video editing</span><span class="ticker__sep">/</span>
-      <span class="ticker__item">Recording</span><span class="ticker__sep">/</span>
-      <span class="ticker__item">Photography</span><span class="ticker__sep">/</span>
-      <span class="ticker__item">Colour</span><span class="ticker__sep">/</span>
-      <span class="ticker__item">Sound</span><span class="ticker__sep">/</span>
-      <span class="ticker__item">Delivery</span><span class="ticker__sep">/</span>
+      <span class="ticker__item">Video editing</span><span class="ticker__sep">✳</span>
+      <span class="ticker__item">Recording</span><span class="ticker__sep">✳</span>
+      <span class="ticker__item">Photography</span><span class="ticker__sep">✳</span>
+      <span class="ticker__item">Colour</span><span class="ticker__sep">✳</span>
+      <span class="ticker__item">Sound</span><span class="ticker__sep">✳</span>
+      <span class="ticker__item">Delivery</span><span class="ticker__sep">✳</span>
+      <span class="ticker__item">Video editing</span><span class="ticker__sep">✳</span>
+      <span class="ticker__item">Recording</span><span class="ticker__sep">✳</span>
+      <span class="ticker__item">Photography</span><span class="ticker__sep">✳</span>
+      <span class="ticker__item">Colour</span><span class="ticker__sep">✳</span>
+      <span class="ticker__item">Sound</span><span class="ticker__sep">✳</span>
+      <span class="ticker__item">Delivery</span><span class="ticker__sep">✳</span>
     </div>
   </div>
 
-  <!-- ============================== COLOUR LAB ============================== -->
-  <section class="section colourlab-section" id="lab" aria-labelledby="labTitle">
+  <!-- ============================== 01 SERVICES ============================== -->
+  <section class="section" id="services">
     <div class="shell">
-      <header class="head">
-        <div class="head__left">
-          <span class="eyebrow mono" data-reveal>A little creative playground</span>
-          <h2 class="head__title" id="labTitle" data-reveal data-d="60">Pick a vibe.<br><em>Paint a scene.</em></h2>
+      <header class="sec-head">
+        <p class="sec-head__idx mono" data-reveal><span>01</span>Services</p>
+        <h2 class="sec-head__title" data-reveal data-d="60">Three things,<br>done <em>properly</em>.</h2>
+        <p class="sec-head__lede" data-reveal data-d="120">
+          From capturing the moment to handing over the finished file. Take one
+          service or the whole pipeline — it works either way.
+        </p>
+      </header>
+
+      <ol class="ledger">
+        <li class="ledger__row" data-reveal>
+          <a class="ledger__link" href="#contact">
+            <span class="ledger__n mono">01</span>
+            <span class="ledger__body">
+              <span class="ledger__name">Video editing</span>
+              <span class="ledger__desc">Clean cuts, thoughtful pacing, colour correction and balanced sound for a finished video that feels intentional.</span>
+              <span class="ledger__tags mono">Cut &amp; pacing · Colour correction · Sound balancing</span>
+            </span>
+            <span class="ledger__chip mono">Edit</span>
+            <span class="ledger__arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+
+        <li class="ledger__row" data-reveal data-d="70">
+          <a class="ledger__link" href="#contact">
+            <span class="ledger__n mono">02</span>
+            <span class="ledger__body">
+              <span class="ledger__name">Video recording</span>
+              <span class="ledger__desc">Clear, carefully framed footage for occasions, social content and interviews — recorded so it is easy to cut later.</span>
+              <span class="ledger__tags mono">Occasions &amp; events · Social content · Framing &amp; light</span>
+            </span>
+            <span class="ledger__chip mono">Record</span>
+            <span class="ledger__arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+
+        <li class="ledger__row" data-reveal data-d="140">
+          <a class="ledger__link" href="#contact">
+            <span class="ledger__n mono">03</span>
+            <span class="ledger__body">
+              <span class="ledger__name">Photography</span>
+              <span class="ledger__desc">Thoughtfully composed photographs with natural colour and a clean, polished finish — moments and details worth keeping.</span>
+              <span class="ledger__tags mono">Occasions · Portraits · Photo finishing</span>
+            </span>
+            <span class="ledger__chip mono">Stills</span>
+            <span class="ledger__arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================== 02 WORK ============================== -->
+  <section class="section section--tint" id="work">
+    <div class="shell">
+      <header class="sec-head">
+        <p class="sec-head__idx mono" data-reveal><span>02</span>Where the work lives</p>
+        <h2 class="sec-head__title" data-reveal data-d="60">See it, don't<br>take my <em>word</em>.</h2>
+        <p class="sec-head__lede" data-reveal data-d="120">
+          No stock frames, no mock-ups, nothing staged on this page. The edits,
+          recordings and photographs go straight to Instagram — watch them there,
+          at full quality.
+        </p>
+      </header>
+
+      <div class="feeds">
+        <a class="account" href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer" data-reveal>
+          <span class="account__n mono">01</span>
+          <span class="account__label mono">Main creative account</span>
+          <span class="account__handle">@nevin.xp</span>
+          <span class="account__desc">The latest video edits, recordings and the photographs that go with them.</span>
+          <span class="account__cta mono">
+            Open on Instagram
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </span>
+        </a>
+
+        <a class="account" href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer" data-reveal data-d="90">
+          <span class="account__n mono">02</span>
+          <span class="account__label mono">Personal account</span>
+          <span class="account__handle">@nevin_manoj__</span>
+          <span class="account__desc">Life beyond the timeline — personal moments and behind the scenes.</span>
+          <span class="account__cta mono">
+            Open on Instagram
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </span>
+        </a>
+      </div>
+
+      <p class="feeds__note mono" data-reveal data-d="160">Both open Instagram in a new tab</p>
+    </div>
+  </section>
+
+  <!-- ============================== 03 ABOUT ============================== -->
+  <section class="section" id="about">
+    <div class="shell">
+      <header class="sec-head sec-head--tight">
+        <p class="sec-head__idx mono" data-reveal><span>03</span>About</p>
+        <h2 class="sec-head__title" data-reveal data-d="60">Capturing moments,<br>shaping <em>stories</em>.</h2>
+      </header>
+
+      <div class="about">
+        <aside class="idcard" data-reveal>
+          <div class="idcard__top mono">
+            <span>Nevin Manoj</span>
+            <span class="live" aria-hidden="true"></span>
+          </div>
+          <dl class="idcard__facts">
+            <div><dt class="mono">Services</dt><dd>Editing, recording &amp; photography</dd></div>
+            <div><dt class="mono">Focus</dt><dd>Videos &amp; photographs</dd></div>
+            <div><dt class="mono">Delivery</dt><dd>Digital, ready to share</dd></div>
+            <div><dt class="mono">Status</dt><dd>Open for commissions</dd></div>
+          </dl>
+          <p class="idcard__mono" aria-hidden="true">N</p>
+        </aside>
+
+        <div class="about__text">
+          <p class="about__p about__p--first" data-reveal>Hi, I'm <strong>Nevin</strong> — I offer video editing, video recording and photography, with care for both the moment and the final result.</p>
+          <p class="about__p" data-reveal data-d="60">From recording footage and taking photographs to arranging clips, correcting colour and balancing sound, I focus on making every video and image clear, polished and personal.</p>
+          <p class="about__p" data-reveal data-d="120">Whether you need <strong>a video edited</strong>, <strong>an occasion recorded</strong> or <strong>photographs captured</strong>, my goal is the same — to give you work that feels natural and helps you hold on to the moment.</p>
+
+          <blockquote class="statement" data-reveal data-d="180">
+            The moment only happens once.<br>The edit is how you <em>keep it</em>.
+          </blockquote>
+
+          <ul class="chips" data-reveal data-d="240">
+            <li class="chip mono">Video editing</li>
+            <li class="chip mono">Video recording</li>
+            <li class="chip mono">Photography</li>
+            <li class="chip mono">Colour correction</li>
+            <li class="chip mono">Sound balancing</li>
+            <li class="chip mono">Photo finishing</li>
+          </ul>
         </div>
-        <p class="head__lede" data-reveal data-d="120">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== 04 PROCESS ============================== -->
+  <section class="section section--tint" id="process">
+    <div class="shell">
+      <header class="sec-head">
+        <p class="sec-head__idx mono" data-reveal><span>04</span>Process</p>
+        <h2 class="sec-head__title" data-reveal data-d="60">Brief, shoot,<br><em>deliver</em>.</h2>
+        <p class="sec-head__lede" data-reveal data-d="120">
+          Three steps, no account managers. You talk to the person doing the work.
+        </p>
+      </header>
+
+      <ol class="steps">
+        <li class="step" data-reveal>
+          <span class="step__n mono">01</span>
+          <h3 class="step__title">Tell me the brief</h3>
+          <p class="step__body">The service, the date and the deadline. Share any references or clips you already have.</p>
+        </li>
+        <li class="step" data-reveal data-d="80">
+          <span class="step__n mono">02</span>
+          <h3 class="step__title">Shoot &amp; cut</h3>
+          <p class="step__body">I record the footage or work with yours, then cut, correct colour and balance the sound.</p>
+        </li>
+        <li class="step" data-reveal data-d="160">
+          <span class="step__n mono">03</span>
+          <h3 class="step__title">Take delivery</h3>
+          <p class="step__body">You get the finished file digitally, ready to share — quote and delivery details agreed up front.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================== 05 COLOUR LAB ============================== -->
+  <section class="section" id="lab" aria-labelledby="labTitle">
+    <div class="shell">
+      <header class="sec-head">
+        <p class="sec-head__idx mono" data-reveal><span>05</span>A little creative playground</p>
+        <h2 class="sec-head__title" id="labTitle" data-reveal data-d="60">Pick a vibe.<br><em>Paint a scene.</em></h2>
+        <p class="sec-head__lede" data-reveal data-d="120">
           Tap a colour mood, slide the glow and watch this tiny demo scene change.
           No uploads, no sign-up — just play.
         </p>
@@ -226,17 +390,16 @@
 
       <div class="colourlab" id="colourLab" data-look="aurora" data-reveal>
         <div class="colourlab__stage-wrap">
-          <div class="colourlab__stage" aria-hidden="true">
-            <div class="colourlab__scene">
-              <span class="colourlab__glow"></span>
-              <span class="colourlab__stars"></span>
-              <span class="colourlab__planet"></span>
-              <span class="colourlab__planet-ring"></span>
-              <span class="colourlab__ridge colourlab__ridge--back"></span>
-              <span class="colourlab__ridge colourlab__ridge--front"></span>
-              <span class="colourlab__spark colourlab__spark--one"></span>
-              <span class="colourlab__spark colourlab__spark--two"></span>
-              <span class="colourlab__spark colourlab__spark--three"></span>
+          <div class="colourlab__stage">
+            <div class="colourlab__scene" aria-hidden="true">
+              <span class="scene__sky"></span>
+              <span class="scene__glow"></span>
+              <span class="scene__sun"></span>
+              <span class="scene__haze"></span>
+              <span class="scene__ridge scene__ridge--back"></span>
+              <span class="scene__ridge scene__ridge--front"></span>
+              <span class="scene__vignette"></span>
+              <span class="scene__scan"></span>
               <div class="colourlab__hud mono">
                 <span>NEVIN / FRAME LAB</span>
                 <span id="labLookBadge">01 — COBALT</span>
@@ -244,7 +407,7 @@
               <span class="colourlab__stamp mono">Demo frame · 01</span>
             </div>
           </div>
-          <p class="colourlab__caption">A little made-for-fun scene — not a client project.</p>
+          <p class="colourlab__caption mono">A little made-for-fun scene — not a client project.</p>
         </div>
 
         <div class="colourlab__panel">
@@ -252,6 +415,7 @@
             <span class="mono">Your turn</span>
             <span class="colourlab__ready"><i aria-hidden="true"></i>Ready to play</span>
           </div>
+
           <h3 class="colourlab__title">Choose a colour mood</h3>
           <p class="colourlab__copy">Every tap gives the same scene a different feeling.</p>
 
@@ -293,298 +457,78 @@
     </div>
   </section>
 
-  <!-- ============================== WORKING TOGETHER ============================== -->
-  <section class="stats" aria-label="What to expect">
-    <div class="shell stats__grid">
-      <article class="stat" data-reveal>
-        <span class="stat__num">3</span>
-        <p class="stat__label">Services — editing, recording and photography</p>
-      </article>
-      <article class="stat" data-reveal data-d="70">
-        <span class="stat__num">One</span>
-        <p class="stat__label">person on your project, from brief to delivery</p>
-      </article>
-      <article class="stat" data-reveal data-d="140">
-        <span class="stat__num">Direct</span>
-        <p class="stat__label">Work with the person doing the work</p>
-      </article>
-      <article class="stat" data-reveal data-d="210">
-        <span class="stat__num">Digital</span>
-        <p class="stat__label">Finished files, ready to share</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- ============================== 01 SERVICES ============================== -->
-  <section class="section" id="services">
+  <!-- ============================== 06 CONTACT ============================== -->
+  <section class="section section--contact" id="contact">
     <div class="shell">
-      <header class="head">
-        <div class="head__left">
-          <span class="eyebrow mono" data-reveal>01 — Services</span>
-          <h2 class="head__title" data-reveal data-d="60">Three things,<br>done <em>properly</em>.</h2>
-        </div>
-        <p class="head__lede" data-reveal data-d="120">
-          From capturing the moment to handing over the finished file. Take one
-          service or the whole pipeline — it works either way.
-        </p>
-      </header>
-
-      <div class="services">
-        <article class="card" data-reveal>
-          <div class="card__in">
-            <div class="card__top">
-              <span class="card__idx mono">01</span>
-              <span class="chip mono">Edit</span>
-            </div>
-            <h3 class="card__title">Video editing</h3>
-            <p class="card__body">Clean cuts, thoughtful pacing, colour correction and balanced sound for a finished video that feels intentional.</p>
-            <ul class="spec">
-              <li>Cut &amp; pacing</li>
-              <li>Colour correction</li>
-              <li>Sound balancing</li>
-            </ul>
-            <a class="card__link" href="#contact">Enquire about editing <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-
-        <article class="card" data-reveal data-d="80">
-          <div class="card__in">
-            <div class="card__top">
-              <span class="card__idx mono">02</span>
-              <span class="chip mono">Record</span>
-            </div>
-            <h3 class="card__title">Video recording</h3>
-            <p class="card__body">Clear, carefully framed footage for occasions, social content and interviews — recorded so it is easy to cut later.</p>
-            <ul class="spec">
-              <li>Occasions &amp; events</li>
-              <li>Social content</li>
-              <li>Framing &amp; light</li>
-            </ul>
-            <a class="card__link" href="#contact">Enquire about recording <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-
-        <article class="card" data-reveal data-d="160">
-          <div class="card__in">
-            <div class="card__top">
-              <span class="card__idx mono">03</span>
-              <span class="chip mono">Stills</span>
-            </div>
-            <h3 class="card__title">Photography</h3>
-            <p class="card__body">Thoughtfully composed photographs with natural colour and a clean, polished finish — moments and details worth keeping.</p>
-            <ul class="spec">
-              <li>Occasions</li>
-              <li>Portraits</li>
-              <li>Photo finishing</li>
-            </ul>
-            <a class="card__link" href="#contact">Enquire about photography <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== 02 WORK ============================== -->
-  <section class="section" id="work">
-    <div class="shell">
-      <header class="head">
-        <div class="head__left">
-          <span class="eyebrow mono" data-reveal>02 — Where the work lives</span>
-          <h2 class="head__title" data-reveal data-d="60">See it, don't<br>take my <em>word</em>.</h2>
-        </div>
-        <p class="head__lede" data-reveal data-d="120">
-          No stock frames, no mock-ups, nothing staged on this page. The edits,
-          recordings and photographs go straight to Instagram — watch them there,
-          at full quality.
-        </p>
-      </header>
-
-      <div class="accounts">
-        <article class="account" data-reveal>
-          <div class="account__in">
-            <div class="account__top">
-              <span class="account__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
-              </span>
-              <span class="chip mono">Main creative account</span>
-            </div>
-            <h3 class="account__handle">@nevin.xp</h3>
-            <p class="account__body">The latest video edits, recordings and the photographs that go with them.</p>
-            <a class="account__link" href="https://www.instagram.com/nevin.xp?igsh=MW91ZHN6OXN3MDl4dg==" target="_blank" rel="noopener noreferrer">
-              Open on Instagram
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="account" data-reveal data-d="90">
-          <div class="account__in">
-            <div class="account__top">
-              <span class="account__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
-              </span>
-              <span class="chip mono">Personal account</span>
-            </div>
-            <h3 class="account__handle">@nevin_manoj__</h3>
-            <p class="account__body">Life beyond the timeline — personal moments and behind the scenes.</p>
-            <a class="account__link" href="https://www.instagram.com/nevin_manoj__?igsh=MWlpbWEycWlocDZvMQ==" target="_blank" rel="noopener noreferrer">
-              Open on Instagram
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-            </a>
-          </div>
-        </article>
-      </div>
-
-      <p class="accounts__note mono" data-reveal data-d="160">Both open Instagram in a new tab</p>
-    </div>
-  </section>
-
-  <!-- ============================== 03 ABOUT ============================== -->
-  <section class="section" id="about">
-    <div class="shell about">
-      <div class="about__aside">
-        <span class="eyebrow mono" data-reveal>03 — About</span>
-        <h2 class="head__title" data-reveal data-d="60">Capturing moments,<br>shaping <em>stories</em>.</h2>
-        <div class="idcard" data-reveal data-d="120">
-          <div class="idcard__top mono">
-            <span>NEVIN MANOJ</span>
-            <span class="idcard__dot" aria-hidden="true"></span>
-          </div>
-          <dl class="idcard__facts">
-            <div><dt class="mono">Services</dt><dd>Editing, recording &amp; photography</dd></div>
-            <div><dt class="mono">Focus</dt><dd>Videos &amp; photographs</dd></div>
-            <div><dt class="mono">Delivery</dt><dd>Digital, ready to share</dd></div>
-            <div><dt class="mono">Status</dt><dd><span class="live" aria-hidden="true"></span> Open for commissions</dd></div>
-          </dl>
-        </div>
-      </div>
-
-      <div class="about__body">
-        <p data-reveal>Hi, I'm <strong>Nevin</strong> — I offer video editing, video recording and photography, with care for both the moment and the final result.</p>
-        <p data-reveal data-d="60">From recording footage and taking photographs to arranging clips, correcting colour and balancing sound, I focus on making every video and image clear, polished and personal.</p>
-        <p data-reveal data-d="120">Whether you need <strong>a video edited</strong>, <strong>an occasion recorded</strong> or <strong>photographs captured</strong>, my goal is the same — to give you work that feels natural and helps you hold on to the moment.</p>
-
-        <p class="statement" data-reveal data-d="180">
-          The moment only happens once. The edit is how you keep it.
-        </p>
-
-        <ul class="chips" data-reveal data-d="240">
-          <li class="chip mono">Video editing</li>
-          <li class="chip mono">Video recording</li>
-          <li class="chip mono">Photography</li>
-          <li class="chip mono">Colour correction</li>
-          <li class="chip mono">Sound balancing</li>
-          <li class="chip mono">Photo finishing</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== 04 PROCESS ============================== -->
-  <section class="section" id="process">
-    <div class="shell">
-      <header class="head">
-        <div class="head__left">
-          <span class="eyebrow mono" data-reveal>04 — Process</span>
-          <h2 class="head__title" data-reveal data-d="60">Brief, shoot,<br><em>deliver</em>.</h2>
-        </div>
-        <p class="head__lede" data-reveal data-d="120">
-          Three steps, no account managers. You talk to the person doing the work.
-        </p>
-      </header>
-
-      <ol class="steps">
-        <li class="step" data-reveal>
-          <span class="step__n mono">01</span>
-          <h3 class="step__title">Tell me the brief</h3>
-          <p class="step__body">The service, the date and the deadline. Share any references or clips you already have.</p>
-        </li>
-        <li class="step" data-reveal data-d="80">
-          <span class="step__n mono">02</span>
-          <h3 class="step__title">Shoot &amp; cut</h3>
-          <p class="step__body">I record the footage or work with yours, then cut, correct colour and balance the sound.</p>
-        </li>
-        <li class="step" data-reveal data-d="160">
-          <span class="step__n mono">03</span>
-          <h3 class="step__title">Take delivery</h3>
-          <p class="step__body">You get the finished file digitally, ready to share — quote and delivery details agreed up front.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- ============================== 05 CONTACT ============================== -->
-  <section class="section" id="contact">
-    <div class="shell">
-      <header class="head">
-        <div class="head__left">
-          <span class="eyebrow mono" data-reveal>05 — Contact</span>
-          <h2 class="head__title" data-reveal data-d="60">Let's make something<br>worth <em>keeping</em>.</h2>
-        </div>
-        <p class="head__lede" data-reveal data-d="120">
+      <header class="sec-head sec-head--tight">
+        <p class="sec-head__idx mono" data-reveal><span>06</span>Contact</p>
+        <h2 class="sec-head__title" data-reveal data-d="60">Let's make something<br>worth <em>keeping</em>.</h2>
+        <p class="sec-head__lede" data-reveal data-d="120">
           Choose the service and preferred date to prepare a quick email, or write
           directly if you already have a brief ready.
         </p>
       </header>
 
       <div class="contact">
-        <div class="contact__card" data-reveal>
-          <div class="contact__in">
-            <span class="contact__label mono">Email</span>
-            <a class="contact__mail" href="mailto:xpnevin@gmail.com">xpnevin@gmail.com</a>
-            <div class="contact__actions">
-              <a class="btn btn--primary btn--sm" href="mailto:xpnevin@gmail.com" data-ripple>
-                Write an email
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
-              </a>
-              <button class="btn btn--ghost btn--sm" id="copyEmail" type="button" data-ripple data-email="xpnevin@gmail.com">
-                Copy address
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5h10"/></svg>
-              </button>
-            </div>
-            <p class="copystate" id="copyState" role="status" aria-live="polite"></p>
+        <div class="contact__side" data-reveal>
+          <span class="contact__label mono">Email</span>
+          <a class="contact__mail" href="mailto:xpnevin@gmail.com">xpnevin<br>@gmail.com</a>
+          <div class="contact__actions">
+            <a class="btn btn--primary btn--sm" href="mailto:xpnevin@gmail.com" data-ripple>
+              Write an email
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
+            </a>
+            <button class="btn btn--ghost btn--sm" id="copyEmail" type="button" data-ripple data-email="xpnevin@gmail.com">
+              Copy address
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5h10"/></svg>
+            </button>
           </div>
+          <p class="copystate mono" id="copyState" role="status" aria-live="polite"></p>
+          <p class="contact__note">Digital delivery, ready to share. Quote and delivery details agreed up front.</p>
         </div>
 
-        <div class="contact__card contact__card--brief" data-reveal data-d="90">
-          <div class="contact__in">
-            <span class="contact__label mono">Start a commission</span>
-            <p class="contact__brief">Choose a service and preferred date. Add a note if you like; I’ll reply with a quote and delivery details.</p>
-            <form class="brief-form" id="commissionForm" action="mailto:xpnevin@gmail.com" method="post" enctype="text/plain">
-              <div class="brief-form__row">
-                <label class="form-field" for="commissionService">
-                  <span>Service <span class="required-mark" aria-hidden="true">*</span></span>
-                  <select id="commissionService" name="service" required>
-                    <option value="" selected disabled>Choose a service</option>
-                    <option value="Video editing">Video editing</option>
-                    <option value="Video recording">Video recording</option>
-                    <option value="Photography">Photography</option>
-                    <option value="More than one service">More than one service</option>
-                    <option value="Not sure yet">Not sure yet</option>
-                  </select>
-                </label>
-                <label class="form-field" for="commissionDate">
-                  <span>Preferred date or deadline <span class="required-mark" aria-hidden="true">*</span></span>
-                  <input id="commissionDate" name="preferred_date" type="date" required>
-                  <span class="field-hint">If it’s not fixed, choose your best estimate.</span>
-                </label>
-              </div>
-              <label class="form-field" for="commissionName">
-                <span>Your name <span class="field-hint">(optional)</span></span>
-                <input id="commissionName" name="name" type="text" autocomplete="name" placeholder="Name">
+        <div class="contact__panel" data-reveal data-d="90">
+          <span class="contact__label mono">Start a commission</span>
+          <p class="contact__brief">Choose a service and preferred date. Add a note if you like; I’ll reply with a quote and delivery details.</p>
+
+          <form class="brief-form" id="commissionForm" action="mailto:xpnevin@gmail.com" method="post" enctype="text/plain">
+            <div class="brief-form__row">
+              <label class="field" for="commissionService">
+                <span class="field__label">Service <span class="required-mark" aria-hidden="true">*</span></span>
+                <select id="commissionService" name="service" required>
+                  <option value="" selected disabled>Choose a service</option>
+                  <option value="Video editing">Video editing</option>
+                  <option value="Video recording">Video recording</option>
+                  <option value="Photography">Photography</option>
+                  <option value="More than one service">More than one service</option>
+                  <option value="Not sure yet">Not sure yet</option>
+                </select>
               </label>
-              <label class="form-field" for="commissionDetails">
-                <span>Project details <span class="field-hint">(optional)</span></span>
-                <textarea id="commissionDetails" name="details" rows="3" maxlength="1200" placeholder="A few details, references, or links to footage/photos"></textarea>
+              <label class="field" for="commissionDate">
+                <span class="field__label">Preferred date or deadline <span class="required-mark" aria-hidden="true">*</span></span>
+                <input id="commissionDate" name="preferred_date" type="date" required>
+                <span class="field__hint">If it’s not fixed, choose your best estimate.</span>
               </label>
-              <button class="btn btn--primary btn--sm brief-form__submit" type="submit" data-ripple>
-                Prepare enquiry email
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
-              </button>
-            </form>
-            <p class="form-note" id="commissionFormStatus" role="status" aria-live="polite">This prepares an email for you to review and send; it won’t send anything automatically.</p>
-            <a class="commission-alt" href="https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform" target="_blank" rel="noopener noreferrer">Prefer the existing form? Open it in a new tab <span aria-hidden="true">↗</span></a>
-          </div>
+            </div>
+
+            <label class="field" for="commissionName">
+              <span class="field__label">Your name <span class="field__hint">(optional)</span></span>
+              <input id="commissionName" name="name" type="text" autocomplete="name" placeholder="Name">
+            </label>
+
+            <label class="field" for="commissionDetails">
+              <span class="field__label">Project details <span class="field__hint">(optional)</span></span>
+              <textarea id="commissionDetails" name="details" rows="3" maxlength="1200" placeholder="A few details, references, or links to footage/photos"></textarea>
+            </label>
+
+            <button class="btn btn--primary brief-form__submit" type="submit" data-ripple>
+              Prepare enquiry email
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg>
+            </button>
+          </form>
+
+          <p class="form-note" id="commissionFormStatus" role="status" aria-live="polite">This prepares an email for you to review and send; it won’t send anything automatically.</p>
+          <a class="commission-alt mono" href="https://docs.google.com/forms/d/e/1FAIpQLScMMtdlPvcL6o0XBwXqrJbJ3QDt0xGXV8yw5osTftCmaxq7Mw/viewform" target="_blank" rel="noopener noreferrer">Prefer the existing form? Open it in a new tab <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </div>
@@ -609,7 +553,7 @@
         <h2 class="footer__h mono">Explore</h2>
         <a href="#services">Services</a>
         <a href="#work">Work</a>
-        <a href="#lab">Play Lab</a>
+        <a href="#lab">Colour Lab</a>
         <a href="#about">About</a>
         <a href="#process">Process</a>
       </div>
@@ -622,6 +566,8 @@
       </div>
     </div>
   </div>
+
+  <div class="footer__wordmark" aria-hidden="true">NEVIN</div>
 
   <div class="shell footer__bottom">
     <span class="mono">© <span id="year">2026</span> Nevin Manoj</span>

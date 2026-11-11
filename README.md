@@ -8,92 +8,76 @@ framework. Deploys to GitHub Pages as-is.
 
 ```text
 index.html              # The whole page
-assets/css/style.css    # Theme, layout, responsive rules
+assets/css/style.css    # Tokens, layout, components, responsive rules
 assets/js/main.js       # All interactions (dependency-free)
 assets/img/og.jpg       # 1200×630 social share card
 robots.txt, sitemap.xml # Crawler hints
 .github/workflows/      # GitHub Pages deployment
 ```
 
-## Design
+## Design — "cut room"
 
-The page takes cues from a video-editing interface: numbered sections,
-monospace technical labels, a glass timeline panel and a CSS-built 3D camera
-lens in the hero. The visual system uses human-first Liquid Glass surfaces:
-Cloud White space, tactile Sand Dune warmth and precise Cobalt Flash actions.
-It keeps the experience friendly and legible without adding heavy libraries or
-stock portfolio work.
+The page is built like an edit suite rather than a stack of cards: a film gate
+in the hero, a ledger of services, hairline rules instead of glass panels, and
+one warm accent cutting through a dark print-like canvas.
 
 | Token | Value |
 | --- | --- |
-| Cloud White — 60% | `#f7f5f0` canvas · `#fffdf9` paper surfaces |
-| Sand Dune — 30% | `#8a7966` structure · `#493e34` deep ink |
-| Cobalt Flash — 10% | `#064fca` actions, active states and focus |
-| Record red | `#bd5048` (playhead, REC dot only) |
-| Type | Inter (UI + display), JetBrains Mono (technical labels) |
+| Ink | `#0b0c0e` — the page in dark mode |
+| Bone | `#f3eee4` — the page in light mode |
+| Ember | `#f4743b` dark / `#c3481c` light — accent, links, active states |
+| Record red | `#e5484d` — the REC dot only |
+| Type | Instrument Serif (display), Inter Tight (UI), JetBrains Mono (labels) |
+
+Both themes share one token set in `:root`; `[data-theme="light"]` overrides the
+colours. The palette keeps an AA contrast ratio for body copy in both modes.
 
 ## Sections
 
-Hero with live timecode, a glass sequence panel and CSS 3D lens · services ticker ·
-interactive Colour Lab · working-together facts · 01 Services · 02 Work (the two
-Instagram feeds) · 03 About · 04 Process · 05 Contact with a service/date enquiry form · footer.
+Hero with live timecode and a film gate · scrolling service marquee · 01 Services
+as a ledger · 02 Work (the two Instagram accounts) · 03 About with an ID slate ·
+04 Process · 05 Colour Lab · 06 Contact with a service/date enquiry form ·
+footer with an outlined wordmark.
 
 ## Features
 
-Numbered section headers · glass timeline panel · CSS 3D lens · interactive
-Colour Lab with four looks and a glow slider · pointer tilt on desktop · animated
-playhead · scrolling ticker · useful working-together facts · service/date email
-enquiry form · feed cards · hover light sweep and 3D lift · magnetic primary
-button · ripple clicks · copy-email button · scroll progress bar · active nav
-link · staggered reveals · back-to-top · responsive layout · SEO metadata, Open
-Graph image and JSON-LD.
+Numbered section rules · film-gate hero · ledger services with hover states ·
+interactive Colour Lab with four looks, a glow slider and pointer tilt · enormous
+outlined wordmark · scrolling marquee · sticky header, scroll progress and back
+to top · active nav link · staggered reveals · service/date enquiry email draft ·
+copy-email button · live timecode · theme toggle that remembers the choice ·
+responsive down to small phones · `prefers-reduced-motion` support.
 
 ## Implementation notes
 
-- **No third-party JS.** Every effect is a small purpose-built module. The page
-  loads no external scripts; only Google Fonts is fetched externally.
-- **Nothing is hidden behind JavaScript.** The `<html>` element only gets the
-  `.js` class from a one-line inline script, and the reveal animation, mobile
-  menu and copy button are all gated on that class. With JS
-  disabled the page is fully readable, the nav stays inline and every section is
-  visible — there is no loader to get stuck behind.
+- **No third-party JS.** Every effect is a small purpose-built module. Only
+  Google Fonts is fetched externally.
+- **Nothing is hidden behind JavaScript.** Content is visible without JS; the
+  reveal animation, mobile menu and copy button are gated on the `.js` class.
 - **No scroll hijacking.** Native scrolling and `scroll-behavior: smooth` are
-  left alone, so nested scrollers, keyboards, trackpads and the scrollbar all
-  behave normally.
-- **Smooth by default.** The progress bar, sticky header and back-to-top button
-  share one throttled scroll pipeline; page geometry is measured on resize/load,
-  not on each scroll frame. The sequence is a calm static composition, while the
-  non-essential utility timecode updates at a quiet 4 Hz only while visible.
-- **Cheap by default.** No canvas, particles or custom cursor. Glass blur is
-  limited to interface surfaces; the background is static and the 3D lens is
-  CSS-only. The page ships exactly one image — the social share card.
-- **Motion and colour are optional.** `prefers-reduced-motion` stops ambient
-  movement and reveals every element immediately. The light/dark switch follows
-  the system preference on a first visit and remembers an explicit choice.
-- **No form backend required.** The service/date enquiry form opens a
-  pre-filled email draft; a Google Form remains available as a fallback.
-- **Kid-friendly play without tracking.** The Colour Lab changes only local CSS
-  state; it asks for no personal details and does not save the selected look.
-- **Accessibility.** Skip link to a focusable `<main>`, visible focus rings,
-  AA-contrast text tokens, `aria-expanded` menu with Escape and focus wrap, and
-  decorative art hidden from screen readers.
+  left alone. One throttled scroll pipeline drives the progress bar, sticky
+  header and back-to-top button.
+- **Semantic and accessible.** Skip link, visible focus rings, labelled controls,
+  `aria-pressed` on the look choices, `aria-live` status messages, decorative art
+  hidden from screen readers.
+- **Cheap by default.** No canvas, particles or custom cursor; the only image is
+  the social share card.
+- **No form backend.** The enquiry form opens a pre-filled email draft; the
+  Google Form stays available as a fallback.
 
 ## Editing
 
 - **Text, links, section copy** — edit `index.html` directly.
 - **Colours and spacing** — edit the custom properties in `:root` at the top of
   `assets/css/style.css`.
-- **Work section** — section 02 is just the two `<article class="account">`
-  feed cards; update the `href`, handle and description if an account changes.
-  There is no gallery to maintain and no thumbnails to keep in sync.
-- **Service cards** — the three `<article class="card">` blocks in the Services
-  section.
-- **Colour Lab** — change the buttons in `index.html`, palette variables in
-  `assets/css/style.css` (`.colourlab[data-look]`) and behaviour in
-  `assets/js/main.js` (`colourLab`).
+- **Work section** — the two `<a class="account">` blocks; update the `href`,
+  handle and description if an account changes. There is no gallery to maintain.
+- **Service ledger** — the three `<li class="ledger__row">` blocks.
+- **Colour Lab** — buttons in `index.html`, palettes under
+  `.colourlab[data-look]` in the stylesheet, behaviour in `main.js`.
 - **Social share card** — replace `assets/img/og.jpg` (1200×630).
-- **Ticker words** — the `.ticker__item` spans; keep the list doubled so the
-  loop stays seamless.
+- **Marquee words** — the `.ticker__item` spans; keep the list doubled for a
+  seamless loop.
 
 ## Deployment
 
