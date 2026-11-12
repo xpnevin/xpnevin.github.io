@@ -1,201 +1,356 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NEVIN — Studio assistant</title>
-
-<meta name="description" content="A live AI chat on Nevin's site. Ask about video editing, recording or photography, or shape a rough idea into a brief. Bring your own model key — the conversation goes straight from your browser to your provider.">
-<meta name="author" content="Nevin Manoj">
-<meta name="theme-color" id="themeColor" content="#0b0c0e">
-<meta name="robots" content="noindex, follow">
-
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0c0e'/%3E%3Cpath d='M20 45V19h3.6l16.8 21V19H44v26h-3.6L23.6 24v21z' fill='%23f4743b'/%3E%3C/svg%3E">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet"
-href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/chat.css">
-
-<!-- Restore the visitor's colour preference before the stylesheet paints. -->
-<script>
-(function () {
-  var root = document.documentElement;
-  var theme = "dark";
-  try {
-    var saved = window.localStorage.getItem("nevin-theme");
-    theme = saved === "dark" || saved === "light" ? saved :
-      (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-  } catch (err) { /* A private browser may deny storage; dark remains a safe fallback. */ }
-  root.setAttribute("data-theme", theme);
-  root.classList.add("js");
-  var themeColor = document.getElementById("themeColor");
-  if (themeColor) themeColor.setAttribute("content", theme === "dark" ? "#0b0c0e" : "#f3eee4");
-})();
-</script>
-</head>
-
-<body class="chatpage">
-
-<a class="skip" href="#composer">Skip to the message box</a>
-<div class="grain" aria-hidden="true"></div>
-
-<header class="topbar is-stuck">
-  <div class="topbar__inner">
-    <a class="brand" href="index.html" aria-label="NEVIN — back to the site">
-      <span class="brand__mark" aria-hidden="true">N</span>
-      <span class="brand__name">NEVIN</span>
-      <span class="brand__rec" aria-hidden="true"><i></i>Assistant</span>
-    </a>
-
-    <div class="topbar__end">
-      <span class="chat-conn mono" id="connBadge" data-state="idle">
-        <i aria-hidden="true"></i><span id="connText">No model connected</span>
-      </span>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode" aria-pressed="true">
-        <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"/></svg>
-        <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2.5v2M12 19.5v2M21.5 12h-2M4.5 12h-2M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4M18.7 18.7l-1.4-1.4M6.7 6.7 5.3 5.3"/></svg>
-        <span class="sr-only">Toggle colour theme</span>
-      </button>
-      <button class="btn btn--ghost btn--xs" id="settingsBtn" type="button">Model</button>
-      <a class="btn btn--primary btn--xs" href="index.html">Back to site</a>
-    </div>
-  </div>
-</header>
-
-<main id="main" tabindex="-1">
-
-  <section class="shell chat-intro">
-    <p class="chat-intro__idx mono"><span>Live</span>Studio assistant</p>
-    <h1 class="chat-intro__title">Ask the<br><em>cut room</em>.</h1>
-    <p class="chat-intro__lede">
-      A small AI assistant for this site. Think out loud about an edit, a shoot or a
-      set of photographs, and turn a rough idea into something you can send.
-    </p>
-  </section>
-
-  <div class="shell chat-grid">
-
-    <aside class="chat-rail" aria-label="How this chat works">
-      <div class="rail-card">
-        <p class="rail-card__h mono">Connected model</p>
-        <p class="rail-card__model" id="railModel">Not set</p>
-        <p class="rail-card__endpoint mono" id="railEndpoint">No key in this browser</p>
-      </div>
-
-      <div class="rail-card">
-        <p class="rail-card__h mono">How it works</p>
-        <ul class="rail-list">
-          <li><span class="mono">01</span> You bring a key from an AI provider of your choice.</li>
-          <li><span class="mono">02</span> The key stays in this browser. Nothing is uploaded to this site or its repo.</li>
-          <li><span class="mono">03</span> Messages travel straight from your browser to that provider.</li>
-        </ul>
-        <button class="rail-card__link" id="railConnect" type="button">Connect a model <span aria-hidden="true">↗</span></button>
-      </div>
-
-      <p class="rail-note mono">No account here · no server · no saved transcripts</p>
-    </aside>
-
-    <section class="console" aria-labelledby="consoleTitle">
-      <h2 class="sr-only" id="consoleTitle">Conversation</h2>
-
-      <div class="console__bar mono">
-        <span class="console__rec"><i aria-hidden="true"></i>Standing by</span>
-        <span id="turnCount">0 messages</span>
-      </div>
-
-      <div class="log" id="log" role="log" aria-live="polite" aria-relevant="additions text">
-        <div class="log__empty" id="logEmpty">
-          <p class="log__empty-title">Nothing on the timeline yet.</p>
-          <p class="log__empty-copy">Start with one of these, or type your own idea below.</p>
-          <div class="starter" id="starter">
-            <button class="starter__chip" type="button" data-prompt="What details do you need from me before quoting a project?">What do you need for a quote?</button>
-            <button class="starter__chip" type="button" data-prompt="Help me plan a one-minute reel from footage I already have.">Plan a one-minute reel</button>
-            <button class="starter__chip" type="button" data-prompt="Should I book recording and editing together, or just one of them?">Recording or editing first?</button>
-          </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>NEVIN — The studio assistant</title>
+    <meta
+      name="description"
+      content="Find your angle with Nevin’s AI studio assistant. Shape an idea into a brief for a video, a shoot or a set of photographs. Bring your own model key."
+    />
+    <meta name="author" content="Nevin Manoj" />
+    <meta name="theme-color" id="themeColor" content="#f5f3ee" />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="assets/fonts/anton-latin-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/dm-sans-latin-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <script src="assets/js/theme.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/chat.css" />
+  </head>
+  <body class="chatpage">
+    <a class="skip" href="#composer">Skip to the message box</a>
+    <header class="topbar">
+      <div class="shell topbar__inner">
+        <a
+          class="brand"
+          href="index.html"
+          aria-label="Nevin — back to the portfolio"
+          >nevin<span class="brand__star" aria-hidden="true">✳</span
+          ><span class="brand__descriptor">THE STUDIO<br />ASSISTANT</span></a
+        >
+        <div class="topbar__end">
+          <span class="chat-conn mono" id="connBadge" data-state="idle"
+            ><i aria-hidden="true"></i
+            ><span id="connText">No model connected</span></span
+          >
+          <button
+            class="theme-toggle js-only"
+            id="themeToggle"
+            type="button"
+            aria-label="Switch to dark mode"
+            aria-pressed="false"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z" />
+              <path class="theme-toggle__half" d="M12 3a9 9 0 0 1 0 18Z" />
+            </svg>
+          </button>
+          <button
+            class="btn btn--ghost btn--small js-only"
+            id="settingsBtn"
+            type="button"
+          >
+            <span class="chat-label-full">Connect model</span
+            ><span class="chat-label-short">Model</span
+            ><span aria-hidden="true">↘</span>
+          </button>
+          <a class="btn btn--dark btn--small topbar__cta" href="index.html"
+            ><span class="chat-label-full">The portfolio</span
+            ><span class="chat-label-short">Back</span
+            ><span aria-hidden="true">↗</span></a
+          >
         </div>
       </div>
-
-      <form class="composer" id="composer" novalidate>
-        <label class="sr-only" for="input">Your message</label>
-        <textarea class="composer__input" id="input" name="message" rows="1" maxlength="4000"
-          placeholder="Ask about an edit, a shoot, or a rough idea…" aria-describedby="composerHint"></textarea>
-
-        <div class="composer__foot">
-          <p class="composer__hint mono" id="composerHint">Enter sends · Shift + Enter starts a new line</p>
-          <div class="composer__actions">
-            <button class="btn btn--ghost btn--xs" id="stopBtn" type="button" hidden>Stop</button>
-            <button class="btn btn--ghost btn--xs" id="clearBtn" type="button">New chat</button>
-            <button class="btn btn--primary btn--xs" id="sendBtn" type="submit">
-              Send
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </header>
+    <main id="main" tabindex="-1">
+      <section class="shell chat-intro" aria-labelledby="chatTitle">
+        <div class="section-label mono">
+          <span><b>AI</b> THE STUDIO ASSISTANT</span
+          ><span>A LITTLE CLARITY. A FRESH DIRECTION.</span>
+        </div>
+        <div class="chat-intro__grid">
+          <h1 class="display" id="chatTitle">
+            LET’S FIND<br />YOUR <span class="blue">ANGLE.</span>
+          </h1>
+          <div class="chat-intro__aside">
+            <p>
+              A big idea or a beautifully vague one. Think it through here, then
+              turn it into a brief worth making.
+            </p>
+            <span class="mono">YOUR MODEL. YOUR KEY. YOUR CONVERSATION.</span>
+          </div>
+        </div>
+      </section>
+      <noscript
+        ><div class="shell chat-noscript">
+          This assistant needs JavaScript and your own AI provider key. You can
+          always
+          <a href="index.html#contact">send your idea directly to Nevin</a>
+          instead.
+        </div></noscript
+      >
+      <div class="shell chat-grid">
+        <aside class="chat-rail" aria-label="About this assistant">
+          <div class="rail-card rail-card--model">
+            <p class="rail-card__h mono">YOUR CONNECTED MODEL</p>
+            <p class="rail-card__model" id="railModel">Not set</p>
+            <p class="rail-card__endpoint mono" id="railEndpoint">
+              No key in this browser
+            </p>
+            <button
+              class="rail-card__link js-only"
+              id="railConnect"
+              type="button"
+            >
+              Make the connection <span aria-hidden="true">↗</span>
             </button>
           </div>
-        </div>
-      </form>
-
-      <p class="console__status mono" id="status" role="status" aria-live="polite"></p>
-    </section>
-  </div>
-
-  <section class="shell settings" id="settings" aria-labelledby="settingsTitle">
-    <header class="settings__head">
-      <p class="settings__idx mono"><span>01</span>Connection</p>
-      <h2 class="settings__title" id="settingsTitle">Point it at a <em>model</em>.</h2>
-      <p class="settings__lede">
-        Paste a key from an AI provider. It is saved in this browser only and used
-        for the messages you send here — never committed to the site.
-      </p>
-    </header>
-
-    <form class="settings__form" id="settingsForm">
-      <label class="field" for="provider">
-        <span class="field__label">Provider</span>
-        <select id="provider" name="provider">
-          <option value="openai">OpenAI</option>
-          <option value="openrouter">OpenRouter</option>
-          <option value="groq">Groq</option>
-          <option value="custom">Custom / local</option>
-        </select>
-        <span class="field__hint">OpenAI, OpenRouter and Groq accept calls straight from a browser.</span>
-      </label>
-
-      <label class="field" for="modelName">
-        <span class="field__label">Model</span>
-        <input id="modelName" name="model" type="text" spellcheck="false" placeholder="gpt-4o-mini">
-      </label>
-
-      <label class="field field--wide" for="baseUrl">
-        <span class="field__label">API base URL <span class="field__hint">(OpenAI-compatible)</span></span>
-        <input id="baseUrl" name="baseUrl" type="url" inputmode="url" spellcheck="false" placeholder="https://api.openai.com/v1">
-      </label>
-
-      <label class="field field--wide" for="apiKey">
-        <span class="field__label">API key</span>
-        <input id="apiKey" name="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="sk-…">
-        <span class="field__hint">Kept on this device. Use a key you can rotate or spend-limit.</span>
-      </label>
-
-      <div class="settings__actions">
-        <button class="btn btn--primary btn--sm" type="submit">Save connection</button>
-        <button class="btn btn--ghost btn--sm" id="forgetBtn" type="button">Forget key</button>
+          <div class="rail-card">
+            <p class="rail-card__h mono">THE SHORT VERSION</p>
+            <ol class="rail-list">
+              <li>
+                <span class="mono">01</span>
+                <p>
+                  Bring a key from your AI provider. Provider usage may cost
+                  money.
+                </p>
+              </li>
+              <li>
+                <span class="mono">02</span>
+                <p>
+                  The key stays in this browser. It isn’t uploaded to Nevin’s
+                  site or repository.
+                </p>
+              </li>
+              <li>
+                <span class="mono">03</span>
+                <p>
+                  Your messages go directly to that provider. No transcripts are
+                  saved here.
+                </p>
+              </li>
+            </ol>
+          </div>
+          <p class="rail-note">
+            An AI assistant, not Nevin. For quotes, availability and a real
+            conversation, <a href="index.html#contact">say hello directly ↗</a>
+          </p>
+        </aside>
+        <section class="console" aria-labelledby="consoleTitle">
+          <h2 class="sr-only" id="consoleTitle">
+            Your conversation with the studio assistant
+          </h2>
+          <div class="console__bar mono">
+            <span class="console__rec"
+              ><i aria-hidden="true"></i>Standing by</span
+            ><span id="turnCount">0 messages</span>
+          </div>
+          <div
+            class="log"
+            id="log"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions text"
+          >
+            <div class="log__empty" id="logEmpty">
+              <span class="log__empty-spark" aria-hidden="true">✳</span>
+              <p class="log__empty-title">What are we making?</p>
+              <p class="log__empty-copy">
+                Start with a thought. We’ll find the story in it.
+              </p>
+              <div class="starter" id="starter">
+                <button
+                  class="starter__chip"
+                  type="button"
+                  data-prompt="What details do you need from me before quoting a project?"
+                >
+                  <span class="mono" aria-hidden="true">01</span>What makes a
+                  good brief?<span aria-hidden="true">↗</span></button
+                ><button
+                  class="starter__chip"
+                  type="button"
+                  data-prompt="Help me plan a one-minute reel from footage I already have."
+                >
+                  <span class="mono" aria-hidden="true">02</span>Let’s plan a
+                  one-minute reel.<span aria-hidden="true">↗</span></button
+                ><button
+                  class="starter__chip"
+                  type="button"
+                  data-prompt="Should I book recording and editing together, or just one of them?"
+                >
+                  <span class="mono" aria-hidden="true">03</span>A shoot, an
+                  edit, or both?<span aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <form class="composer" id="composer" novalidate>
+            <label class="sr-only" for="input">Your message</label
+            ><textarea
+              class="composer__input"
+              id="input"
+              name="message"
+              rows="2"
+              maxlength="4000"
+              placeholder="An idea, a question, a ‘what if’…"
+              aria-describedby="composerHint"
+            ></textarea>
+            <div class="composer__foot">
+              <p class="composer__hint" id="composerHint">
+                Enter to send · Shift + Enter for a new line
+              </p>
+              <div class="composer__actions">
+                <button
+                  class="btn btn--ghost btn--small"
+                  id="stopBtn"
+                  type="button"
+                  hidden
+                >
+                  Stop</button
+                ><button
+                  class="btn btn--ghost btn--small"
+                  id="clearBtn"
+                  type="button"
+                >
+                  New chat</button
+                ><button
+                  class="btn btn--dark btn--small"
+                  id="sendBtn"
+                  type="submit"
+                >
+                  Send <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </div>
+          </form>
+          <p
+            class="console__status"
+            id="status"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </section>
       </div>
-
-      <p class="settings__note mono" id="settingsStatus" role="status" aria-live="polite">Nothing saved yet.</p>
-    </form>
-  </section>
-
-</main>
-
-<footer class="footer footer--slim">
-  <div class="shell footer__bottom">
-    <span class="mono">© <span id="year">2026</span> Nevin Manoj</span>
-    <a class="mono footer__link" href="index.html">Back to xpnevin.github.io</a>
-  </div>
-</footer>
-
-<script src="assets/js/chat.js" defer></script>
-</body>
+      <section
+        class="shell settings"
+        id="settings"
+        aria-labelledby="settingsTitle"
+      >
+        <div class="settings__head">
+          <p class="section-label mono">
+            <span><b>01</b> MAKE THE CONNECTION</span>
+          </p>
+          <h2 class="display" id="settingsTitle">
+            BRING YOUR<br />OWN <span class="blue">BRAIN.</span>
+          </h2>
+          <p class="settings__lede">
+            Pick your provider, add a model and paste your key. Then we’re ready
+            to think out loud.
+          </p>
+          <p class="settings__privacy">
+            Your key is stored on this device only. Use a key you can rotate or
+            spend-limit, especially on a shared computer. Never paste it into
+            the conversation.
+          </p>
+        </div>
+        <form class="settings__form" id="settingsForm">
+          <label class="field" for="provider"
+            ><span class="field__label">Your provider</span
+            ><select id="provider" name="provider">
+              <option value="openai">OpenAI</option>
+              <option value="openrouter">OpenRouter</option>
+              <option value="groq">Groq</option>
+              <option value="custom">Custom endpoint</option>
+            </select></label
+          >
+          <label class="field" for="modelName"
+            ><span class="field__label">Model name</span
+            ><input
+              id="modelName"
+              name="model"
+              type="text"
+              spellcheck="false"
+              placeholder="gpt-4o-mini"
+              maxlength="160"
+              required
+          /></label>
+          <label class="field field--wide" for="baseUrl"
+            ><span class="field__label">API base URL</span
+            ><input
+              id="baseUrl"
+              name="baseUrl"
+              type="url"
+              inputmode="url"
+              spellcheck="false"
+              placeholder="https://api.openai.com/v1"
+              required
+              aria-describedby="endpointHint"
+            /><span class="field__hint" id="endpointHint"
+              >An OpenAI-compatible, browser-accessible HTTPS endpoint. Your
+              provider must allow browser requests (CORS).</span
+            ></label
+          >
+          <label class="field field--wide" for="apiKey"
+            ><span class="field__label">Your API key</span
+            ><input
+              id="apiKey"
+              name="apiKey"
+              type="password"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Kept on this device. Never in the repo."
+              required
+              aria-describedby="keyHint"
+            /><span class="field__hint" id="keyHint"
+              >Messages and this key are sent only to your chosen provider when
+              you use the chat.</span
+            ></label
+          >
+          <div class="settings__actions">
+            <button class="btn btn--dark btn--small" type="submit">
+              Save connection <span aria-hidden="true">↗</span></button
+            ><button
+              class="btn btn--ghost btn--small"
+              id="forgetBtn"
+              type="button"
+            >
+              Forget key
+            </button>
+          </div>
+          <p
+            class="settings__note"
+            id="settingsStatus"
+            role="status"
+            aria-live="polite"
+          >
+            Nothing saved yet. Let’s keep it that way until you’re ready.
+          </p>
+        </form>
+      </section>
+    </main>
+    <footer class="footer footer--slim">
+      <div class="shell footer__bottom mono">
+        <span>© <span id="year">2026</span> NEVIN MANOJ</span
+        ><span>GOOD STORIES START WITH GOOD QUESTIONS.</span
+        ><a href="index.html">BACK TO THE PORTFOLIO ↗</a>
+      </div>
+    </footer>
+    <script src="assets/js/chat.js" defer></script>
+  </body>
 </html>

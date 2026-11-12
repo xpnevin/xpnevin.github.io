@@ -9,10 +9,8 @@
   "use strict";
 
   var doc = document;
-  var root = doc.documentElement;
 
   var STORE_KEY = "nevin-assistant-v1";
-  var THEME_KEY = "nevin-theme";
   var MAX_HISTORY = 12;
   var MAX_TOKENS = 800;
 
@@ -23,34 +21,48 @@
     "Be warm, plain-spoken and brief — usually under 120 words unless asked for detail. Use short paragraphs or a short list.",
     "Never invent prices, availability or delivery dates: quotes are agreed per project, so point people to the enquiry form or xpnevin@gmail.com.",
     "Never claim to be Nevin or a human. If asked what you are, say you are an AI assistant on the site.",
-    "If a request is unrelated to video, photography or the studio, answer briefly and steer back to the work."
+    "If a request is unrelated to video, photography or the studio, answer briefly and steer back to the work.",
   ].join(" ");
 
   /* Prices, models and endpoints change; these presets are starting points. */
   var PRESETS = {
     openai: { base: "https://api.openai.com/v1", model: "gpt-4o-mini" },
-    openrouter: { base: "https://openrouter.ai/api/v1", model: "openai/gpt-4o-mini" },
-    groq: { base: "https://api.groq.com/openai/v1", model: "llama-3.3-70b-versatile" },
+    openrouter: {
+      base: "https://openrouter.ai/api/v1",
+      model: "openai/gpt-4o-mini",
+    },
+    groq: {
+      base: "https://api.groq.com/openai/v1",
+      model: "llama-3.3-70b-versatile",
+    },
     zai: { base: "https://api.z.ai/api/paas/v4", model: "glm-4-flash" },
-    custom: { base: "", model: "" }
+    custom: { base: "", model: "" },
   };
 
-  function $(sel, ctx) { return (ctx || doc).querySelector(sel); }
-  function $$(sel, ctx) { return Array.prototype.slice.call((ctx || doc).querySelectorAll(sel)); }
+  function $(sel, ctx) {
+    return (ctx || doc).querySelector(sel);
+  }
+  function $$(sel, ctx) {
+    return Array.prototype.slice.call((ctx || doc).querySelectorAll(sel));
+  }
 
   function readStore() {
     try {
       var raw = window.localStorage.getItem(STORE_KEY);
       var parsed = raw ? JSON.parse(raw) : null;
       return parsed && typeof parsed === "object" ? parsed : {};
-    } catch (err) { return {}; }
+    } catch (err) {
+      return {};
+    }
   }
 
   function writeStore(value) {
     try {
       window.localStorage.setItem(STORE_KEY, JSON.stringify(value));
       return true;
-    } catch (err) { return false; }
+    } catch (err) {
+      return false;
+    }
   }
 
   /* ------------------------------------------------------------------ state */
@@ -60,11 +72,11 @@
       provider: store.provider || "openai",
       base: store.base || PRESETS.openai.base,
       model: store.model || PRESETS.openai.model,
-      key: store.key || ""
+      key: store.key || "",
     },
     messages: [],
     busy: false,
-    controller: null
+    controller: null,
   };
 
   var els = {
@@ -92,9 +104,8 @@
     modelName: $("#modelName"),
     apiKey: $("#apiKey"),
     forgetBtn: $("#forgetBtn"),
-    themeToggle: $("#themeToggle"),
     console: $(".console"),
-    recLabel: $(".console__rec")
+    recLabel: $(".console__rec"),
   };
 
   function setStatus(text, kind) {
@@ -111,13 +122,41 @@
     else els.settingsStatus.removeAttribute("data-state");
   }
 
-  function hasKey() { return Boolean(state.config.key && state.config.base && state.config.model); }
+  function hasKey() {
+    return Boolean(state.config.key && state.config.base && state.config.model);
+  }
+
+  function validEndpoint(base) {
+    try {
+      var url = new URL(base);
+      var host = url.hostname;
+      return (
+        url.protocol === "https:" &&
+        !url.username &&
+        !url.password &&
+        !url.hash &&
+        !url.search &&
+        host !== "localhost" &&
+        !host.endsWith(".localhost") &&
+        host !== "[::1]" &&
+        host !== "0.0.0.0" &&
+        !/^127\./.test(host)
+      );
+    } catch (error) {
+      return false;
+    }
+  }
 
   function paintConnection() {
     var ready = hasKey();
-    if (els.connBadge) els.connBadge.setAttribute("data-state", ready ? "connected" : "idle");
-    if (els.connText) els.connText.textContent = ready ? "Connected" : "No model connected";
-    if (els.railModel) els.railModel.textContent = ready ? state.config.model : "Not set";
+    if (els.connBadge)
+      els.connBadge.setAttribute("data-state", ready ? "connected" : "idle");
+    if (els.connText)
+      els.connText.textContent = ready
+        ? "Model configured"
+        : "No model connected";
+    if (els.railModel)
+      els.railModel.textContent = ready ? state.config.model : "Not set";
     if (els.railEndpoint) {
       els.railEndpoint.textContent = ready
         ? state.config.base.replace(/^https?:\/\//, "")
@@ -127,7 +166,8 @@
 
   function countLabel() {
     var n = state.messages.length;
-    if (els.turnCount) els.turnCount.textContent = n === 1 ? "1 message" : n + " messages";
+    if (els.turnCount)
+      els.turnCount.textContent = n === 1 ? "1 message" : n + " messages";
   }
 
   /* --------------------------------------------------------------- markdown */
@@ -142,12 +182,16 @@
 
   function inline(text) {
     return text
-      .replace(/`([^`]+)`/g, function (_, code) { return "<code>" + code + "</code>"; })
+      .replace(/`([^`]+)`/g, function (_, code) {
+        return "<code>" + code + "</code>";
+      })
       .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
       .replace(/(^|[\s(])\*([^*\n]+)\*/g, "$1<em>$2</em>")
       .replace(/(^|[\s(])_([^_\n]+)_/g, "$1<em>$2</em>")
-      .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+|mailto:[^\s)]+)\)/g,
-        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+      .replace(
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+|mailto:[^\s)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>',
+      );
   }
 
   function listBlock(lines, ordered) {
@@ -159,7 +203,11 @@
     }
     if (!items.length) return "";
     var tag = ordered ? "ol" : "ul";
-    var inner = items.map(function (item) { return "<li>" + inline(item) + "</li>"; }).join("");
+    var inner = items
+      .map(function (item) {
+        return "<li>" + inline(item) + "</li>";
+      })
+      .join("");
     return "<" + tag + ">" + inner + "</" + tag + ">";
   }
 
@@ -175,7 +223,8 @@
       if (/^\s*(?:[-*+]|\d+\.)\s+/.test(first)) {
         out += listBlock(lines, /^\s*\d+\./.test(first));
       } else if (/^#{1,6}\s+/.test(first)) {
-        out += '<p class="md-h">' + inline(chunk.replace(/^#{1,6}\s+/, "")) + "</p>";
+        out +=
+          '<p class="md-h">' + inline(chunk.replace(/^#{1,6}\s+/, "")) + "</p>";
       } else {
         out += "<p>" + inline(chunk).replace(/\n/g, "<br>") + "</p>";
       }
@@ -192,7 +241,10 @@
 
     while ((match = fence.exec(text))) {
       html += block(text.slice(last, match.index));
-      html += '<pre class="code"><code>' + match[2].replace(/^\n+|\n+$/g, "") + "</code></pre>";
+      html +=
+        '<pre class="code"><code>' +
+        match[2].replace(/^\n+|\n+$/g, "") +
+        "</code></pre>";
       last = fence.lastIndex;
     }
     html += block(text.slice(last));
@@ -207,7 +259,8 @@
   }
 
   function hideEmpty() {
-    if (els.logEmpty && els.logEmpty.parentNode) els.logEmpty.parentNode.removeChild(els.logEmpty);
+    if (els.logEmpty && els.logEmpty.parentNode)
+      els.logEmpty.parentNode.removeChild(els.logEmpty);
   }
 
   function showEmpty() {
@@ -218,24 +271,33 @@
 
   function timeNow() {
     try {
-      return new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    } catch (err) { return ""; }
+      return new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch (err) {
+      return "";
+    }
   }
 
   function addMessage(role, text) {
     hideEmpty();
 
     var article = doc.createElement("article");
-    article.className = "msg msg--" + (role === "user" ? "user" : role === "error" ? "error" : "ai");
+    article.className =
+      "msg msg--" +
+      (role === "user" ? "user" : role === "error" ? "error" : "ai");
 
     var meta = doc.createElement("div");
     meta.className = "msg__meta mono";
 
     var who = doc.createElement("span");
-    who.textContent = role === "user" ? "You" : role === "error" ? "Note" : "Assistant";
+    who.textContent =
+      role === "user" ? "You" : role === "error" ? "Note" : "Assistant";
 
     var time = doc.createElement("time");
     time.textContent = timeNow();
+    time.dateTime = new Date().toISOString();
 
     meta.appendChild(who);
     meta.appendChild(time);
@@ -261,17 +323,24 @@
 
   function addPending() {
     var body = addMessage("ai", "");
-    body.innerHTML = '<span class="msg__dots" aria-hidden="true"><i></i><i></i><i></i></span>';
+    body.innerHTML =
+      '<span class="msg__dots" aria-hidden="true"><i></i><i></i><i></i></span>';
     return body;
   }
 
   function setBusy(busy) {
     state.busy = busy;
     if (els.sendBtn) els.sendBtn.disabled = busy;
+    if (els.clearBtn) els.clearBtn.disabled = busy;
+    $$("input, select, button", els.settingsForm).forEach(function (field) {
+      field.disabled = busy;
+    });
     if (els.stopBtn) els.stopBtn.hidden = !busy;
     if (els.input) els.input.disabled = false;
     if (els.console) els.console.classList.toggle("is-live", busy);
-    if (els.recLabel) els.recLabel.innerHTML = '<i aria-hidden="true"></i>' + (busy ? "Live" : "Standing by");
+    if (els.recLabel)
+      els.recLabel.innerHTML =
+        '<i aria-hidden="true"></i>' + (busy ? "Live" : "Standing by");
   }
 
   /* ------------------------------------------------------------------ calls */
@@ -283,8 +352,11 @@
       return "The provider didn't recognise that base URL or model name.";
     }
     if (status === 422 || status === 400) {
-      return "The provider didn't accept the request" + (detail ? " — " + detail : ".") +
-        " The model name is the usual cause.";
+      return (
+        "The provider didn't accept the request" +
+        (detail ? " — " + detail : ".") +
+        " The model name is the usual cause."
+      );
     }
     if (status === 429) {
       return "The provider is rate-limiting this key. Wait a moment and send again.";
@@ -292,7 +364,9 @@
     if (status >= 500) {
       return "The provider had a server error. Try again shortly.";
     }
-    return "The provider replied with " + status + (detail ? " — " + detail : ".");
+    return (
+      "The provider replied with " + status + (detail ? " — " + detail : ".")
+    );
   }
 
   function endpoint() {
@@ -302,11 +376,17 @@
   function errorDetail(payload) {
     try {
       var data = JSON.parse(payload);
-      if (data && data.error && data.error.message) return String(data.error.message).slice(0, 220);
+      if (data && data.error && data.error.message)
+        return String(data.error.message).slice(0, 220);
       if (data && data.message) return String(data.message).slice(0, 220);
-      if (data && data.error && typeof data.error === "string") return data.error.slice(0, 220);
-    } catch (err) { /* not JSON, fall through */ }
-    return String(payload || "").replace(/\s+/g, " ").slice(0, 220);
+      if (data && data.error && typeof data.error === "string")
+        return data.error.slice(0, 220);
+    } catch (err) {
+      /* not JSON, fall through */
+    }
+    return String(payload || "")
+      .replace(/\s+/g, " ")
+      .slice(0, 220);
   }
 
   async function streamCompletion(messages, onDelta, signal) {
@@ -315,15 +395,15 @@
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + state.config.key
+        Authorization: "Bearer " + state.config.key,
       },
       body: JSON.stringify({
         model: state.config.model,
         messages: messages,
         stream: true,
-        max_tokens: MAX_TOKENS
+        max_tokens: MAX_TOKENS,
       }),
-      signal: signal
+      signal: signal,
     });
 
     if (!res.ok) {
@@ -331,12 +411,15 @@
       throw new Error(describeStatus(res.status, errorDetail(failure)));
     }
 
-    var isStream = (res.headers.get("content-type") || "").indexOf("text/event-stream") !== -1;
+    var isStream =
+      (res.headers.get("content-type") || "").indexOf("text/event-stream") !==
+      -1;
 
     if (!isStream) {
       var data = await res.json();
       var choice = data && data.choices && data.choices[0];
-      var whole = choice && ((choice.message && choice.message.content) || choice.text);
+      var whole =
+        choice && ((choice.message && choice.message.content) || choice.text);
       if (!whole) throw new Error("The provider replied without any text.");
       onDelta(whole);
       return whole;
@@ -346,38 +429,58 @@
     var decoder = new TextDecoder();
     var buffer = "";
     var full = "";
+    var finished = false;
 
-    while (true) {
-      var step = await reader.read();
-      if (step.done) break;
-      buffer += decoder.decode(step.value, { stream: true });
-
-      var lines = buffer.split("\n");
-      buffer = lines.pop();
-
-      for (var i = 0; i < lines.length; i++) {
-        var line = lines[i].trim();
-        if (!line || line.charAt(0) === ":") continue;
-        if (line.indexOf("data:") !== 0) continue;
-
-        var payload = line.slice(5).trim();
-        if (payload === "[DONE]") { lines = []; break; }
-
-        var parsed;
-        try { parsed = JSON.parse(payload); } catch (err) { continue; }
-        if (parsed && parsed.error) throw new Error(describeStatus(0, errorDetail(payload)));
-
-        var pick = parsed && parsed.choices && parsed.choices[0];
-        if (!pick) continue;
-        var delta = (pick.delta && pick.delta.content) || (pick.message && pick.message.content) || "";
-        if (delta) {
-          full += delta;
-          onDelta(full);
-        }
+    function consume(line) {
+      line = line.trim();
+      if (!line || line.charAt(0) === ":" || line.indexOf("data:") !== 0)
+        return;
+      var payload = line.slice(5).trim();
+      if (payload === "[DONE]") {
+        finished = true;
+        return;
+      }
+      var parsed;
+      try {
+        parsed = JSON.parse(payload);
+      } catch (error) {
+        return;
+      }
+      if (parsed && parsed.error)
+        throw new Error(describeStatus(0, errorDetail(payload)));
+      var pick = parsed && parsed.choices && parsed.choices[0];
+      if (!pick) return;
+      var delta =
+        (pick.delta && pick.delta.content) ||
+        (pick.message && pick.message.content) ||
+        "";
+      if (typeof delta === "string" && delta) {
+        full += delta;
+        onDelta(full);
       }
     }
 
-    if (!full) throw new Error("The provider ended the reply without sending any text.");
+    try {
+      while (!finished) {
+        var step = await reader.read();
+        buffer += decoder.decode(step.value || new Uint8Array(), {
+          stream: !step.done,
+        });
+        var lines = buffer.split("\n");
+        buffer = lines.pop();
+        for (var i = 0; i < lines.length && !finished; i++) consume(lines[i]);
+        if (step.done) {
+          if (buffer && !finished) consume(buffer);
+          break;
+        }
+      }
+      if (finished) await reader.cancel();
+    } finally {
+      reader.releaseLock();
+    }
+
+    if (!full)
+      throw new Error("The provider ended the reply without sending any text.");
     return full;
   }
 
@@ -385,7 +488,10 @@
     if (state.busy) return;
 
     if (!hasKey()) {
-      setStatus("Add a key first — the connection panel is just below the chat.", "error");
+      setStatus(
+        "Add a key first — the connection panel is just below the chat.",
+        "error",
+      );
       openSettings(true);
       return;
     }
@@ -395,38 +501,49 @@
     countLabel();
 
     var body = addPending();
-    var payload = [{ role: "system", content: SYSTEM_PROMPT }]
-      .concat(state.messages.slice(-MAX_HISTORY));
+    var payload = [{ role: "system", content: SYSTEM_PROMPT }].concat(
+      state.messages.slice(-MAX_HISTORY),
+    );
 
     state.controller = new AbortController();
     setBusy(true);
     setStatus("Waiting for " + state.config.model + "…");
 
     try {
-      await streamCompletion(payload, function (partial) {
-        body.innerHTML = renderMarkdown(partial);
-        scrollToEnd(false);
-      }, state.controller.signal);
+      var final = await streamCompletion(
+        payload,
+        function (partial) {
+          body.innerHTML = renderMarkdown(partial);
+          scrollToEnd(false);
+        },
+        state.controller.signal,
+      );
 
-      var final = body.textContent.trim();
-      if (final) {
+      if (final && final.trim()) {
         state.messages.push({ role: "assistant", content: final });
         countLabel();
       }
       setStatus("Reply from " + state.config.model + " · " + timeNow(), "ok");
     } catch (err) {
-      var aborted = err && (err.name === "AbortError");
+      var aborted = err && err.name === "AbortError";
       if (aborted) {
         body.innerHTML = renderMarkdown("_Stopped._");
         setStatus("Stopped before the reply finished.");
       } else {
-        if (body.parentNode) body.parentNode.parentNode.removeChild(body.parentNode);
-        var message = err && err.message ? err.message : "Something went wrong.";
+        if (body.parentNode)
+          body.parentNode.parentNode.removeChild(body.parentNode);
+        var message =
+          err && err.message ? err.message : "Something went wrong.";
         if (err instanceof TypeError) {
-          message = "Couldn't reach the provider. Some providers block calls straight from a browser (CORS) — OpenRouter and Groq usually allow it.";
+          message =
+            "Couldn't reach the provider. Some providers block calls straight from a browser (CORS) — OpenRouter and Groq usually allow it.";
         }
         addMessage("error", message);
         setStatus(message, "error");
+        if (els.input && !els.input.value) {
+          els.input.value = text;
+          autoGrow();
+        }
         /* Drop the unanswered turn so a retry does not stack up context. */
         state.messages.pop();
         countLabel();
@@ -441,9 +558,13 @@
   /* ---------------------------------------------------------------- actions */
   function openSettings(focusKey) {
     if (!els.settings) return;
-    els.settings.scrollIntoView({ behavior: "smooth", block: "start" });
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    els.settings.scrollIntoView({
+      behavior: reduced ? "auto" : "smooth",
+      block: "start",
+    });
     window.setTimeout(function () {
-      if (focusKey && els.apiKey) els.apiKey.focus();
+      if (focusKey && els.apiKey) els.apiKey.focus({ preventScroll: true });
     }, 320);
   }
 
@@ -454,6 +575,7 @@
   }
 
   function resetChat() {
+    if (state.busy) return;
     state.messages = [];
     countLabel();
     showEmpty();
@@ -472,7 +594,19 @@
     els.composer.addEventListener("submit", function (event) {
       event.preventDefault();
       var text = els.input.value.trim();
-      if (!text) return;
+      if (!text || state.busy) return;
+      if (!hasKey()) {
+        send(text);
+        return;
+      }
+      if (!validEndpoint(state.config.base)) {
+        setStatus(
+          "Use a browser-accessible HTTPS provider URL in the connection panel.",
+          "error",
+        );
+        openSettings(false);
+        return;
+      }
       els.input.value = "";
       autoGrow();
       send(text);
@@ -481,9 +615,13 @@
     els.input.addEventListener("input", autoGrow);
 
     els.input.addEventListener("keydown", function (event) {
-      if (event.key === "Enter" && !event.shiftKey) {
+      if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
         event.preventDefault();
-        els.composer.requestSubmit ? els.composer.requestSubmit() : els.composer.dispatchEvent(new Event("submit", { cancelable: true }));
+        els.composer.requestSubmit
+          ? els.composer.requestSubmit()
+          : els.composer.dispatchEvent(
+              new Event("submit", { cancelable: true }),
+            );
       }
     });
 
@@ -532,11 +670,17 @@
       var key = els.apiKey.value.trim();
 
       if (!base || !model) {
-        setSettingsStatus("A base URL and a model name are both needed.", "error");
+        setSettingsStatus(
+          "A base URL and a model name are both needed.",
+          "error",
+        );
         return;
       }
-      if (!/^https?:\/\//i.test(base)) {
-        setSettingsStatus("The base URL should start with https://", "error");
+      if (!validEndpoint(base)) {
+        setSettingsStatus(
+          "Use a browser-accessible HTTPS API URL, not a local address or a URL containing credentials.",
+          "error",
+        );
         return;
       }
       if (!key) {
@@ -544,13 +688,20 @@
         return;
       }
 
-      state.config = { provider: els.provider.value, base: base, model: model, key: key };
+      state.config = {
+        provider: els.provider.value,
+        base: base,
+        model: model,
+        key: key,
+      };
       var saved = writeStore(state.config);
 
       paintConnection();
       setSettingsStatus(
-        saved ? "Saved in this browser · " + model : "Couldn't save here (storage is blocked). It will work for this visit only.",
-        saved ? "ok" : "error"
+        saved
+          ? "Saved in this browser · " + model
+          : "Couldn't save here (storage is blocked). It will work for this visit only.",
+        saved ? "ok" : "error",
       );
       setStatus("Connected to " + model + ". Ask away.", "ok");
       if (els.input) els.input.focus();
@@ -559,7 +710,12 @@
     if (els.forgetBtn) {
       els.forgetBtn.addEventListener("click", function () {
         state.config.key = "";
-        writeStore({ provider: state.config.provider, base: state.config.base, model: state.config.model, key: "" });
+        writeStore({
+          provider: state.config.provider,
+          base: state.config.base,
+          model: state.config.model,
+          key: "",
+        });
         if (els.apiKey) els.apiKey.value = "";
         paintConnection();
         setSettingsStatus("Key removed from this browser.", "ok");
@@ -567,47 +723,39 @@
       });
     }
 
-    if (els.settingsBtn) els.settingsBtn.addEventListener("click", function () { openSettings(false); });
-    if (els.railConnect) els.railConnect.addEventListener("click", function () { openSettings(true); });
-  }
-
-  function theme() {
-    if (!els.themeToggle) return;
-    var meta = doc.getElementById("themeColor");
-
-    function paint(isDark) {
-      els.themeToggle.setAttribute("aria-pressed", isDark ? "true" : "false");
-      els.themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-      if (meta) meta.setAttribute("content", isDark ? "#0b0c0e" : "#f3eee4");
-    }
-
-    paint(root.getAttribute("data-theme") !== "light");
-
-    els.themeToggle.addEventListener("click", function () {
-      var next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-      root.setAttribute("data-theme", next);
-      paint(next === "dark");
-      try { window.localStorage.setItem(THEME_KEY, next); } catch (err) { /* storage may be denied */ }
-    });
-  }
-
-  function footerYear() {
-    var year = doc.getElementById("year");
-    if (year) year.textContent = String(new Date().getFullYear());
+    if (els.settingsBtn)
+      els.settingsBtn.addEventListener("click", function () {
+        openSettings(false);
+      });
+    if (els.railConnect)
+      els.railConnect.addEventListener("click", function () {
+        openSettings(true);
+      });
   }
 
   function boot() {
-    var modules = [chatForm, connectionForm, theme, footerYear];
+    var modules = [chatForm, connectionForm];
     for (var i = 0; i < modules.length; i++) {
-      try { modules[i](); } catch (err) { /* one module cannot break the rest */ }
+      try {
+        modules[i]();
+      } catch (err) {
+        /* one module cannot break the rest */
+      }
     }
     try {
       paintConnection();
       countLabel();
-      if (hasKey()) setSettingsStatus("Saved in this browser · " + state.config.model, "ok");
-    } catch (err) { /* the page still renders */ }
+      if (hasKey())
+        setSettingsStatus(
+          "Saved in this browser · " + state.config.model,
+          "ok",
+        );
+    } catch (err) {
+      /* the page still renders */
+    }
   }
 
-  if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", boot);
+  if (doc.readyState === "loading")
+    doc.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();
